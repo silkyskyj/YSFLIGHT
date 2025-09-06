@@ -20,493 +20,493 @@ FsFlightControl::FsFlightControl()
 	Initialize();
 }
 
-FsFlightControl::FsFlightControl(const FsFlightControl &from)
+FsFlightControl::FsFlightControl(const FsFlightControl& from)
 {
-	*this=from;
+	*this = from;
 }
 
 void FsFlightControl::Initialize(void)
 {
-	ctlGear=0.0;
-	ctlGearTrouble=YSFALSE;
-	ctlBrake=0.0;
-	ctlSpoiler=0.0;
-	ctlAb=YSFALSE;
-	hasAb=YSFALSE;
-	ctlThrottle=0.0;
-	ctlPropeller=1.0; // Full forward
-	ctlFlap=0.0;
-	ctlVgw=0.0;
-	ctlAutoVgw=YSTRUE;
-	ctlThrVec=0.0;
-	ctlThrRev=0.0;
+	ctlGear = 0.0;
+	ctlGearTrouble = YSFALSE;
+	ctlBrake = 0.0;
+	ctlSpoiler = 0.0;
+	ctlAb = YSFALSE;
+	hasAb = YSFALSE;
+	ctlThrottle = 0.0;
+	ctlPropeller = 1.0; // Full forward
+	ctlFlap = 0.0;
+	ctlVgw = 0.0;
+	ctlAutoVgw = YSTRUE;
+	ctlThrVec = 0.0;
+	ctlThrRev = 0.0;
 
-	ctlElevator=0.0;
-	ctlElvTrim=0.0;
-	ctlRudder=0.0;
-	ctlAileron=0.0;
+	ctlElevator = 0.0;
+	ctlElvTrim = 0.0;
+	ctlRudder = 0.0;
+	ctlAileron = 0.0;
 
-	ctlFireWeaponButtonExt=YSFALSE;
-	ctlFireGunButtonExt=YSFALSE;
-	ctlFireAAMButtonExt=YSFALSE;
-	ctlFireAGMButtonExt=YSFALSE;
-	ctlFireRocketButtonExt=YSFALSE;
-	ctlDropBombButtonExt=YSFALSE;
-	ctlDispenseFlareButtonExt=YSFALSE;
-	ctlCycleWeaponButtonExt=YSFALSE;
-	ctlSmokeButtonExt=YSFALSE;
-	ctlCycleSmokeSelectorButtonExt=YSFALSE;
+	ctlFireWeaponButtonExt = YSFALSE;
+	ctlFireGunButtonExt = YSFALSE;
+	ctlFireAAMButtonExt = YSFALSE;
+	ctlFireAGMButtonExt = YSFALSE;
+	ctlFireRocketButtonExt = YSFALSE;
+	ctlDropBombButtonExt = YSFALSE;
+	ctlDispenseFlareButtonExt = YSFALSE;
+	ctlCycleWeaponButtonExt = YSFALSE;
+	ctlSmokeButtonExt = YSFALSE;
+	ctlCycleSmokeSelectorButtonExt = YSFALSE;
 
-	ctlFireWeaponButton=YSFALSE;
-	ctlFireGunButton=YSFALSE;
-	ctlFireAAMButton=YSFALSE;
-	ctlFireAGMButton=YSFALSE;
-	ctlFireRocketButton=YSFALSE;
-	ctlDropBombButton=YSFALSE;
-	ctlDispenseFlareButton=YSFALSE;
-	ctlCycleWeaponButton=YSFALSE;
-	ctlSmokeButton=YSFALSE;
-	ctlBombBayDoor=YSFALSE;
+	ctlFireWeaponButton = YSFALSE;
+	ctlFireGunButton = YSFALSE;
+	ctlFireAAMButton = YSFALSE;
+	ctlFireAGMButton = YSFALSE;
+	ctlFireRocketButton = YSFALSE;
+	ctlDropBombButton = YSFALSE;
+	ctlDispenseFlareButton = YSFALSE;
+	ctlCycleWeaponButton = YSFALSE;
+	ctlSmokeButton = YSFALSE;
+	ctlBombBayDoor = YSFALSE;
 
-	ctlLeftDoor=0.0;
-	ctlRightDoor=0.0;
-	ctlRearDoor=0.0;
+	ctlLeftDoor = 0.0;
+	ctlRightDoor = 0.0;
+	ctlRearDoor = 0.0;
 
-	ctlSensitivity=1.0;
+	ctlSensitivity = 1.0;
 
-	ctlNavId=0;
-	ctlVectorMarker=YSFALSE;
+	ctlNavId = 0;
+	ctlVectorMarker = YSFALSE;
 
-	brakeHold=YSFALSE;
-	spoilerHold=YSFALSE;
+	brakeHold = YSFALSE;
+	spoilerHold = YSFALSE;
 
-	pov=0;
-	viewHdg=0.0;
-	viewPch=0.0;
+	pov = 0;
+	viewHdg = 0.0;
+	viewPch = 0.0;
 
-	ctlTurretHdg=0.0;
-	ctlTurretPch=0.0;
+	ctlTurretHdg = 0.0;
+	ctlTurretPch = 0.0;
 }
 
-YSRESULT FsFlightControl::ProcessButtonFunction(const double &/*cTime*/,FsExistence *existence,FSBUTTONFUNCTION fnc)
+YSRESULT FsFlightControl::ProcessButtonFunction(const double&/*cTime*/, FsExistence* existence, FSBUTTONFUNCTION fnc)
 {
-	FsAirplane *air=NULL;
-	FsGround *gnd=NULL;
-	if(NULL!=existence)
+	FsAirplane* air = NULL;
+	FsGround* gnd = NULL;
+	if (NULL != existence)
 	{
-		switch(existence->GetType())
+		switch (existence->GetType())
 		{
-		case FSEX_AIRPLANE:
-			air=(FsAirplane *)existence;
-			break;
-		case FSEX_GROUND:
-			gnd=(FsGround *)existence;
-			break;
+			case FSEX_AIRPLANE:
+				air = (FsAirplane*)existence;
+				break;
+			case FSEX_GROUND:
+				gnd = (FsGround*)existence;
+				break;
 		}
 	}
 
-	switch(fnc)
+	switch (fnc)
 	{
-	case FSBTF_ELEVATORUP:                    //  Elevator Up
-		ctlElevator=YsSmaller(ctlElevator+0.04,1.0);
-		return YSOK;
-	case FSBTF_ELEVATORNEUTRAL:               //  Elevator Neutral
-		ctlElevator=0.0;
-		return YSOK;
-	case FSBTF_ELEVATORDOWN:                  //  Elevator Down
-		ctlElevator=YsGreater(ctlElevator-0.04,-1.0);
-		return YSOK;
-	case FSBTF_AILERONLEFT:                   //  Aileron Left
-		if(ctlAileron<0.0)
-		{
-			ctlAileron=0.0;
-		}
-		else
-		{
-			ctlAileron=YsSmaller(ctlAileron+0.1,1.0);
-		}
-		return YSOK;
-	case FSBTF_AILERONNEUTRAL:                //  Aileron Neutral
-		ctlAileron=0.0;
-		return YSOK;
-	case FSBTF_AILERONRIGHT:                  //  Aileron Right
-		if(ctlAileron>0.0)
-		{
-			ctlAileron=0.0;
-		}
-		else
-		{
-			ctlAileron=YsGreater(ctlAileron-0.1,-1.0);
-		}
-		return YSOK;
-	case FSBTF_RUDDERLEFT:                    //  Rudder Left
-		ctlRudder=YsSmaller(ctlRudder+0.25,1.0);
-		return YSOK;
-	case FSBTF_RUDDERCENTER:                  //  Rudder Center
-		ctlRudder=0.0;
-		return YSOK;
-	case FSBTF_RUDDERRIGHT:                   //  Rudder Right
-		ctlRudder=YsGreater(ctlRudder-0.25,-1.0);
-		return YSOK;
-	// case FSBTF_TRIMUP:                        //  Elevator Trim Up  Processed in SimControlByUser.  Effect depends on dt.
-	//	break;
-	// case FSBTF_TRIMDOWN:                      //  Elevator Trim Down  Processed in SimControlByUser.  Effect depends on dt.
-	//	breauk;
-	case FSBTF_AUTOTRIM:                      //  Auto Trim
-		ctlElvTrim=YsBound(ctlElvTrim+ctlElevator,-1.0,1.0);
-		return YSOK;
-	case FSBTF_THROTTLEUP:                    //  Throttle Add Power
-		ctlThrottle=YsSmaller(ctlThrottle+0.05,1.0);
-		return YSOK;
-	case FSBTF_THROTTLEUP_HALF:
-		ctlThrottle=YsSmaller(ctlThrottle+0.025,1.0);
-		return YSOK;
-	case FSBTF_THROTTLEDOWN:                  //  Throttle Reduce Power
-		ctlThrottle=YsGreater(ctlThrottle-0.05,0.0);
-		if(ctlThrottle<0.6)
-		{
-			ctlAb=YSFALSE;
-		}
-		return YSOK;
-	case FSBTF_THROTTLEDOWN_HALF:             //  Throttle Reduce Power
-		ctlThrottle=YsGreater(ctlThrottle-0.025,0.0);
-		if(ctlThrottle<0.6)
-		{
-			ctlAb=YSFALSE;
-		}
-		return YSOK;
-	case FSBTF_THROTTLEMAX:                   //  Throttle Max
-		ctlThrottle=1.0;
-		ctlAb=YSTRUE;
-		return YSOK;
-	case FSBTF_THROTTLEIDLE:                  //  Throttle Min (Idle)
-		ctlThrottle=0.0;
-		ctlAb=YSFALSE;
-		return YSOK;
-	case FSBTF_AFTERBURNER:                   //  Afterburner
-		ctlAb=(ctlAb==YSTRUE ? YSFALSE : YSTRUE);
-		if(ctlAb==YSTRUE && ctlThrottle<0.6)
-		{
-			ctlThrottle=0.6;
-		}
-		return YSOK;
-	case FSBTF_PROPFORWARD:
-		ctlPropeller+=0.1;
-		if(1.0<ctlPropeller)
-		{
-			ctlPropeller=1.0;
-		}
-		return YSOK;
-	case FSBTF_PROPBACKWARD:
-		ctlPropeller-=0.1;
-		if(0.0>ctlPropeller)
-		{
-			ctlPropeller=0.0;
-		}
-		return YSOK;
-	case FSBTF_NOZZLEUP:                      //  Nozzle Up (Nose Up for Concorde)
-		ctlThrVec=YsGreater(ctlThrVec-0.1,0.0);
-		return YSOK;
-	case FSBTF_NOZZLEDOWN:                    //  Nozzle Down (Nose Down for Concorde)
-		ctlThrVec=YsSmaller(ctlThrVec+0.1,1.0);
-		return YSOK;
-	case FSBTF_LANDINGGEAR:                   //  Landing Gear Extend/Retract
-		if(YSTRUE!=ctlGearTrouble)
-		{
-			ctlGear=(ctlGear<0.5 ? 1.0 : 0.0);
-		}
-		else
-		{
-			ctlGear=(ctlGear<0.5 ? 0.8 : 0.2);
-			ctlGearTrouble=YSFALSE;
-		}
-		return YSOK;
-	case FSBTF_FLAP:                          //  Flap Up/Down
-		ctlFlap=(ctlFlap<0.5 ? 1.0 : 0.0);
-		return YSOK;
-	case FSBTF_FLAPUP:                        //  Flap Up
-		if(NULL!=air)
-		{
-			const int nFlpPos=air->Prop().GetNumFlapPosition();
-			int i;
-			YSBOOL set=YSFALSE;
-			for(i=0; i<nFlpPos; i++)
+		case FSBTF_ELEVATORUP:                    //  Elevator Up
+			ctlElevator = YsSmaller(ctlElevator + 0.04, 1.0);
+			return YSOK;
+		case FSBTF_ELEVATORNEUTRAL:               //  Elevator Neutral
+			ctlElevator = 0.0;
+			return YSOK;
+		case FSBTF_ELEVATORDOWN:                  //  Elevator Down
+			ctlElevator = YsGreater(ctlElevator - 0.04, -1.0);
+			return YSOK;
+		case FSBTF_AILERONLEFT:                   //  Aileron Left
+			if (ctlAileron < 0.0)
 			{
-				if(YSTRUE==YsEqual(ctlFlap,air->Prop().GetFlapPosition(i)))
-				{
-					if(0<i)
-					{
-						ctlFlap=air->Prop().GetFlapPosition(i-1);
-					}
-					set=YSTRUE;
-					break;
-				}
+				ctlAileron = 0.0;
 			}
-			if(YSTRUE!=set)
+			else
 			{
-				for(i=0; i<nFlpPos-1; i++)
+				ctlAileron = YsSmaller(ctlAileron + 0.1, 1.0);
+			}
+			return YSOK;
+		case FSBTF_AILERONNEUTRAL:                //  Aileron Neutral
+			ctlAileron = 0.0;
+			return YSOK;
+		case FSBTF_AILERONRIGHT:                  //  Aileron Right
+			if (ctlAileron > 0.0)
+			{
+				ctlAileron = 0.0;
+			}
+			else
+			{
+				ctlAileron = YsGreater(ctlAileron - 0.1, -1.0);
+			}
+			return YSOK;
+		case FSBTF_RUDDERLEFT:                    //  Rudder Left
+			ctlRudder = YsSmaller(ctlRudder + 0.25, 1.0);
+			return YSOK;
+		case FSBTF_RUDDERCENTER:                  //  Rudder Center
+			ctlRudder = 0.0;
+			return YSOK;
+		case FSBTF_RUDDERRIGHT:                   //  Rudder Right
+			ctlRudder = YsGreater(ctlRudder - 0.25, -1.0);
+			return YSOK;
+			// case FSBTF_TRIMUP:                        //  Elevator Trim Up  Processed in SimControlByUser.  Effect depends on dt.
+			//	break;
+			// case FSBTF_TRIMDOWN:                      //  Elevator Trim Down  Processed in SimControlByUser.  Effect depends on dt.
+			//	breauk;
+		case FSBTF_AUTOTRIM:                      //  Auto Trim
+			ctlElvTrim = YsBound(ctlElvTrim + ctlElevator, -1.0, 1.0);
+			return YSOK;
+		case FSBTF_THROTTLEUP:                    //  Throttle Add Power
+			ctlThrottle = YsSmaller(ctlThrottle + 0.05, 1.0);
+			return YSOK;
+		case FSBTF_THROTTLEUP_HALF:
+			ctlThrottle = YsSmaller(ctlThrottle + 0.025, 1.0);
+			return YSOK;
+		case FSBTF_THROTTLEDOWN:                  //  Throttle Reduce Power
+			ctlThrottle = YsGreater(ctlThrottle - 0.05, 0.0);
+			if (ctlThrottle < 0.6)
+			{
+				ctlAb = YSFALSE;
+			}
+			return YSOK;
+		case FSBTF_THROTTLEDOWN_HALF:             //  Throttle Reduce Power
+			ctlThrottle = YsGreater(ctlThrottle - 0.025, 0.0);
+			if (ctlThrottle < 0.6)
+			{
+				ctlAb = YSFALSE;
+			}
+			return YSOK;
+		case FSBTF_THROTTLEMAX:                   //  Throttle Max
+			ctlThrottle = 1.0;
+			ctlAb = YSTRUE;
+			return YSOK;
+		case FSBTF_THROTTLEIDLE:                  //  Throttle Min (Idle)
+			ctlThrottle = 0.0;
+			ctlAb = YSFALSE;
+			return YSOK;
+		case FSBTF_AFTERBURNER:                   //  Afterburner
+			ctlAb = (ctlAb == YSTRUE ? YSFALSE : YSTRUE);
+			if (ctlAb == YSTRUE && ctlThrottle < 0.6)
+			{
+				ctlThrottle = 0.6;
+			}
+			return YSOK;
+		case FSBTF_PROPFORWARD:
+			ctlPropeller += 0.1;
+			if (1.0 < ctlPropeller)
+			{
+				ctlPropeller = 1.0;
+			}
+			return YSOK;
+		case FSBTF_PROPBACKWARD:
+			ctlPropeller -= 0.1;
+			if (0.0 > ctlPropeller)
+			{
+				ctlPropeller = 0.0;
+			}
+			return YSOK;
+		case FSBTF_NOZZLEUP:                      //  Nozzle Up (Nose Up for Concorde)
+			ctlThrVec = YsGreater(ctlThrVec - 0.1, 0.0);
+			return YSOK;
+		case FSBTF_NOZZLEDOWN:                    //  Nozzle Down (Nose Down for Concorde)
+			ctlThrVec = YsSmaller(ctlThrVec + 0.1, 1.0);
+			return YSOK;
+		case FSBTF_LANDINGGEAR:                   //  Landing Gear Extend/Retract
+			if (YSTRUE != ctlGearTrouble)
+			{
+				ctlGear = (ctlGear < 0.5 ? 1.0 : 0.0);
+			}
+			else
+			{
+				ctlGear = (ctlGear < 0.5 ? 0.8 : 0.2);
+				ctlGearTrouble = YSFALSE;
+			}
+			return YSOK;
+		case FSBTF_FLAP:                          //  Flap Up/Down
+			ctlFlap = (ctlFlap < 0.5 ? 1.0 : 0.0);
+			return YSOK;
+		case FSBTF_FLAPUP:                        //  Flap Up
+			if (NULL != air)
+			{
+				const int nFlpPos = air->Prop().GetNumFlapPosition();
+				int i;
+				YSBOOL set = YSFALSE;
+				for (i = 0; i < nFlpPos; i++)
 				{
-					if(air->Prop().GetFlapPosition(i)<=ctlFlap && ctlFlap<air->Prop().GetFlapPosition(i+1))
+					if (YSTRUE == YsEqual(ctlFlap, air->Prop().GetFlapPosition(i)))
 					{
-						ctlFlap=air->Prop().GetFlapPosition(i);
-						set=YSTRUE;
+						if (0 < i)
+						{
+							ctlFlap = air->Prop().GetFlapPosition(i - 1);
+						}
+						set = YSTRUE;
 						break;
 					}
 				}
-			}
-			if(YSTRUE!=set)
-			{
-				if(0<nFlpPos)
+				if (YSTRUE != set)
 				{
-					ctlFlap=air->Prop().GetFlapPosition(0);
-				}
-				else
-				{
-					ctlFlap=0.0;
-				}
-			}
-		}
-		// ctlFlap=YsGreater(ctlFlap-0.25,0.0);
-		return YSOK;
-	case FSBTF_FLAPDOWN:                      //  Flap Down
-		if(NULL!=air)
-		{
-			const int nFlpPos=air->Prop().GetNumFlapPosition();
-			int i;
-			YSBOOL set=YSFALSE;
-			for(i=0; i<nFlpPos; i++)
-			{
-				if(YSTRUE==YsEqual(ctlFlap,air->Prop().GetFlapPosition(i)))
-				{
-					if(i<nFlpPos-1)
+					for (i = 0; i < nFlpPos - 1; i++)
 					{
-						ctlFlap=air->Prop().GetFlapPosition(i+1);
+						if (air->Prop().GetFlapPosition(i) <= ctlFlap && ctlFlap < air->Prop().GetFlapPosition(i + 1))
+						{
+							ctlFlap = air->Prop().GetFlapPosition(i);
+							set = YSTRUE;
+							break;
+						}
 					}
-					set=YSTRUE;
-					break;
+				}
+				if (YSTRUE != set)
+				{
+					if (0 < nFlpPos)
+					{
+						ctlFlap = air->Prop().GetFlapPosition(0);
+					}
+					else
+					{
+						ctlFlap = 0.0;
+					}
 				}
 			}
-			if(YSTRUE!=set)
+			// ctlFlap=YsGreater(ctlFlap-0.25,0.0);
+			return YSOK;
+		case FSBTF_FLAPDOWN:                      //  Flap Down
+			if (NULL != air)
 			{
-				for(i=0; i<nFlpPos-1; i++)
+				const int nFlpPos = air->Prop().GetNumFlapPosition();
+				int i;
+				YSBOOL set = YSFALSE;
+				for (i = 0; i < nFlpPos; i++)
 				{
-					if(air->Prop().GetFlapPosition(i)<ctlFlap && ctlFlap<=air->Prop().GetFlapPosition(i+1))
+					if (YSTRUE == YsEqual(ctlFlap, air->Prop().GetFlapPosition(i)))
 					{
-						ctlFlap=air->Prop().GetFlapPosition(i+1);
-						set=YSTRUE;
+						if (i < nFlpPos - 1)
+						{
+							ctlFlap = air->Prop().GetFlapPosition(i + 1);
+						}
+						set = YSTRUE;
 						break;
 					}
 				}
+				if (YSTRUE != set)
+				{
+					for (i = 0; i < nFlpPos - 1; i++)
+					{
+						if (air->Prop().GetFlapPosition(i) < ctlFlap && ctlFlap <= air->Prop().GetFlapPosition(i + 1))
+						{
+							ctlFlap = air->Prop().GetFlapPosition(i + 1);
+							set = YSTRUE;
+							break;
+						}
+					}
+				}
+				if (YSTRUE != set)
+				{
+					if (0 < nFlpPos)
+					{
+						ctlFlap = air->Prop().GetFlapPosition(nFlpPos - 1);
+					}
+					else
+					{
+						ctlFlap = 1.0;
+					}
+				}
 			}
-			if(YSTRUE!=set)
+			// ctlFlap=YsSmaller(ctlFlap+0.25,1.0);
+			return YSOK;
+		case FSBTF_FLAPFULLUP:                    //  Flap Full Up
+			ctlFlap = 0.0;
+			return YSOK;
+		case FSBTF_FLAPFULLDOWN:                  //  Flap Full Down
+			ctlFlap = 1.0;
+			return YSOK;
+		case FSBTF_SPOILERBRAKE:                  //  Spoiler and Brake On/Off
+			ctlBrake = (ctlBrake < 0.5 ? 1.0 : 0.0);
+			ctlSpoiler = ctlBrake;
+			return YSOK;
+		case FSBTF_SPOILER:                       //  Spoiler Extend/Retract
+			ctlSpoiler = (ctlSpoiler < 0.5 ? 1.0 : 0.0);
+			return YSOK;
+		case FSBTF_SPOILEREXTEND:                 //  Spoiler Extend
+			ctlSpoiler = YsSmaller(ctlSpoiler + 0.25, 1.0);
+			return YSOK;
+		case FSBTF_SPOILERRETRACT:                //  Spoiler Retract
+			ctlSpoiler = YsGreater(ctlSpoiler - 0.25, 0.0);
+			return YSOK;
+		case FSBTF_BRAKEONOFF:                    //  Brake On/Off
+			ctlBrake = (ctlBrake < 0.5 ? 1.0 : 0.0);
+			return YSOK;
+
+		case FSBTF_RADAR:                         //  Radar
+			if (NULL != air)
 			{
-				if(0<nFlpPos)
-				{
-					ctlFlap=air->Prop().GetFlapPosition(nFlpPos-1);
-				}
-				else
-				{
-					ctlFlap=1.0;
-				}
+				const int dir = (YSTRUE != FsGetKeyState(FSKEY_SHIFT) ? 1 : -1);
+				air->Prop().ToggleRadarRange(dir);
 			}
-		}
-		// ctlFlap=YsSmaller(ctlFlap+0.25,1.0);
-		return YSOK;
-	case FSBTF_FLAPFULLUP:                    //  Flap Full Up
-		ctlFlap=0.0;
-		return YSOK;
-	case FSBTF_FLAPFULLDOWN:                  //  Flap Full Down
-		ctlFlap=1.0;
-		return YSOK;
-	case FSBTF_SPOILERBRAKE:                  //  Spoiler and Brake On/Off
-		ctlBrake=(ctlBrake<0.5 ? 1.0 : 0.0);
-		ctlSpoiler=ctlBrake;
-		return YSOK;
-	case FSBTF_SPOILER:                       //  Spoiler Extend/Retract
-		ctlSpoiler=(ctlSpoiler<0.5 ? 1.0 : 0.0);
-		return YSOK;
-	case FSBTF_SPOILEREXTEND:                 //  Spoiler Extend
-		ctlSpoiler=YsSmaller(ctlSpoiler+0.25,1.0);
-		return YSOK;
-	case FSBTF_SPOILERRETRACT:                //  Spoiler Retract
-		ctlSpoiler=YsGreater(ctlSpoiler-0.25,0.0);
-		return YSOK;
-	case FSBTF_BRAKEONOFF:                    //  Brake On/Off
-		ctlBrake=(ctlBrake<0.5 ? 1.0 : 0.0);
-		return YSOK;
-
-	case FSBTF_RADAR:                         //  Radar
-		if(NULL!=air)
-		{
-			const int dir=(YSTRUE!=FsGetKeyState(FSKEY_SHIFT) ? 1 : -1);
-			air->Prop().ToggleRadarRange(dir);
-		}
-		return YSOK;
-	case FSBTF_RADARRANGEUP:                  //  Radar Range Up
-		if(air!=NULL)
-		{
-			air->Prop().IncreaseRadarRange();
-		}
-		return YSOK;
-	case FSBTF_RADARRANGEDOWN:                //  Radar Range Down
-		if(air!=NULL)
-		{
-			air->Prop().ReduceRadarRange();
-		}
-		return YSOK;
+			return YSOK;
+		case FSBTF_RADARRANGEUP:                  //  Radar Range Up
+			if (air != NULL)
+			{
+				air->Prop().IncreaseRadarRange();
+			}
+			return YSOK;
+		case FSBTF_RADARRANGEDOWN:                //  Radar Range Down
+			if (air != NULL)
+			{
+				air->Prop().ReduceRadarRange();
+			}
+			return YSOK;
 
 
-	case FSBTF_ILS:                           //  ILS On/Off
-		switch(ctlNavId)
-		{
-		case 0:
-			ctlNavId=1;
+		case FSBTF_ILS:                           //  ILS On/Off
+			switch (ctlNavId)
+			{
+				case 0:
+					ctlNavId = 1;
+					break;
+				case 1:
+					ctlNavId = 100;   // <- ADF
+					break;
+				case 100:
+					ctlNavId = 200;   // <- Heading Bug
+					break;
+				default:
+				case 200:
+					ctlNavId = 0;
+					break;
+			}
+			return YSOK;
+		case FSBTF_VELOCITYINDICATOR:             //  Velocity Indicator On/Off
+			YsFlip(ctlVectorMarker);
+			return YSOK;
+
+		case FSBTF_BOMBBAYDOOR:                   // Open/Close Bomb Bay Door
+			YsFlip(ctlBombBayDoor);
+			return YSOK;
+
+
+			/* Turret Motion is moved to FsSimulation::SimControlByUser
+			case FSBTF_TURRETLEFT:
+				ctlTurretHdg+=0.0125;
+				if(ctlTurretHdg>=1.0)
+				{
+					ctlTurretHdg=1.0;
+				}
+				return YSOK;
+			case FSBTF_TURRETRIGHT:
+				ctlTurretHdg-=0.0125;
+				if(ctlTurretHdg<=-1.0)
+				{
+					ctlTurretHdg=-1.0;
+				}
+				return YSOK;
+			case FSBTF_TURRETUP:
+				ctlTurretPch+=0.0125;
+				if(ctlTurretPch>=1.0)
+				{
+					ctlTurretPch=1.0;
+				}
+				return YSOK;
+			case FSBTF_TURRETDOWN:
+				ctlTurretPch-=0.0125;
+				if(ctlTurretPch<=-1.0)
+				{
+					ctlTurretPch=-1.0;
+				}
+				return YSOK; */
+		case FSBTF_TURRETNEUTRAL:
+			ctlTurretPch = 0.0;
+			ctlTurretHdg = 0.0;
+			return YSOK;
+
+		case FSBTF_TOGGLELIGHT:
+			if (NULL != air)
+			{
+				air->Prop().ToggleLight();
+			}
+			if (NULL != gnd)
+			{
+				gnd->Prop().ToggleLight();
+			}
 			break;
-		case 1:
-			ctlNavId=100;   // <- ADF
+		case FSBTF_TOGGLENAVLIGHT:
+			if (NULL != air)
+			{
+				air->Prop().ToggleNavLight();
+			}
 			break;
-		case 100:
-			ctlNavId=200;   // <- Heading Bug
+		case FSBTF_TOGGLEBEACON:
+			if (NULL != air)
+			{
+				air->Prop().ToggleBeacon();
+			}
 			break;
-		default:
-		case 200:
-			ctlNavId=0;
+		case FSBTF_TOGGLESTROBE:
+			if (NULL != air)
+			{
+				air->Prop().ToggleStrobe();
+			}
 			break;
-		}
-		return YSOK;
-	case FSBTF_VELOCITYINDICATOR:             //  Velocity Indicator On/Off
-		YsFlip(ctlVectorMarker);
-		return YSOK;
-
-	case FSBTF_BOMBBAYDOOR:                   // Open/Close Bomb Bay Door
-		YsFlip(ctlBombBayDoor);
-		return YSOK;
+		case FSBTF_TOGGLELANDINGLIGHT:
+			if (NULL != air)
+			{
+				air->Prop().ToggleLandingLight();
+			}
+			break;
 
 
-	/* Turret Motion is moved to FsSimulation::SimControlByUser
-	case FSBTF_TURRETLEFT:
-		ctlTurretHdg+=0.0125;
-		if(ctlTurretHdg>=1.0)
-		{
-			ctlTurretHdg=1.0;
-		}
-		return YSOK;
-	case FSBTF_TURRETRIGHT:
-		ctlTurretHdg-=0.0125;
-		if(ctlTurretHdg<=-1.0)
-		{
-			ctlTurretHdg=-1.0;
-		}
-		return YSOK;
-	case FSBTF_TURRETUP:
-		ctlTurretPch+=0.0125;
-		if(ctlTurretPch>=1.0)
-		{
-			ctlTurretPch=1.0;
-		}
-		return YSOK;
-	case FSBTF_TURRETDOWN:
-		ctlTurretPch-=0.0125;
-		if(ctlTurretPch<=-1.0)
-		{
-			ctlTurretPch=-1.0;
-		}
-		return YSOK; */
-	case FSBTF_TURRETNEUTRAL:
-		ctlTurretPch=0.0;
-		ctlTurretHdg=0.0;
-		return YSOK;
+			// The following keys are implemented through virtual buttons of FsAirplaneProperty
+		case FSBTF_FIREWEAPON:                    //  Fire Selected Weapon
+		case FSBTF_FIREAAM:                       //  Fire AAM
+		case FSBTF_FIREAGM:                       //  Fire AAM
+		case FSBTF_FIREROCKET:                    //  Fire Rocket
+		case FSBTF_DROPBOMB:                      //  Drop Bomb
+		case FSBTF_DISPENSEFLARE:                 //  Dispense Flare
+		case FSBTF_SELECTWEAPON:                  //  Select Weapon
+		case FSBTF_BRAKEHOLD:                     //  Brake On While Holding
+		case FSBTF_FIREGUN:                       //  Fire Machine Gun
+		case FSBTF_SMOKE:                         //  Smoke
+			break;
 
-	case FSBTF_TOGGLELIGHT:
-		if(NULL!=air)
-		{
-			air->Prop().ToggleLight();
-		}
-		if(NULL!=gnd)
-		{
-			gnd->Prop().ToggleLight();
-		}
-		break;
-	case FSBTF_TOGGLENAVLIGHT:
-		if(NULL!=air)
-		{
-			air->Prop().ToggleNavLight();
-		}
-		break;
-	case FSBTF_TOGGLEBEACON:
-		if(NULL!=air)
-		{
-			air->Prop().ToggleBeacon();
-		}
-		break;
-	case FSBTF_TOGGLESTROBE:
-		if(NULL!=air)
-		{
-			air->Prop().ToggleStrobe();
-		}
-		break;
-	case FSBTF_TOGGLELANDINGLIGHT:
-		if(NULL!=air)
-		{
-			air->Prop().ToggleLandingLight();
-		}
-		break;
-
-
-	// The following keys are implemented through virtual buttons of FsAirplaneProperty
-	case FSBTF_FIREWEAPON:                    //  Fire Selected Weapon
-	case FSBTF_FIREAAM:                       //  Fire AAM
-	case FSBTF_FIREAGM:                       //  Fire AAM
-	case FSBTF_FIREROCKET:                    //  Fire Rocket
-	case FSBTF_DROPBOMB:                      //  Drop Bomb
-	case FSBTF_DISPENSEFLARE:                 //  Dispense Flare
-	case FSBTF_SELECTWEAPON:                  //  Select Weapon
-	case FSBTF_BRAKEHOLD:                     //  Brake On While Holding
-	case FSBTF_FIREGUN:                       //  Fire Machine Gun
-	case FSBTF_SMOKE:                         //  Smoke
-		break;
-
-	case FSBTF_TOGGLEALLDOOR:
-		ctlLeftDoor=(0.5<ctlLeftDoor ? 0.0 : 1.0);
-		ctlRightDoor=ctlLeftDoor;
-		ctlRearDoor=ctlLeftDoor;
-		break;
-	case FSBTF_TOGGLELEFTDOOR:
-		ctlLeftDoor=(0.5<ctlLeftDoor ? 0.0 : 1.0);
-		break;
-	case FSBTF_TOGGLERIGHTDOOR:
-		ctlRightDoor=(0.5<ctlRightDoor ? 0.0 : 1.0);
-		break;
-	case FSBTF_TOGGLEREARDOOR:
-		ctlRearDoor=(0.5<ctlRearDoor ? 0.0 : 1.0);
-		break;
+		case FSBTF_TOGGLEALLDOOR:
+			ctlLeftDoor = (0.5 < ctlLeftDoor ? 0.0 : 1.0);
+			ctlRightDoor = ctlLeftDoor;
+			ctlRearDoor = ctlLeftDoor;
+			break;
+		case FSBTF_TOGGLELEFTDOOR:
+			ctlLeftDoor = (0.5 < ctlLeftDoor ? 0.0 : 1.0);
+			break;
+		case FSBTF_TOGGLERIGHTDOOR:
+			ctlRightDoor = (0.5 < ctlRightDoor ? 0.0 : 1.0);
+			break;
+		case FSBTF_TOGGLEREARDOOR:
+			ctlRearDoor = (0.5 < ctlRearDoor ? 0.0 : 1.0);
+			break;
 	}
 	return YSERR;
 }
 
 void FsFlightControl::CycleNav(void)
 {
-	if(ctlNavId==0)
+	if (ctlNavId == 0)
 	{
-		ctlNavId=1;
+		ctlNavId = 1;
 	}
-	else if(ctlNavId==1)
+	else if (ctlNavId == 1)
 	{
-		ctlNavId=100;
+		ctlNavId = 100;
 	}
-	else if(ctlNavId==100)
+	else if (ctlNavId == 100)
 	{
-		ctlNavId=200;
+		ctlNavId = 200;
 	}
 	else
 	{
-		ctlNavId=0;
+		ctlNavId = 0;
 	}
 }
 
 void FsFlightControl::SelectNav(int navIdIn)
 {
-	ctlNavId=navIdIn;
+	ctlNavId = navIdIn;
 }
 
 int FsFlightControl::Nav(void) const
@@ -516,45 +516,45 @@ int FsFlightControl::Nav(void) const
 
 void FsFlightControl::SensitivityDown(void)
 {
-	if(0.501<=ctlSensitivity)
+	if (0.501 <= ctlSensitivity)
 	{
-		ctlSensitivity=0.5;
+		ctlSensitivity = 0.5;
 	}
-	else if(0.251<=ctlSensitivity)
+	else if (0.251 <= ctlSensitivity)
 	{
-		ctlSensitivity=0.25;
+		ctlSensitivity = 0.25;
 	}
 }
 
 void FsFlightControl::SensitivityUp(void)
 {
-	if(0.499>=ctlSensitivity)
+	if (0.499 >= ctlSensitivity)
 	{
-		ctlSensitivity=0.5;
+		ctlSensitivity = 0.5;
 	}
-	else if(0.99>=ctlSensitivity)
+	else if (0.99 >= ctlSensitivity)
 	{
-		ctlSensitivity=1.0;
+		ctlSensitivity = 1.0;
 	}
 }
 
 void FsFlightControl::CycleSensitivity(void)
 {
-	if(0.999<=ctlSensitivity)
+	if (0.999 <= ctlSensitivity)
 	{
-		ctlSensitivity=0.25;
+		ctlSensitivity = 0.25;
 	}
-	else if(0.749<=ctlSensitivity)
+	else if (0.749 <= ctlSensitivity)
 	{
-		ctlSensitivity=1.0;
+		ctlSensitivity = 1.0;
 	}
-	else if(0.499<=ctlSensitivity)
+	else if (0.499 <= ctlSensitivity)
 	{
-		ctlSensitivity=0.75;
+		ctlSensitivity = 0.75;
 	}
 	else
 	{
-		ctlSensitivity=0.5;
+		ctlSensitivity = 0.5;
 	}
 
 }
@@ -564,27 +564,27 @@ const double FsFlightControl::GetSensitivity(void) const
 	return ctlSensitivity;
 }
 
-YSRESULT FsFlightControl::ReadControl(const FsControlAssignment &ctlAssign,FsJoystick joy[FsMaxNumJoystick])
+YSRESULT FsFlightControl::ReadControl(const FsControlAssignment& ctlAssign, FsJoystick joy[FsMaxNumJoystick])
 {
 	FsJoystick pJoy[FsMaxNumJoystick];
-	int i,j;
-	for(i=0; i<FsMaxNumJoystick; i++)
+	int i, j;
+	for (i = 0; i < FsMaxNumJoystick; i++)
 	{
-		pJoy[i]=joy[i];
-		for(j=0; j<FsMaxNumJoyAxis; j++)
+		pJoy[i] = joy[i];
+		for (j = 0; j < FsMaxNumJoyAxis; j++)
 		{
-			pJoy[i].axs[j]+=1.0;
+			pJoy[i].axs[j] += 1.0;
 		}
-		for(j=0; j<FsMaxNumJoyTrig; j++)
+		for (j = 0; j < FsMaxNumJoyTrig; j++)
 		{
 			YsFlip(pJoy[i].trg[j]);
 		}
 	}
-	return ReadControl(ctlAssign,pJoy,joy);
+	return ReadControl(ctlAssign, pJoy, joy);
 }
 
 YSRESULT FsFlightControl::ReadControl
-    (const FsControlAssignment &ctlAssign,FsJoystick pJoy[FsMaxNumJoystick],FsJoystick joy[FsMaxNumJoystick])
+(const FsControlAssignment& ctlAssign, FsJoystick pJoy[FsMaxNumJoystick], FsJoystick joy[FsMaxNumJoystick])
 {
 	// int wid,hei;
 	int i;
@@ -592,261 +592,261 @@ YSRESULT FsFlightControl::ReadControl
 	// FsGetWindowSize(wid,hei);
 
 	// >> Following Values must be zero unless otherwise something is held.
-	pov=0;
-	viewHdg=0.0;
-	viewPch=0.0;
+	pov = 0;
+	viewHdg = 0.0;
+	viewPch = 0.0;
 	// <<
 
-	ctlFireWeaponButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREWEAPON,joy),ctlFireWeaponButtonExt);
-	ctlFireGunButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREGUN,joy),ctlFireGunButtonExt);
-	ctlFireAAMButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREAAM,joy),ctlFireAAMButtonExt);
-	ctlFireAGMButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREAGM,joy),ctlFireAGMButtonExt);
-	ctlFireRocketButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREROCKET,joy),ctlFireRocketButtonExt);
-	ctlDropBombButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_DROPBOMB,joy),ctlDropBombButtonExt);
-	ctlDispenseFlareButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_DISPENSEFLARE,joy),ctlDispenseFlareButtonExt);
-	ctlCycleWeaponButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_SELECTWEAPON,joy),ctlCycleWeaponButtonExt);
-	ctlSmokeButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_SMOKE,joy),ctlSmokeButtonExt);
-	ctlCycleSmokeSelectorButton=YsOr(ctlAssign.IsButtonPressed(FSBTF_CYCLESMOKESELECTOR,joy),ctlCycleSmokeSelectorButtonExt);
+	ctlFireWeaponButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREWEAPON, joy), ctlFireWeaponButtonExt);
+	ctlFireGunButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREGUN, joy), ctlFireGunButtonExt);
+	ctlFireAAMButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREAAM, joy), ctlFireAAMButtonExt);
+	ctlFireAGMButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREAGM, joy), ctlFireAGMButtonExt);
+	ctlFireRocketButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_FIREROCKET, joy), ctlFireRocketButtonExt);
+	ctlDropBombButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_DROPBOMB, joy), ctlDropBombButtonExt);
+	ctlDispenseFlareButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_DISPENSEFLARE, joy), ctlDispenseFlareButtonExt);
+	ctlCycleWeaponButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_SELECTWEAPON, joy), ctlCycleWeaponButtonExt);
+	ctlSmokeButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_SMOKE, joy), ctlSmokeButtonExt);
+	ctlCycleSmokeSelectorButton = YsOr(ctlAssign.IsButtonPressed(FSBTF_CYCLESMOKESELECTOR, joy), ctlCycleSmokeSelectorButtonExt);
 
-	ctlFireWeaponButtonExt=YSFALSE;
-	ctlFireGunButtonExt=YSFALSE;
-	ctlFireAAMButtonExt=YSFALSE;
-	ctlFireAGMButtonExt=YSFALSE;
-	ctlFireRocketButtonExt=YSFALSE;
-	ctlDropBombButtonExt=YSFALSE;
-	ctlDispenseFlareButtonExt=YSFALSE;
-	ctlCycleWeaponButtonExt=YSFALSE;
-	ctlSmokeButtonExt=YSFALSE;
-	ctlCycleSmokeSelectorButtonExt=YSFALSE;
+	ctlFireWeaponButtonExt = YSFALSE;
+	ctlFireGunButtonExt = YSFALSE;
+	ctlFireAAMButtonExt = YSFALSE;
+	ctlFireAGMButtonExt = YSFALSE;
+	ctlFireRocketButtonExt = YSFALSE;
+	ctlDropBombButtonExt = YSFALSE;
+	ctlDispenseFlareButtonExt = YSFALSE;
+	ctlCycleWeaponButtonExt = YSFALSE;
+	ctlSmokeButtonExt = YSFALSE;
+	ctlCycleSmokeSelectorButtonExt = YSFALSE;
 
 
 	// 2005/09/20 If mouse is assigned to turret, and left button is not assigned to anything,
 	// use it as a fire-gun button.
-	if(ctlFireGunButton==YSFALSE)
+	if (ctlFireGunButton == YSFALSE)
 	{
-		int joyId,joyAxs;
+		int joyId, joyAxs;
 		YSBOOL reverse;
-		if(ctlAssign.FindAxisByFunction(joyId,joyAxs,reverse,FSAXF_TURRETH)==YSOK &&
-		   ctlAssign.TranslateTrigger(joyId,0)==FSBTF_NULL)
+		if (ctlAssign.FindAxisByFunction(joyId, joyAxs, reverse, FSAXF_TURRETH) == YSOK &&
+			ctlAssign.TranslateTrigger(joyId, 0) == FSBTF_NULL)
 		{
-			ctlFireGunButton=joy[joyId].trg[0];
+			ctlFireGunButton = joy[joyId].trg[0];
 		}
 	}
 
 
-	for(i=0; i<FsMaxNumJoystick; i++)
+	for (i = 0; i < FsMaxNumJoystick; i++)
 	{
-		YSBOOL atLeastSomethingIsAssigned=YSFALSE;
-		for(int j=0; j<FsMaxNumJoyAxis; j++)
+		YSBOOL atLeastSomethingIsAssigned = YSFALSE;
+		for (int j = 0; j < FsMaxNumJoyAxis; j++)
 		{
-			if(FSAXF_NULL!=ctlAssign.TranslateAxis(i,j))
+			if (FSAXF_NULL != ctlAssign.TranslateAxis(i, j))
 			{
-				atLeastSomethingIsAssigned=YSTRUE;
+				atLeastSomethingIsAssigned = YSTRUE;
 				break;
 			}
 		}
 
-		if(YSTRUE==atLeastSomethingIsAssigned && YSTRUE==ctlAssign.usePovHatSwitch && YSTRUE==joy[i].pov)
+		if (YSTRUE == atLeastSomethingIsAssigned && YSTRUE == ctlAssign.usePovHatSwitch && YSTRUE == joy[i].pov)
 		{
-			if(YsAbs(joy[i].povAngle)<YsTolerance)
+			if (YsAbs(joy[i].povAngle) < YsTolerance)
 			{
-				viewHdg=0.0;
-				viewPch=YsPi/2.0;
+				viewHdg = 0.0;
+				viewPch = YsPi / 2.0;
 			}
 			else
 			{
-				viewHdg=-joy[i].povAngle;
+				viewHdg = -joy[i].povAngle;
 			}
-			pov=(int)((joy[i].povAngle+YsPi/8.0)/(YsPi/4.0))&7;
+			pov = (int)((joy[i].povAngle + YsPi / 8.0) / (YsPi / 4.0)) & 7;
 			pov++;
 		}
 	}
 
 	// viewHdg, viewPch may be overridden in SetControlAxis
 	// It may happen if POV is explicitly specified in ctlassign.cfg
-	double ctlViewX=0.0;
-	double ctlViewY=0.0;
-	if(PollControlAxis(ctlAssign,ctlViewX,YSTRUE,YSTRUE,FSAXF_POVX,joy)==YSTRUE)
+	double ctlViewX = 0.0;
+	double ctlViewY = 0.0;
+	if (PollControlAxis(ctlAssign, ctlViewX, YSTRUE, YSTRUE, FSAXF_POVX, joy) == YSTRUE)
 	{
-		viewHdg=ctlViewX*YsPi/2.0;
+		viewHdg = ctlViewX * YsPi / 2.0;
 	}
-	if(PollControlAxis(ctlAssign,ctlViewX,YSTRUE,YSTRUE,FSAXF_POVX_180DEG,joy)==YSTRUE)
+	if (PollControlAxis(ctlAssign, ctlViewX, YSTRUE, YSTRUE, FSAXF_POVX_180DEG, joy) == YSTRUE)
 	{
-		viewHdg=ctlViewX*YsPi;
+		viewHdg = ctlViewX * YsPi;
 	}
-	if(PollControlAxis(ctlAssign,ctlViewY,YSTRUE,YSTRUE,FSAXF_POVY,joy)==YSTRUE)
+	if (PollControlAxis(ctlAssign, ctlViewY, YSTRUE, YSTRUE, FSAXF_POVY, joy) == YSTRUE)
 	{
-		viewPch=ctlViewY*YsPi/2.0;
+		viewPch = ctlViewY * YsPi / 2.0;
 	}
 
-                                      // defRev  2side
-	SetControlAxis(ctlAssign,ctlElevator,YSFALSE,YSTRUE ,ctlAssign.deadZoneElevator,FSAXF_ELEVATOR,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlAileron, YSTRUE, YSTRUE ,ctlAssign.deadZoneAileron,FSAXF_AILERON, pJoy,joy);
-	if(SetControlAxis(ctlAssign,ctlThrottle,YSTRUE,YSFALSE,0.0,FSAXF_THROTTLE,pJoy,joy)==YSTRUE)
+	// defRev  2side
+	SetControlAxis(ctlAssign, ctlElevator, YSFALSE, YSTRUE, ctlAssign.deadZoneElevator, FSAXF_ELEVATOR, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlAileron, YSTRUE, YSTRUE, ctlAssign.deadZoneAileron, FSAXF_AILERON, pJoy, joy);
+	if (SetControlAxis(ctlAssign, ctlThrottle, YSTRUE, YSFALSE, 0.0, FSAXF_THROTTLE, pJoy, joy) == YSTRUE)
 	{
-		if(hasAb==YSTRUE)
+		if (hasAb == YSTRUE)
 		{
-			if(ctlThrottle<0.6)
+			if (ctlThrottle < 0.6)
 			{
-				ctlThrottle=ctlThrottle/0.6;
-				ctlAb=YSFALSE;
+				ctlThrottle = ctlThrottle / 0.6;
+				ctlAb = YSFALSE;
 			}
 			else
 			{
-				ctlAb=YSTRUE;
+				ctlAb = YSTRUE;
 			}
 		}
 		else
 		{
-			ctlAb=YSFALSE;
+			ctlAb = YSFALSE;
 		}
 	}
-	SetControlAxis(ctlAssign,ctlPropeller,YSTRUE,YSFALSE,0.0,FSAXF_PROPELLER,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlRudder, YSTRUE, YSTRUE ,ctlAssign.deadZoneRudder, FSAXF_RUDDER,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlFlap,   YSFALSE,YSFALSE,0.0,FSAXF_FLAP,  pJoy,joy);
-	SetControlAxis(ctlAssign,ctlGear,   YSFALSE,YSFALSE,0.0,FSAXF_LANDINGGEAR,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlElvTrim,YSFALSE,YSTRUE ,0.0,FSAXF_TRIM,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlThrVec ,YSFALSE,YSFALSE,0.0,FSAXF_NOZZLE,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlVgw    ,YSFALSE,YSFALSE,0.0,FSAXF_VGW,pJoy,joy);
+	SetControlAxis(ctlAssign, ctlPropeller, YSTRUE, YSFALSE, 0.0, FSAXF_PROPELLER, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlRudder, YSTRUE, YSTRUE, ctlAssign.deadZoneRudder, FSAXF_RUDDER, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlFlap, YSFALSE, YSFALSE, 0.0, FSAXF_FLAP, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlGear, YSFALSE, YSFALSE, 0.0, FSAXF_LANDINGGEAR, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlElvTrim, YSFALSE, YSTRUE, 0.0, FSAXF_TRIM, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlThrVec, YSFALSE, YSFALSE, 0.0, FSAXF_NOZZLE, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlVgw, YSFALSE, YSFALSE, 0.0, FSAXF_VGW, pJoy, joy);
 
-	SetControlAxis(ctlAssign,ctlSpoiler,YSTRUE ,YSFALSE,0.0,FSAXF_SPOILERBRAKE,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlBrake  ,YSTRUE ,YSFALSE,0.0,FSAXF_SPOILERBRAKE,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlSpoiler,YSTRUE ,YSFALSE,0.0,FSAXF_SPOILER,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlBrake  ,YSTRUE ,YSFALSE,0.0,FSAXF_BRAKE,pJoy,joy);
+	SetControlAxis(ctlAssign, ctlSpoiler, YSTRUE, YSFALSE, 0.0, FSAXF_SPOILERBRAKE, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlBrake, YSTRUE, YSFALSE, 0.0, FSAXF_SPOILERBRAKE, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlSpoiler, YSTRUE, YSFALSE, 0.0, FSAXF_SPOILER, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlBrake, YSTRUE, YSFALSE, 0.0, FSAXF_BRAKE, pJoy, joy);
 
-	SetControlAxis(ctlAssign,ctlTurretHdg,YSTRUE,YSTRUE,0.0,FSAXF_TURRETH,pJoy,joy);
-	SetControlAxis(ctlAssign,ctlTurretPch,YSTRUE,YSTRUE,0.0,FSAXF_TURRETP,pJoy,joy);
+	SetControlAxis(ctlAssign, ctlTurretHdg, YSTRUE, YSTRUE, 0.0, FSAXF_TURRETH, pJoy, joy);
+	SetControlAxis(ctlAssign, ctlTurretPch, YSTRUE, YSTRUE, 0.0, FSAXF_TURRETP, pJoy, joy);
 
 
-	if(ctlAssign.IsButtonPressed(FSBTF_VGWEXTEND,joy)==YSTRUE)
+	if (ctlAssign.IsButtonPressed(FSBTF_VGWEXTEND, joy) == YSTRUE)
 	{
-		ctlVgw=1.0;
-		ctlAutoVgw=YSFALSE;
+		ctlVgw = 1.0;
+		ctlAutoVgw = YSFALSE;
 	}
-	else if(ctlAssign.IsButtonPressed(FSBTF_VGWRETRACT,joy)==YSTRUE)
+	else if (ctlAssign.IsButtonPressed(FSBTF_VGWRETRACT, joy) == YSTRUE)
 	{
-		ctlVgw=0.0;
-		ctlAutoVgw=YSFALSE;
-	}
-	else
-	{
-		ctlAutoVgw=YSTRUE;
-	}
-
-	if(ctlAssign.IsButtonPressed(FSBTF_REVERSETHRUST,joy)==YSTRUE)
-	{
-		ctlThrRev=1.0;
+		ctlVgw = 0.0;
+		ctlAutoVgw = YSFALSE;
 	}
 	else
 	{
-		ctlThrRev=0.0;
+		ctlAutoVgw = YSTRUE;
 	}
 
-	if(brakeHold!=ctlAssign.IsButtonPressed(FSBTF_BRAKEHOLD,joy))
+	if (ctlAssign.IsButtonPressed(FSBTF_REVERSETHRUST, joy) == YSTRUE)
+	{
+		ctlThrRev = 1.0;
+	}
+	else
+	{
+		ctlThrRev = 0.0;
+	}
+
+	if (brakeHold != ctlAssign.IsButtonPressed(FSBTF_BRAKEHOLD, joy))
 	{
 		YsFlip(brakeHold);
-		ctlBrake=(brakeHold==YSTRUE ? 1.0 : 0.0);
+		ctlBrake = (brakeHold == YSTRUE ? 1.0 : 0.0);
 	}
-	if(spoilerHold!=ctlAssign.IsButtonPressed(FSBTF_SPOILERHOLD,joy))
+	if (spoilerHold != ctlAssign.IsButtonPressed(FSBTF_SPOILERHOLD, joy))
 	{
 		YsFlip(spoilerHold);
-		ctlSpoiler=(spoilerHold==YSTRUE ? 1.0 : 0.0);
+		ctlSpoiler = (spoilerHold == YSTRUE ? 1.0 : 0.0);
 	}
 
 
-	int vx,vy,vz;
+	int vx, vy, vz;
 	YsVec3 viewVec;
 	YsAtt3 viewAtt;
-	vx=0;
-	vy=0;
-	vz=0;
+	vx = 0;
+	vy = 0;
+	vz = 0;
 
-	if(ctlAssign.IsButtonPressed(FSBTF_LOOKFORWARD,joy)==YSTRUE)
+	if (ctlAssign.IsButtonPressed(FSBTF_LOOKFORWARD, joy) == YSTRUE)
 	{
-		vz+=1;
-		pov=1;
+		vz += 1;
+		pov = 1;
 	}
-	if(ctlAssign.IsButtonPressed(FSBTF_LOOKBACK,joy)==YSTRUE)
+	if (ctlAssign.IsButtonPressed(FSBTF_LOOKBACK, joy) == YSTRUE)
 	{
-		vz-=1;
-		pov=5;
+		vz -= 1;
+		pov = 5;
 	}
-	if(ctlAssign.IsButtonPressed(FSBTF_LOOKLEFT,joy)==YSTRUE)
+	if (ctlAssign.IsButtonPressed(FSBTF_LOOKLEFT, joy) == YSTRUE)
 	{
-		vx-=1;
-		pov=7;
+		vx -= 1;
+		pov = 7;
 	}
-	if(ctlAssign.IsButtonPressed(FSBTF_LOOKRIGHT,joy)==YSTRUE)
+	if (ctlAssign.IsButtonPressed(FSBTF_LOOKRIGHT, joy) == YSTRUE)
 	{
-		vx+=1;
-		pov=3;
+		vx += 1;
+		pov = 3;
 	}
-	if(ctlAssign.IsButtonPressed(FSBTF_LOOKUP,joy)==YSTRUE)
+	if (ctlAssign.IsButtonPressed(FSBTF_LOOKUP, joy) == YSTRUE)
 	{
-		vy+=1;
+		vy += 1;
 	}
-	if(ctlAssign.IsButtonPressed(FSBTF_LOOKDOWN,joy)==YSTRUE)
+	if (ctlAssign.IsButtonPressed(FSBTF_LOOKDOWN, joy) == YSTRUE)
 	{
-		vy-=1;
+		vy -= 1;
 	}
 
-	if(vx!=0 || vy!=0 || vz!=0)
+	if (vx != 0 || vy != 0 || vz != 0)
 	{
-		viewVec.Set(vx,vy,vz);
-		viewAtt.Set(0.0,0.0,0.0);
+		viewVec.Set(vx, vy, vz);
+		viewAtt.Set(0.0, 0.0, 0.0);
 		viewAtt.SetForwardVector(viewVec);
-		viewHdg=viewAtt.h();
-		viewPch=viewAtt.p();
+		viewHdg = viewAtt.h();
+		viewPch = viewAtt.p();
 	}
 
 	return YSOK;
 }
 
 YSBOOL FsFlightControl::SetControlAxis
-   (const FsControlAssignment &ctlAssign,
-    double &newValue,YSBOOL defReverse,YSBOOL twoSide,const double &deadZone,FSAXISFUNCTION fnc,
-    FsJoystick pJoy[FsMaxNumJoystick],FsJoystick joy[FsMaxNumJoystick])
+(const FsControlAssignment& ctlAssign,
+	double& newValue, YSBOOL defReverse, YSBOOL twoSide, const double& deadZone, FSAXISFUNCTION fnc,
+	FsJoystick pJoy[FsMaxNumJoystick], FsJoystick joy[FsMaxNumJoystick])
 {
-	int joyId,joyAxs;
+	int joyId, joyAxs;
 	YSBOOL reverse;
 
-	if(ctlAssign.FindAxisByFunction(joyId,joyAxs,reverse,fnc)==YSOK)
+	if (ctlAssign.FindAxisByFunction(joyId, joyAxs, reverse, fnc) == YSOK)
 	{
-		double pAxs,axs;
-		pAxs=pJoy[joyId].axs[joyAxs];
-		axs=joy[joyId].axs[joyAxs];
+		double pAxs, axs;
+		pAxs = pJoy[joyId].axs[joyAxs];
+		axs = joy[joyId].axs[joyAxs];
 
-		if(YsAbs(pAxs-axs)>YsTolerance)
+		if (YsAbs(pAxs - axs) > YsTolerance)
 		{
-			if(reverse!=defReverse)
+			if (reverse != defReverse)
 			{
-				axs=1.0-axs;
+				axs = 1.0 - axs;
 			}
 
-			if(fnc!=FSAXF_TURRETH && fnc!=FSAXF_TURRETP)
+			if (fnc != FSAXF_TURRETH && fnc != FSAXF_TURRETP)
 			{
-				if(twoSide!=YSTRUE)
+				if (twoSide != YSTRUE)
 				{
-					axs=YsBound(Margin(axs,deadZone),0.0,1.0);
+					axs = YsBound(Margin(axs, deadZone), 0.0, 1.0);
 				}
 				else
 				{
-					axs=YsBound(Margin((axs-0.5)*2.0,deadZone),-1.0,1.0);
+					axs = YsBound(Margin((axs - 0.5) * 2.0, deadZone), -1.0, 1.0);
 				}
 			}
 			else
 			{
-				if(twoSide!=YSTRUE)
+				if (twoSide != YSTRUE)
 				{
-					axs=YsBound(axs,0.0,1.0);
+					axs = YsBound(axs, 0.0, 1.0);
 				}
 				else
 				{
-					axs=YsBound((axs-0.5)*2.0,-1.0,1.0);
+					axs = YsBound((axs - 0.5) * 2.0, -1.0, 1.0);
 				}
 			}
 
-			newValue=axs;
+			newValue = axs;
 
 			/* if(useDeadZone==YSTRUE)
 			{
@@ -873,193 +873,193 @@ YSBOOL FsFlightControl::SetControlAxis
 }
 
 YSBOOL FsFlightControl::PollControlAxis
-   (const FsControlAssignment &ctlAssign,
-    double &newValue,YSBOOL defReverse,YSBOOL twoSide,FSAXISFUNCTION fnc,
-    const FsJoystick joy[FsMaxNumJoystick]) const
+(const FsControlAssignment& ctlAssign,
+	double& newValue, YSBOOL defReverse, YSBOOL twoSide, FSAXISFUNCTION fnc,
+	const FsJoystick joy[FsMaxNumJoystick]) const
 {
-	int joyId,joyAxs;
+	int joyId, joyAxs;
 	YSBOOL reverse;
 
-	if(ctlAssign.FindAxisByFunction(joyId,joyAxs,reverse,fnc)==YSOK)
+	if (ctlAssign.FindAxisByFunction(joyId, joyAxs, reverse, fnc) == YSOK)
 	{
 		double axs;
-		axs=joy[joyId].axs[joyAxs];
+		axs = joy[joyId].axs[joyAxs];
 
-		if(reverse!=defReverse)
+		if (reverse != defReverse)
 		{
-			axs=1.0-axs;
+			axs = 1.0 - axs;
 		}
 
-		if(twoSide!=YSTRUE)
+		if (twoSide != YSTRUE)
 		{
-			axs=YsBound(Margin(axs,0.03),0.0,1.0);
+			axs = YsBound(Margin(axs, 0.03), 0.0, 1.0);
 		}
 		else
 		{
-			axs=YsBound(Margin((axs-0.5)*2.0,0.03),-1.0,1.0);
+			axs = YsBound(Margin((axs - 0.5) * 2.0, 0.03), -1.0, 1.0);
 		}
-		newValue=axs;
+		newValue = axs;
 		return YSTRUE;
 	}
 	return YSFALSE;
 }
 
-void FsFlightControl::Move(FsControlAssignment &ctlAssign,const FsJoystick joy[FsMaxNumJoystick],const double &dt)
+void FsFlightControl::Move(FsControlAssignment& ctlAssign, const FsJoystick joy[FsMaxNumJoystick], const double& dt)
 {
-	int joyId,joyAxs;
+	int joyId, joyAxs;
 	YSBOOL reverse;
-	if(ctlAssign.FindAxisByFunction(joyId,joyAxs,reverse,FSAXF_AILERON)!=YSOK)
+	if (ctlAssign.FindAxisByFunction(joyId, joyAxs, reverse, FSAXF_AILERON) != YSOK)
 	{
-		if(ctlAileron>0.0)
+		if (ctlAileron > 0.0)
 		{
-			ctlAileron-=0.1*dt;
-			if(ctlAileron<0.0)
+			ctlAileron -= 0.1 * dt;
+			if (ctlAileron < 0.0)
 			{
-				ctlAileron=0.0;
+				ctlAileron = 0.0;
 			}
 		}
-		else if(ctlAileron<0.0)
+		else if (ctlAileron < 0.0)
 		{
-			ctlAileron+=0.1*dt;
-			if(ctlAileron>0.0)
+			ctlAileron += 0.1 * dt;
+			if (ctlAileron > 0.0)
 			{
-				ctlAileron=0.0;
+				ctlAileron = 0.0;
 			}
 		}
 	}
 
 	double axs;
-	if(YSTRUE==PollControlAxis(ctlAssign,axs,YSFALSE,YSTRUE,FSAXF_THROTTLE_UPDOWN,joy))
+	if (YSTRUE == PollControlAxis(ctlAssign, axs, YSFALSE, YSTRUE, FSAXF_THROTTLE_UPDOWN, joy))
 	{
-		ctlThrottle+=axs*dt;
-		if(YSTRUE==hasAb)
+		ctlThrottle += axs * dt;
+		if (YSTRUE == hasAb)
 		{
-			if(1.0<ctlThrottle)
+			if (1.0 < ctlThrottle)
 			{
-				if(YSTRUE!=ctlAb)
+				if (YSTRUE != ctlAb)
 				{
-					ctlThrottle=0.6;
-					ctlAb=YSTRUE;
+					ctlThrottle = 0.6;
+					ctlAb = YSTRUE;
 				}
 				else
 				{
-					ctlThrottle=1.0;
+					ctlThrottle = 1.0;
 				}
 			}
-			else if(ctlThrottle<0.6 && YSTRUE==ctlAb)
+			else if (ctlThrottle < 0.6 && YSTRUE == ctlAb)
 			{
-				ctlThrottle=1.0;
-				ctlAb=YSFALSE;
+				ctlThrottle = 1.0;
+				ctlAb = YSFALSE;
 			}
-			else if(ctlThrottle<0.0)
+			else if (ctlThrottle < 0.0)
 			{
-				ctlThrottle=0.0;
+				ctlThrottle = 0.0;
 			}
 		}
 		else
 		{
-			if(1.0<ctlThrottle)
+			if (1.0 < ctlThrottle)
 			{
-				ctlThrottle=1.0;
+				ctlThrottle = 1.0;
 			}
-			else if(ctlThrottle<0.0)
+			else if (ctlThrottle < 0.0)
 			{
-				ctlThrottle=0.0;
+				ctlThrottle = 0.0;
 			}
 		}
 	}
 }
 
-double FsFlightControl::Margin(double org,const double deadZone) const
+double FsFlightControl::Margin(double org, const double deadZone) const
 {
-	if(org>deadZone)
+	if (org > deadZone)
 	{
-		org=(org-deadZone)/(1.0-deadZone);
+		org = (org - deadZone) / (1.0 - deadZone);
 	}
-	else if(org<-deadZone)
+	else if (org < -deadZone)
 	{
-		org=(org+deadZone)/(1.0-deadZone);
+		org = (org + deadZone) / (1.0 - deadZone);
 	}
 	else
 	{
-		org=0.0;
+		org = 0.0;
 	}
-	return org*fabs(org);
+	return org * fabs(org);
 }
 
 
 
-YSRESULT FsFlightControl::VerifyAndFixJoystickAxisAssignment(FsControlAssignment &ctlAssign)
+YSRESULT FsFlightControl::VerifyAndFixJoystickAxisAssignment(FsControlAssignment& ctlAssign)
 {
-	YSRESULT res=YSOK;  // Return YSERR if joystick axis is missing.
+	YSRESULT res = YSOK;  // Return YSERR if joystick axis is missing.
 
-	int joyId,joyAxs;
-	YSBOOL needRemap=YSFALSE;
+	int joyId, joyAxs;
+	YSBOOL needRemap = YSFALSE;
 	YSBOOL reverse;
 
-	if(ctlAssign.FindAxisByFunction(joyId,joyAxs,reverse,FSAXF_ELEVATOR)==YSOK && joyId!=FsMouseJoyId)
+	if (ctlAssign.FindAxisByFunction(joyId, joyAxs, reverse, FSAXF_ELEVATOR) == YSOK && joyId != FsMouseJoyId)
 	{
-		if(FsIsJoystickAxisAvailable(joyId,joyAxs)!=YSTRUE)
+		if (FsIsJoystickAxisAvailable(joyId, joyAxs) != YSTRUE)
 		{
-			res=YSERR;
-			if(ctlAssign.FindKeyByFunction(FSBTF_ELEVATORUP)==FSKEY_NULL ||
-			   ctlAssign.FindKeyByFunction(FSBTF_ELEVATORDOWN)==FSKEY_NULL)
+			res = YSERR;
+			if (ctlAssign.FindKeyByFunction(FSBTF_ELEVATORUP) == FSKEY_NULL ||
+				ctlAssign.FindKeyByFunction(FSBTF_ELEVATORDOWN) == FSKEY_NULL)
 			{
-				ctlAssign.DeleteAxis(joyId,joyAxs);
-				ctlAssign.DeleteAxis(FsMouseJoyId,1);  // 2005/06/29
+				ctlAssign.DeleteAxis(joyId, joyAxs);
+				ctlAssign.DeleteAxis(FsMouseJoyId, 1);  // 2005/06/29
 
-				ctlAssign.AddAxisAssignment(FsMouseJoyId,1,FSAXF_ELEVATOR,YSFALSE);
-				ctlAssign.AddTriggerAssignment(FsMouseJoyId,0,FSBTF_FIREWEAPON);
-				ctlAssign.AddTriggerAssignment(FsMouseJoyId,1,FSBTF_SELECTWEAPON);
-				ctlAssign.AddTriggerAssignment(FsMouseJoyId,2,FSBTF_RADAR);
+				ctlAssign.AddAxisAssignment(FsMouseJoyId, 1, FSAXF_ELEVATOR, YSFALSE);
+				ctlAssign.AddTriggerAssignment(FsMouseJoyId, 0, FSBTF_FIREWEAPON);
+				ctlAssign.AddTriggerAssignment(FsMouseJoyId, 1, FSBTF_SELECTWEAPON);
+				ctlAssign.AddTriggerAssignment(FsMouseJoyId, 2, FSBTF_RADAR);
 
 				ctlAssign.AddKeyAssignment(FSKEY_LEFT, FSBTF_TURRETLEFT);
-				ctlAssign.AddKeyAssignment(FSKEY_RIGHT,FSBTF_TURRETRIGHT);
-				ctlAssign.AddKeyAssignment(FSKEY_UP,   FSBTF_TURRETUP);
+				ctlAssign.AddKeyAssignment(FSKEY_RIGHT, FSBTF_TURRETRIGHT);
+				ctlAssign.AddKeyAssignment(FSKEY_UP, FSBTF_TURRETUP);
 				ctlAssign.AddKeyAssignment(FSKEY_DOWN, FSBTF_TURRETDOWN);
 
-				needRemap=YSTRUE;
+				needRemap = YSTRUE;
 			}
 		}
 	}
 
-	if(ctlAssign.FindAxisByFunction(joyId,joyAxs,reverse,FSAXF_AILERON)==YSOK && joyId!=FsMouseJoyId)
+	if (ctlAssign.FindAxisByFunction(joyId, joyAxs, reverse, FSAXF_AILERON) == YSOK && joyId != FsMouseJoyId)
 	{
-		if(FsIsJoystickAxisAvailable(joyId,joyAxs)!=YSTRUE)
+		if (FsIsJoystickAxisAvailable(joyId, joyAxs) != YSTRUE)
 		{
-			res=YSERR;
-			if(ctlAssign.FindKeyByFunction(FSBTF_AILERONLEFT)==FSKEY_NULL ||
-			   ctlAssign.FindKeyByFunction(FSBTF_AILERONRIGHT)==FSKEY_NULL)
+			res = YSERR;
+			if (ctlAssign.FindKeyByFunction(FSBTF_AILERONLEFT) == FSKEY_NULL ||
+				ctlAssign.FindKeyByFunction(FSBTF_AILERONRIGHT) == FSKEY_NULL)
 			{
-				ctlAssign.DeleteAxis(joyId,joyAxs);
-				ctlAssign.DeleteAxis(FsMouseJoyId,0);  // 2005/06/29
+				ctlAssign.DeleteAxis(joyId, joyAxs);
+				ctlAssign.DeleteAxis(FsMouseJoyId, 0);  // 2005/06/29
 
-				ctlAssign.AddAxisAssignment(FsMouseJoyId,0,FSAXF_AILERON,YSFALSE);
-				ctlAssign.AddTriggerAssignment(FsMouseJoyId,0,FSBTF_FIREWEAPON);
-				ctlAssign.AddTriggerAssignment(FsMouseJoyId,1,FSBTF_SELECTWEAPON);
-				ctlAssign.AddTriggerAssignment(FsMouseJoyId,2,FSBTF_RADAR);
+				ctlAssign.AddAxisAssignment(FsMouseJoyId, 0, FSAXF_AILERON, YSFALSE);
+				ctlAssign.AddTriggerAssignment(FsMouseJoyId, 0, FSBTF_FIREWEAPON);
+				ctlAssign.AddTriggerAssignment(FsMouseJoyId, 1, FSBTF_SELECTWEAPON);
+				ctlAssign.AddTriggerAssignment(FsMouseJoyId, 2, FSBTF_RADAR);
 
-				needRemap=YSTRUE;
+				needRemap = YSTRUE;
 			}
 		}
 	}
 
-	for(int i=0; i<(int)FSAXF_NUMAXISFUNCTION; i++)
+	for (int i = 0; i < (int)FSAXF_NUMAXISFUNCTION; i++)
 	{
-		if(i!=(int)FSAXF_ELEVATOR &&
-		   i!=(int)FSAXF_AILERON &&
-		   ctlAssign.FindAxisByFunction(joyId,joyAxs,reverse,(FSAXISFUNCTION)i)==YSOK)
+		if (i != (int)FSAXF_ELEVATOR &&
+			i != (int)FSAXF_AILERON &&
+			ctlAssign.FindAxisByFunction(joyId, joyAxs, reverse, (FSAXISFUNCTION)i) == YSOK)
 		{
-			if(FsIsJoystickAxisAvailable(joyId,joyAxs)!=YSTRUE)
+			if (FsIsJoystickAxisAvailable(joyId, joyAxs) != YSTRUE)
 			{
 				ctlAssign.DeleteAxisFunction((FSAXISFUNCTION)i);
-				ctlAssign.DeleteAxis(joyId,joyAxs);
-				needRemap=YSTRUE;
+				ctlAssign.DeleteAxis(joyId, joyAxs);
+				needRemap = YSTRUE;
 			}
 		}
 	}
 
-	if(needRemap==YSTRUE)
+	if (needRemap == YSTRUE)
 	{
 		ctlAssign.BuildMapping();
 	}
@@ -1071,104 +1071,104 @@ YSRESULT FsFlightControl::VerifyAndFixJoystickAxisAssignment(FsControlAssignment
 
 
 
-static FsVisualDnm *stickDnm=NULL;
-static FsVisualDnm *throttleDnm=NULL;
-static FsVisualDnm *rudderDnm=NULL;
+static FsVisualDnm* stickDnm = NULL;
+static FsVisualDnm* throttleDnm = NULL;
+static FsVisualDnm* rudderDnm = NULL;
 
 void FsFlightControl::PrepareJoystickPolygonModel(void)
 {
-	if(stickDnm==NULL)
+	if (stickDnm == NULL)
 	{
-		stickDnm=new FsVisualDnm;
-		if(stickDnm->Load(L"misc/stick.dnm")!=YSOK)
+		stickDnm = new FsVisualDnm;
+		if (stickDnm->Load(L"misc/stick.dnm") != YSOK)
 		{
 			delete stickDnm;
-			stickDnm=NULL;
+			stickDnm = NULL;
 		}
 	}
 
-	if(throttleDnm==NULL)
+	if (throttleDnm == NULL)
 	{
-		throttleDnm=new FsVisualDnm;
-		if(throttleDnm->Load(L"misc/throttle.dnm")!=YSOK)
+		throttleDnm = new FsVisualDnm;
+		if (throttleDnm->Load(L"misc/throttle.dnm") != YSOK)
 		{
 			delete throttleDnm;
-			throttleDnm=NULL;
+			throttleDnm = NULL;
 		}
 	}
 
-	if(rudderDnm==NULL)
+	if (rudderDnm == NULL)
 	{
-		rudderDnm=new FsVisualDnm;
-		if(rudderDnm->Load(L"misc/rudder.dnm")!=YSOK)
+		rudderDnm = new FsVisualDnm;
+		if (rudderDnm->Load(L"misc/rudder.dnm") != YSOK)
 		{
 			delete rudderDnm;
-			rudderDnm=NULL;
+			rudderDnm = NULL;
 		}
 	}
 }
 
-void FsFlightControl::DrawJoystick(const YsVec3 &pos,const YsAtt3 &att) const
+void FsFlightControl::DrawJoystick(const YsVec3& pos, const YsAtt3& att) const
 {
 	PrepareJoystickPolygonModel();
-	if(stickDnm!=NULL)
+	if (stickDnm != NULL)
 	{
-		if(ctlElevator>0.0)
+		if (ctlElevator > 0.0)
 		{
-			stickDnm->SetState(6,0,1,ctlElevator);
+			stickDnm->SetState(6, 0, 1, ctlElevator);
 		}
 		else
 		{
-			stickDnm->SetState(6,0,2,-ctlElevator);
+			stickDnm->SetState(6, 0, 2, -ctlElevator);
 		}
-		if(ctlAileron>0.0)
+		if (ctlAileron > 0.0)
 		{
-			stickDnm->SetState(7,0,1,ctlAileron);
+			stickDnm->SetState(7, 0, 1, ctlAileron);
 		}
 		else
 		{
-			stickDnm->SetState(7,0,2,-ctlAileron);
+			stickDnm->SetState(7, 0, 2, -ctlAileron);
 		}
 		stickDnm->CacheTransformation();
-		stickDnm->Draw(pos,att);
+		stickDnm->Draw(pos, att);
 	}
 }
 
-void FsFlightControl::DrawThrottle(const YsVec3 &pos,const YsAtt3 &att) const
+void FsFlightControl::DrawThrottle(const YsVec3& pos, const YsAtt3& att) const
 {
 	PrepareJoystickPolygonModel();
-	if(throttleDnm!=NULL)
+	if (throttleDnm != NULL)
 	{
-		throttleDnm->SetState(0,0,1,ctlThrottle);
+		throttleDnm->SetState(0, 0, 1, ctlThrottle);
 		throttleDnm->CacheTransformation();;
-		throttleDnm->Draw(pos,att);
+		throttleDnm->Draw(pos, att);
 	}
 }
 
-void FsFlightControl::DrawRudder(const YsVec3 &pos,const YsAtt3 &att) const
+void FsFlightControl::DrawRudder(const YsVec3& pos, const YsAtt3& att) const
 {
 	PrepareJoystickPolygonModel();
-	if(rudderDnm!=NULL)
+	if (rudderDnm != NULL)
 	{
-		if(ctlRudder>0.0)
+		if (ctlRudder > 0.0)
 		{
-			rudderDnm->SetState(8,0,1,ctlRudder);
+			rudderDnm->SetState(8, 0, 1, ctlRudder);
 		}
 		else
 		{
-			rudderDnm->SetState(8,0,2,-ctlRudder);
+			rudderDnm->SetState(8, 0, 2, -ctlRudder);
 		}
 		rudderDnm->CacheTransformation();
-		rudderDnm->Draw(pos,att);
+		rudderDnm->Draw(pos, att);
 	}
 }
 
-YSRESULT FsFlightControl::CenterJoystick(FsControlAssignment &ctlAssign)
+YSRESULT FsFlightControl::CenterJoystick(FsControlAssignment& ctlAssign)
 {
 	FsCenterJoystick centerJoystick;
-	centerJoystick.Initialize(this,&ctlAssign,0);
+	centerJoystick.Initialize(this, &ctlAssign, 0);
 
-	while(FsCenterJoystick::OVER!=centerJoystick.state)
+	while (FsCenterJoystick::OVER != centerJoystick.state)
 	{
 		centerJoystick.RunOneStep();
 	}
@@ -1181,25 +1181,25 @@ YSRESULT FsFlightControl::CenterJoystick(FsControlAssignment &ctlAssign)
 struct FsAxisFunctionString
 {
 	FSAXISFUNCTION fnc;
-	const char *str;
-	const char *label;
+	const char* str;
+	const char* label;
 };
 
 struct FsButtonFunctionString
 {
 	FSBUTTONFUNCTION fnc;
-	const char *str;
-	const char *label;
+	const char* str;
+	const char* label;
 };
 
 struct FsKeyString
 {
 	int keyCode;
-	const char *str;
-	const char *label;
+	const char* str;
+	const char* label;
 };
 
-static struct FsAxisFunctionString fsAxisFuncStr[]=
+static struct FsAxisFunctionString fsAxisFuncStr[] =
 {
 	{FSAXF_NULL,                 "NULL",                "NULL"},
 	{FSAXF_AILERON,              "AILERON",             "Aileron"},
@@ -1223,7 +1223,7 @@ static struct FsAxisFunctionString fsAxisFuncStr[]=
 	{FSAXF_THROTTLE_UPDOWN,      "THROTTLEUPDOWN",      "Increase/Decrease Throttle"},
 };
 
-static struct FsButtonFunctionString fsButtonFuncStr[]=
+static struct FsButtonFunctionString fsButtonFuncStr[] =
 {
 	{FSBTF_NULL,                 "NULL",                 "NULL"},
 	{FSBTF_ELEVATORUP,           "ELEVATORUP",           "Elevator Up"},
@@ -1346,7 +1346,7 @@ static struct FsButtonFunctionString fsButtonFuncStr[]=
 	{FSBTF_SWITCHVIEWTARGET,     "SWITCHVIEWTARGET",     "Switch View Target"}
 };
 
-static struct FsKeyString fsKeyString[]=
+static struct FsKeyString fsKeyString[] =
 {
 	{FSKEY_SPACE,        "SPACE",        "Space"},
 	{FSKEY_0,            "0",            "0"},
@@ -1448,12 +1448,12 @@ static struct FsKeyString fsKeyString[]=
 	{FSKEY_WHEELDOWN,    "WHEELDOWN",    "Mouse Wheel Down"}
 };
 
-const char *FsGetAxisFuncLabel(FSAXISFUNCTION fnc)
+const char* FsGetAxisFuncLabel(FSAXISFUNCTION fnc)
 {
 	int i;
-	for(i=0; i<sizeof(fsAxisFuncStr)/sizeof(struct FsAxisFunctionString); i++)
+	for (i = 0; i < sizeof(fsAxisFuncStr) / sizeof(struct FsAxisFunctionString); i++)
 	{
-		if(fsAxisFuncStr[i].fnc==fnc)
+		if (fsAxisFuncStr[i].fnc == fnc)
 		{
 			return fsAxisFuncStr[i].label;
 		}
@@ -1461,12 +1461,12 @@ const char *FsGetAxisFuncLabel(FSAXISFUNCTION fnc)
 	return NULL;
 }
 
-const char *FsGetAxisFuncString(FSAXISFUNCTION fnc)
+const char* FsGetAxisFuncString(FSAXISFUNCTION fnc)
 {
 	int i;
-	for(i=0; i<sizeof(fsAxisFuncStr)/sizeof(struct FsAxisFunctionString); i++)
+	for (i = 0; i < sizeof(fsAxisFuncStr) / sizeof(struct FsAxisFunctionString); i++)
 	{
-		if(fsAxisFuncStr[i].fnc==fnc)
+		if (fsAxisFuncStr[i].fnc == fnc)
 		{
 			return fsAxisFuncStr[i].str;
 		}
@@ -1474,12 +1474,12 @@ const char *FsGetAxisFuncString(FSAXISFUNCTION fnc)
 	return NULL;
 }
 
-const char *FsGetButtonFuncLabel(FSBUTTONFUNCTION fnc)
+const char* FsGetButtonFuncLabel(FSBUTTONFUNCTION fnc)
 {
 	int i;
-	for(i=0; i<sizeof(fsButtonFuncStr)/sizeof(struct FsButtonFunctionString); i++)
+	for (i = 0; i < sizeof(fsButtonFuncStr) / sizeof(struct FsButtonFunctionString); i++)
 	{
-		if(fsButtonFuncStr[i].fnc==fnc)
+		if (fsButtonFuncStr[i].fnc == fnc)
 		{
 			return fsButtonFuncStr[i].label;
 		}
@@ -1487,12 +1487,12 @@ const char *FsGetButtonFuncLabel(FSBUTTONFUNCTION fnc)
 	return NULL;
 }
 
-const char *FsGetButtonFuncString(FSBUTTONFUNCTION fnc)
+const char* FsGetButtonFuncString(FSBUTTONFUNCTION fnc)
 {
 	int i;
-	for(i=0; i<sizeof(fsButtonFuncStr)/sizeof(struct FsButtonFunctionString); i++)
+	for (i = 0; i < sizeof(fsButtonFuncStr) / sizeof(struct FsButtonFunctionString); i++)
 	{
-		if(fsButtonFuncStr[i].fnc==fnc)
+		if (fsButtonFuncStr[i].fnc == fnc)
 		{
 			return fsButtonFuncStr[i].str;
 		}
@@ -1500,12 +1500,12 @@ const char *FsGetButtonFuncString(FSBUTTONFUNCTION fnc)
 	return NULL;
 }
 
-const char *FsGetKeyLabel(int keyCode)
+const char* FsGetKeyLabel(int keyCode)
 {
 	int i;
-	for(i=0; i<sizeof(fsKeyString)/sizeof(struct FsKeyString); i++)
+	for (i = 0; i < sizeof(fsKeyString) / sizeof(struct FsKeyString); i++)
 	{
-		if(fsKeyString[i].keyCode==keyCode)
+		if (fsKeyString[i].keyCode == keyCode)
 		{
 			return fsKeyString[i].label;
 		}
@@ -1513,12 +1513,12 @@ const char *FsGetKeyLabel(int keyCode)
 	return NULL;
 }
 
-const char *FsGetKeyString(int keyCode)
+const char* FsGetKeyString(int keyCode)
 {
 	int i;
-	for(i=0; i<sizeof(fsKeyString)/sizeof(struct FsKeyString); i++)
+	for (i = 0; i < sizeof(fsKeyString) / sizeof(struct FsKeyString); i++)
 	{
-		if(fsKeyString[i].keyCode==keyCode)
+		if (fsKeyString[i].keyCode == keyCode)
 		{
 			return fsKeyString[i].str;
 		}
@@ -1529,9 +1529,9 @@ const char *FsGetKeyString(int keyCode)
 FSAXISFUNCTION FsGetAxisFuncFromString(const char str[])
 {
 	int i;
-	for(i=0; i<sizeof(fsAxisFuncStr)/sizeof(struct FsAxisFunctionString); i++)
+	for (i = 0; i < sizeof(fsAxisFuncStr) / sizeof(struct FsAxisFunctionString); i++)
 	{
-		if(strcmp(fsAxisFuncStr[i].str,str)==0)
+		if (strcmp(fsAxisFuncStr[i].str, str) == 0)
 		{
 			return fsAxisFuncStr[i].fnc;
 		}
@@ -1542,9 +1542,9 @@ FSAXISFUNCTION FsGetAxisFuncFromString(const char str[])
 FSBUTTONFUNCTION FsGetButtonFuncFromString(const char str[])
 {
 	int i;
-	for(i=0; i<sizeof(fsButtonFuncStr)/sizeof(struct FsButtonFunctionString); i++)
+	for (i = 0; i < sizeof(fsButtonFuncStr) / sizeof(struct FsButtonFunctionString); i++)
 	{
-		if(strcmp(fsButtonFuncStr[i].str,str)==0)
+		if (strcmp(fsButtonFuncStr[i].str, str) == 0)
 		{
 			return fsButtonFuncStr[i].fnc;
 		}
@@ -1555,9 +1555,9 @@ FSBUTTONFUNCTION FsGetButtonFuncFromString(const char str[])
 int FsGetKeycodeFromString(const char str[])
 {
 	int i;
-	for(i=0; i<sizeof(fsKeyString)/sizeof(struct FsKeyString); i++)
+	for (i = 0; i < sizeof(fsKeyString) / sizeof(struct FsKeyString); i++)
 	{
-		if(strcmp(fsKeyString[i].str,str)==0)
+		if (strcmp(fsKeyString[i].str, str) == 0)
 		{
 			return fsKeyString[i].keyCode;
 		}
@@ -1574,9 +1574,9 @@ FsControlAssignment::FsControlAssignment() :
 	trgAssignList(trgAssignAllocator),
 	keyAssignList(keyAssignAllocator)
 {
-	processNumberKey=YSTRUE;
-	checkKeyHolding=YSTRUE;
-	ignoreThisKeyHolding=FSKEY_NULL;
+	processNumberKey = YSTRUE;
+	checkKeyHolding = YSTRUE;
+	ignoreThisKeyHolding = FSKEY_NULL;
 	SetDefault(0);
 	BuildMapping();
 }
@@ -1591,9 +1591,9 @@ void FsControlAssignment::CleanUp(void)
 	trgAssignAllocator.CollectGarbage();
 	keyAssignAllocator.CollectGarbage();
 
-	processNumberKey=YSTRUE;
-	checkKeyHolding=YSTRUE;
-	ignoreThisKeyHolding=FSKEY_NULL;
+	processNumberKey = YSTRUE;
+	checkKeyHolding = YSTRUE;
+	ignoreThisKeyHolding = FSKEY_NULL;
 }
 
 void FsControlAssignment::CleanUpAxisAndButtonAssignment(void)
@@ -1602,8 +1602,8 @@ void FsControlAssignment::CleanUpAxisAndButtonAssignment(void)
 	trgAssignList.CleanUp();
 	axsAssignAllocator.CollectGarbage();
 	trgAssignAllocator.CollectGarbage();
-	checkKeyHolding=YSTRUE;
-	ignoreThisKeyHolding=FSKEY_NULL;
+	checkKeyHolding = YSTRUE;
+	ignoreThisKeyHolding = FSKEY_NULL;
 }
 
 void FsControlAssignment::SetDefault(int primaryJoyId)
@@ -1612,51 +1612,51 @@ void FsControlAssignment::SetDefault(int primaryJoyId)
 
 	SetDefaultKeyAssign();
 
-	AddAxisAssignment(primaryJoyId,0,FSAXF_AILERON,YSFALSE);
-	AddAxisAssignment(primaryJoyId,1,FSAXF_ELEVATOR,YSFALSE);
-	AddAxisAssignment(primaryJoyId,2,FSAXF_THROTTLE,YSFALSE);
-	AddAxisAssignment(primaryJoyId,3,FSAXF_RUDDER,YSFALSE);
+	AddAxisAssignment(primaryJoyId, 0, FSAXF_AILERON, YSFALSE);
+	AddAxisAssignment(primaryJoyId, 1, FSAXF_ELEVATOR, YSFALSE);
+	AddAxisAssignment(primaryJoyId, 2, FSAXF_THROTTLE, YSFALSE);
+	AddAxisAssignment(primaryJoyId, 3, FSAXF_RUDDER, YSFALSE);
 
-	AddAxisAssignment(FsMouseJoyId,0,FSAXF_TURRETH,YSFALSE);
-	AddAxisAssignment(FsMouseJoyId,1,FSAXF_TURRETP,YSFALSE);
+	AddAxisAssignment(FsMouseJoyId, 0, FSAXF_TURRETH, YSFALSE);
+	AddAxisAssignment(FsMouseJoyId, 1, FSAXF_TURRETP, YSFALSE);
 
-	AddTriggerAssignment(primaryJoyId,0,FSBTF_FIREWEAPON);
-	AddTriggerAssignment(primaryJoyId,1,FSBTF_SELECTWEAPON);
-	AddTriggerAssignment(primaryJoyId,2,FSBTF_RADAR);
-	AddTriggerAssignment(primaryJoyId,3,FSBTF_DISPENSEFLARE);
+	AddTriggerAssignment(primaryJoyId, 0, FSBTF_FIREWEAPON);
+	AddTriggerAssignment(primaryJoyId, 1, FSBTF_SELECTWEAPON);
+	AddTriggerAssignment(primaryJoyId, 2, FSBTF_RADAR);
+	AddTriggerAssignment(primaryJoyId, 3, FSBTF_DISPENSEFLARE);
 
-	deadZoneElevator=0.03;
-	deadZoneAileron=0.03;
-	deadZoneRudder=0.03;
-	usePovHatSwitch=YSTRUE;
+	deadZoneElevator = 0.03;
+	deadZoneAileron = 0.03;
+	deadZoneRudder = 0.03;
+	usePovHatSwitch = YSTRUE;
 }
 
 void FsControlAssignment::SetDefaultGamePad(int primaryJoyId)
 {
 	CleanUpAxisAndButtonAssignment();
 
-	AddAxisAssignment(primaryJoyId,0,FSAXF_AILERON,YSFALSE);
-	AddAxisAssignment(primaryJoyId,1,FSAXF_ELEVATOR,YSFALSE);
-	AddAxisAssignment(primaryJoyId,2,FSAXF_RUDDER,YSFALSE);
-	AddAxisAssignment(primaryJoyId,3,FSAXF_THROTTLE_UPDOWN,YSTRUE);
+	AddAxisAssignment(primaryJoyId, 0, FSAXF_AILERON, YSFALSE);
+	AddAxisAssignment(primaryJoyId, 1, FSAXF_ELEVATOR, YSFALSE);
+	AddAxisAssignment(primaryJoyId, 2, FSAXF_RUDDER, YSFALSE);
+	AddAxisAssignment(primaryJoyId, 3, FSAXF_THROTTLE_UPDOWN, YSTRUE);
 
-	AddAxisAssignment(FsMouseJoyId,0,FSAXF_TURRETH,YSFALSE);
-	AddAxisAssignment(FsMouseJoyId,1,FSAXF_TURRETP,YSFALSE);
+	AddAxisAssignment(FsMouseJoyId, 0, FSAXF_TURRETH, YSFALSE);
+	AddAxisAssignment(FsMouseJoyId, 1, FSAXF_TURRETP, YSFALSE);
 
-	AddTriggerAssignment(primaryJoyId,0,FSBTF_FIREWEAPON);
-	AddTriggerAssignment(primaryJoyId,1,FSBTF_SELECTWEAPON);
-	AddTriggerAssignment(primaryJoyId,2,FSBTF_RADAR);
-	AddTriggerAssignment(primaryJoyId,3,FSBTF_DISPENSEFLARE);
+	AddTriggerAssignment(primaryJoyId, 0, FSBTF_FIREWEAPON);
+	AddTriggerAssignment(primaryJoyId, 1, FSBTF_SELECTWEAPON);
+	AddTriggerAssignment(primaryJoyId, 2, FSBTF_RADAR);
+	AddTriggerAssignment(primaryJoyId, 3, FSBTF_DISPENSEFLARE);
 
-	AddTriggerAssignment(primaryJoyId,4,FSBTF_LANDINGGEAR);
-	AddTriggerAssignment(primaryJoyId,5,FSBTF_FLAP);
-	AddTriggerAssignment(primaryJoyId,6,FSBTF_SPOILERBRAKE);
-	AddTriggerAssignment(primaryJoyId,7,FSBTF_AUTOTRIM);
+	AddTriggerAssignment(primaryJoyId, 4, FSBTF_LANDINGGEAR);
+	AddTriggerAssignment(primaryJoyId, 5, FSBTF_FLAP);
+	AddTriggerAssignment(primaryJoyId, 6, FSBTF_SPOILERBRAKE);
+	AddTriggerAssignment(primaryJoyId, 7, FSBTF_AUTOTRIM);
 
-	deadZoneElevator=0.03;
-	deadZoneAileron=0.03;
-	deadZoneRudder=0.03;
-	usePovHatSwitch=YSTRUE;
+	deadZoneElevator = 0.03;
+	deadZoneAileron = 0.03;
+	deadZoneRudder = 0.03;
+	usePovHatSwitch = YSTRUE;
 }
 
 void FsControlAssignment::SetDefaultMouseAsStick(void)
@@ -1670,21 +1670,21 @@ void FsControlAssignment::SetDefaultMouseAsStick(void)
 
 	SetDefaultKeyAssign();
 
-	AddAxisAssignment(FsMouseJoyId,0,FSAXF_AILERON,YSFALSE);
-	AddAxisAssignment(FsMouseJoyId,1,FSAXF_ELEVATOR,YSFALSE);
+	AddAxisAssignment(FsMouseJoyId, 0, FSAXF_AILERON, YSFALSE);
+	AddAxisAssignment(FsMouseJoyId, 1, FSAXF_ELEVATOR, YSFALSE);
 
-	AddTriggerAssignment(FsMouseJoyId,0,FSBTF_FIREWEAPON);
-	AddTriggerAssignment(FsMouseJoyId,1,FSBTF_SELECTWEAPON);
-	AddTriggerAssignment(FsMouseJoyId,2,FSBTF_RADAR);
+	AddTriggerAssignment(FsMouseJoyId, 0, FSBTF_FIREWEAPON);
+	AddTriggerAssignment(FsMouseJoyId, 1, FSBTF_SELECTWEAPON);
+	AddTriggerAssignment(FsMouseJoyId, 2, FSBTF_RADAR);
 
 	AddKeyAssignment(FSKEY_LEFT, FSBTF_TURRETLEFT);
-	AddKeyAssignment(FSKEY_RIGHT,FSBTF_TURRETRIGHT);
-	AddKeyAssignment(FSKEY_UP,   FSBTF_TURRETUP);
+	AddKeyAssignment(FSKEY_RIGHT, FSBTF_TURRETRIGHT);
+	AddKeyAssignment(FSKEY_UP, FSBTF_TURRETUP);
 	AddKeyAssignment(FSKEY_DOWN, FSBTF_TURRETDOWN);
 
-	deadZoneElevator=0.0;
-	deadZoneAileron=0.05;
-	deadZoneRudder=0.05;
+	deadZoneElevator = 0.0;
+	deadZoneAileron = 0.05;
+	deadZoneRudder = 0.05;
 }
 
 void FsControlAssignment::SetDefaultKeyboardAsStick(void)
@@ -1693,165 +1693,165 @@ void FsControlAssignment::SetDefaultKeyboardAsStick(void)
 
 	SetDefaultKeyAssign();
 
-	AddKeyAssignment(FSKEY_UP   ,FSBTF_ELEVATORDOWN);
-	AddKeyAssignment(FSKEY_DOWN ,FSBTF_ELEVATORUP);
-	AddKeyAssignment(FSKEY_LEFT ,FSBTF_AILERONLEFT);
-	AddKeyAssignment(FSKEY_RIGHT,FSBTF_AILERONRIGHT);
+	AddKeyAssignment(FSKEY_UP, FSBTF_ELEVATORDOWN);
+	AddKeyAssignment(FSKEY_DOWN, FSBTF_ELEVATORUP);
+	AddKeyAssignment(FSKEY_LEFT, FSBTF_AILERONLEFT);
+	AddKeyAssignment(FSKEY_RIGHT, FSBTF_AILERONRIGHT);
 
-	deadZoneElevator=0.0;
-	deadZoneAileron=0.03;
-	deadZoneRudder=0.03;
+	deadZoneElevator = 0.0;
+	deadZoneAileron = 0.03;
+	deadZoneRudder = 0.03;
 }
 
 void FsControlAssignment::SetDefaultKeyAssign(void)
 {
 #ifndef __APPLE__
-	AddKeyAssignment(FSKEY_INS,     FSBTF_TRIMDOWN);
-	AddKeyAssignment(FSKEY_DEL,     FSBTF_TRIMUP);
+	AddKeyAssignment(FSKEY_INS, FSBTF_TRIMDOWN);
+	AddKeyAssignment(FSKEY_DEL, FSBTF_TRIMUP);
 #else
-	AddKeyAssignment(FSKEY_UP,      FSBTF_TRIMDOWN);
-	AddKeyAssignment(FSKEY_DOWN,    FSBTF_TRIMUP);
+	AddKeyAssignment(FSKEY_UP, FSBTF_TRIMDOWN);
+	AddKeyAssignment(FSKEY_DOWN, FSBTF_TRIMUP);
 #endif
-	AddKeyAssignment(FSKEY_T,       FSBTF_AUTOTRIM);
-	AddKeyAssignment(FSKEY_Q,       FSBTF_THROTTLEUP);
-	AddKeyAssignment(FSKEY_A,       FSBTF_THROTTLEDOWN);
-	AddKeyAssignment(FSKEY_TAB,     FSBTF_AFTERBURNER);
-	AddKeyAssignment(FSKEY_PAGEUP,  FSBTF_NOZZLEUP);
-	AddKeyAssignment(FSKEY_PAGEDOWN,FSBTF_NOZZLEDOWN);
-	AddKeyAssignment(FSKEY_COMMA,   FSBTF_CYCLESENSITIVITY);
-	AddKeyAssignment(FSKEY_G,       FSBTF_LANDINGGEAR);
-	AddKeyAssignment(FSKEY_B,       FSBTF_SPOILERBRAKE);
-	AddKeyAssignment(FSKEY_Z,       FSBTF_RUDDERLEFT);
-	AddKeyAssignment(FSKEY_X,       FSBTF_RUDDERCENTER);
-	AddKeyAssignment(FSKEY_C,       FSBTF_RUDDERRIGHT);
-	AddKeyAssignment(FSKEY_SPACE,   FSBTF_FIREWEAPON);
-	AddKeyAssignment(FSKEY_2,       FSBTF_SELECTWEAPON);
-	AddKeyAssignment(FSKEY_P,       FSBTF_CYCLESMOKESELECTOR);
-	AddKeyAssignment(FSKEY_3,       FSBTF_RADAR);
-	AddKeyAssignment(FSKEY_4,       FSBTF_DISPENSEFLARE);
-	AddKeyAssignment(FSKEY_I,       FSBTF_TOGGLELIGHT);
-	AddKeyAssignment(FSKEY_V,       FSBTF_VELOCITYINDICATOR);
-	AddKeyAssignment(FSKEY_BS,      FSBTF_OPENAUTOPILOTMENU);
-	AddKeyAssignment(FSKEY_ENTER,   FSBTF_OPENRADIOCOMMMENU);
-	AddKeyAssignment(FSKEY_F1,      FSBTF_COCKPITVIEW);
-	AddKeyAssignment(FSKEY_F2,      FSBTF_OUTSIDEPLAYERVIEW);
-	AddKeyAssignment(FSKEY_F3,      FSBTF_COMPUTERAIRPLANEVIEW);
-	AddKeyAssignment(FSKEY_F4,      FSBTF_WEAPONVIEW);
-	AddKeyAssignment(FSKEY_F5,      FSBTF_CHANGEAIRPLANE);
-	AddKeyAssignment(FSKEY_F6,      FSBTF_ILSVIEW);
-	AddKeyAssignment(FSKEY_F7,      FSBTF_OUTSIDEPLAYERVIEW2);
-	AddKeyAssignment(FSKEY_F8,      FSBTF_CONTROLTOWERVIEW);
-	AddKeyAssignment(FSKEY_F9,      FSBTF_SWITCHVIEWTARGET);
-	AddKeyAssignment(FSKEY_U,       FSBTF_LOOKFORWARD);
-	AddKeyAssignment(FSKEY_K,       FSBTF_LOOKRIGHT);
-	AddKeyAssignment(FSKEY_H,       FSBTF_LOOKLEFT);
-	AddKeyAssignment(FSKEY_M,       FSBTF_LOOKBACK);
-	AddKeyAssignment(FSKEY_J,       FSBTF_LOOKUP);
-	AddKeyAssignment(FSKEY_N,       FSBTF_LOOKDOWN);
-	AddKeyAssignment(FSKEY_DOT,     FSBTF_REVERSETHRUST);
-	AddKeyAssignment(FSKEY_W,       FSBTF_PROPFORWARD);
-	AddKeyAssignment(FSKEY_S,       FSBTF_PROPBACKWARD);
-	AddKeyAssignment(FSKEY_R,       FSBTF_FLAPUP);
-	AddKeyAssignment(FSKEY_F,       FSBTF_FLAPDOWN);
-	AddKeyAssignment(FSKEY_O,       FSBTF_OPENSUBWINDOWMENU);
-	AddKeyAssignment(FSKEY_9,       FSBTF_CHANGEHUDCOLOR);
-	AddKeyAssignment(FSKEY_PAUSEBREAK,FSBTF_PAUSE);
-	AddKeyAssignment(FSKEY_F10,     FSBTF_GHOSTVIEW);
-	AddKeyAssignment(FSKEY_L,       FSBTF_OPENVORMENU);
-	AddKeyAssignment(FSKEY_7,       FSBTF_ROTATEVORLEFT);
-	AddKeyAssignment(FSKEY_8,       FSBTF_ROTATEVORRIGHT);
-	AddKeyAssignment(FSKEY_1,       FSBTF_BOMBBAYDOOR);
-	AddKeyAssignment(FSKEY_CTRL,    FSBTF_INFLTCONFIG);
+	AddKeyAssignment(FSKEY_T, FSBTF_AUTOTRIM);
+	AddKeyAssignment(FSKEY_Q, FSBTF_THROTTLEUP);
+	AddKeyAssignment(FSKEY_A, FSBTF_THROTTLEDOWN);
+	AddKeyAssignment(FSKEY_TAB, FSBTF_AFTERBURNER);
+	AddKeyAssignment(FSKEY_PAGEUP, FSBTF_NOZZLEUP);
+	AddKeyAssignment(FSKEY_PAGEDOWN, FSBTF_NOZZLEDOWN);
+	AddKeyAssignment(FSKEY_COMMA, FSBTF_CYCLESENSITIVITY);
+	AddKeyAssignment(FSKEY_G, FSBTF_LANDINGGEAR);
+	AddKeyAssignment(FSKEY_B, FSBTF_SPOILERBRAKE);
+	AddKeyAssignment(FSKEY_Z, FSBTF_RUDDERLEFT);
+	AddKeyAssignment(FSKEY_X, FSBTF_RUDDERCENTER);
+	AddKeyAssignment(FSKEY_C, FSBTF_RUDDERRIGHT);
+	AddKeyAssignment(FSKEY_SPACE, FSBTF_FIREWEAPON);
+	AddKeyAssignment(FSKEY_2, FSBTF_SELECTWEAPON);
+	AddKeyAssignment(FSKEY_P, FSBTF_CYCLESMOKESELECTOR);
+	AddKeyAssignment(FSKEY_3, FSBTF_RADAR);
+	AddKeyAssignment(FSKEY_4, FSBTF_DISPENSEFLARE);
+	AddKeyAssignment(FSKEY_I, FSBTF_TOGGLELIGHT);
+	AddKeyAssignment(FSKEY_V, FSBTF_VELOCITYINDICATOR);
+	AddKeyAssignment(FSKEY_BS, FSBTF_OPENAUTOPILOTMENU);
+	AddKeyAssignment(FSKEY_ENTER, FSBTF_OPENRADIOCOMMMENU);
+	AddKeyAssignment(FSKEY_F1, FSBTF_COCKPITVIEW);
+	AddKeyAssignment(FSKEY_F2, FSBTF_OUTSIDEPLAYERVIEW);
+	AddKeyAssignment(FSKEY_F3, FSBTF_COMPUTERAIRPLANEVIEW);
+	AddKeyAssignment(FSKEY_F4, FSBTF_WEAPONVIEW);
+	AddKeyAssignment(FSKEY_F5, FSBTF_CHANGEAIRPLANE);
+	AddKeyAssignment(FSKEY_F6, FSBTF_ILSVIEW);
+	AddKeyAssignment(FSKEY_F7, FSBTF_OUTSIDEPLAYERVIEW2);
+	AddKeyAssignment(FSKEY_F8, FSBTF_CONTROLTOWERVIEW);
+	AddKeyAssignment(FSKEY_F9, FSBTF_SWITCHVIEWTARGET);
+	AddKeyAssignment(FSKEY_U, FSBTF_LOOKFORWARD);
+	AddKeyAssignment(FSKEY_K, FSBTF_LOOKRIGHT);
+	AddKeyAssignment(FSKEY_H, FSBTF_LOOKLEFT);
+	AddKeyAssignment(FSKEY_M, FSBTF_LOOKBACK);
+	AddKeyAssignment(FSKEY_J, FSBTF_LOOKUP);
+	AddKeyAssignment(FSKEY_N, FSBTF_LOOKDOWN);
+	AddKeyAssignment(FSKEY_DOT, FSBTF_REVERSETHRUST);
+	AddKeyAssignment(FSKEY_W, FSBTF_PROPFORWARD);
+	AddKeyAssignment(FSKEY_S, FSBTF_PROPBACKWARD);
+	AddKeyAssignment(FSKEY_R, FSBTF_FLAPUP);
+	AddKeyAssignment(FSKEY_F, FSBTF_FLAPDOWN);
+	AddKeyAssignment(FSKEY_O, FSBTF_OPENSUBWINDOWMENU);
+	AddKeyAssignment(FSKEY_9, FSBTF_CHANGEHUDCOLOR);
+	AddKeyAssignment(FSKEY_PAUSEBREAK, FSBTF_PAUSE);
+	AddKeyAssignment(FSKEY_F10, FSBTF_GHOSTVIEW);
+	AddKeyAssignment(FSKEY_L, FSBTF_OPENVORMENU);
+	AddKeyAssignment(FSKEY_7, FSBTF_ROTATEVORLEFT);
+	AddKeyAssignment(FSKEY_8, FSBTF_ROTATEVORRIGHT);
+	AddKeyAssignment(FSKEY_1, FSBTF_BOMBBAYDOOR);
+	AddKeyAssignment(FSKEY_CTRL, FSBTF_INFLTCONFIG);
 	AddKeyAssignment(FSKEY_SEMICOLON, FSBTF_TOGGLEALLDOOR);
 #ifndef __APPLE__
-	AddKeyAssignment(FSKEY_F12,     FSBTF_INFLTMESSAGE);
+	AddKeyAssignment(FSKEY_F12, FSBTF_INFLTMESSAGE);
 #else
-	AddKeyAssignment(FSKEY_0,       FSBTF_INFLTMESSAGE);
+	AddKeyAssignment(FSKEY_0, FSBTF_INFLTMESSAGE);
 #endif
 	AddKeyAssignment(FSKEY_WHEELUP, FSBTF_VIEWZOOM);
-	AddKeyAssignment(FSKEY_WHEELDOWN,FSBTF_VIEWMOOZ);
-	AddKeyAssignment(FSKEY_HOME,    FSBTF_SUPPLYDIALOG);
+	AddKeyAssignment(FSKEY_WHEELDOWN, FSBTF_VIEWMOOZ);
+	AddKeyAssignment(FSKEY_HOME, FSBTF_SUPPLYDIALOG);
 }
 
 void FsControlAssignment::BuildMapping(void)
 {
-	int i,j;
-	for(i=0; i<FsMaxNumJoystick; i++)
+	int i, j;
+	for (i = 0; i < FsMaxNumJoystick; i++)
 	{
-		for(j=0; j<FsMaxNumJoyAxis; j++)
+		for (j = 0; j < FsMaxNumJoyAxis; j++)
 		{
-			axisToFuncMap[i][j]=NULL;
+			axisToFuncMap[i][j] = NULL;
 		}
-		for(j=0; j<FsMaxNumJoyTrig; j++)
+		for (j = 0; j < FsMaxNumJoyTrig; j++)
 		{
-			trgToFuncMap[i][j]=NULL;
+			trgToFuncMap[i][j] = NULL;
 		}
 	}
 
-	for(i=0; i<FSAXF_NUMAXISFUNCTION; i++)
+	for (i = 0; i < FSAXF_NUMAXISFUNCTION; i++)
 	{
-		funcToAxisMap[i]=NULL;
+		funcToAxisMap[i] = NULL;
 	}
 
-	for(i=0; i<FSBTF_NUMBUTTONFUNCTION; i++)
+	for (i = 0; i < FSBTF_NUMBUTTONFUNCTION; i++)
 	{
-		funcToTrgMap[i]=NULL;
-		funcToKeyMap[i]=NULL;
+		funcToTrgMap[i] = NULL;
+		funcToKeyMap[i] = NULL;
 	}
 
-	for(i=0; i<FSKEY_NUM_KEYCODE; i++)
+	for (i = 0; i < FSKEY_NUM_KEYCODE; i++)
 	{
-		keyToFuncMap[i]=NULL;
+		keyToFuncMap[i] = NULL;
 	}
 
 
-	YsListItem <FsAxisAssignment> *axsPtr;
-	axsPtr=NULL;
-	while((axsPtr=axsAssignList.FindNext(axsPtr))!=NULL)
+	YsListItem <FsAxisAssignment>* axsPtr;
+	axsPtr = NULL;
+	while ((axsPtr = axsAssignList.FindNext(axsPtr)) != NULL)
 	{
-		if(0<=axsPtr->dat.joyId && axsPtr->dat.joyId<FsMaxNumJoystick &&
-		   0<=axsPtr->dat.joyAxs && axsPtr->dat.joyAxs<FsMaxNumJoyAxis)
+		if (0 <= axsPtr->dat.joyId && axsPtr->dat.joyId < FsMaxNumJoystick &&
+			0 <= axsPtr->dat.joyAxs && axsPtr->dat.joyAxs < FsMaxNumJoyAxis)
 		{
-			axisToFuncMap[axsPtr->dat.joyId][axsPtr->dat.joyAxs]=&axsPtr->dat;
+			axisToFuncMap[axsPtr->dat.joyId][axsPtr->dat.joyAxs] = &axsPtr->dat;
 		}
-		funcToAxisMap[(int)axsPtr->dat.fnc]=&axsPtr->dat;
+		funcToAxisMap[(int)axsPtr->dat.fnc] = &axsPtr->dat;
 	}
 
-	YsListItem <FsTriggerAssignment> *trgPtr;
-	trgPtr=NULL;
-	while((trgPtr=trgAssignList.FindNext(trgPtr))!=NULL)
+	YsListItem <FsTriggerAssignment>* trgPtr;
+	trgPtr = NULL;
+	while ((trgPtr = trgAssignList.FindNext(trgPtr)) != NULL)
 	{
-		if(0<=trgPtr->dat.joyId && trgPtr->dat.joyId<FsMaxNumJoystick &&
-		   0<=trgPtr->dat.joyTrg && trgPtr->dat.joyTrg<FsMaxNumJoyTrig)
+		if (0 <= trgPtr->dat.joyId && trgPtr->dat.joyId < FsMaxNumJoystick &&
+			0 <= trgPtr->dat.joyTrg && trgPtr->dat.joyTrg < FsMaxNumJoyTrig)
 		{
-			trgToFuncMap[trgPtr->dat.joyId][trgPtr->dat.joyTrg]=&trgPtr->dat;
+			trgToFuncMap[trgPtr->dat.joyId][trgPtr->dat.joyTrg] = &trgPtr->dat;
 		}
-		funcToTrgMap[(int)trgPtr->dat.fnc]=&trgPtr->dat;
+		funcToTrgMap[(int)trgPtr->dat.fnc] = &trgPtr->dat;
 	}
 
-	YsListItem <FsKeyAssignment> *keyPtr;
-	keyPtr=NULL;
-	while((keyPtr=keyAssignList.FindNext(keyPtr))!=NULL)
+	YsListItem <FsKeyAssignment>* keyPtr;
+	keyPtr = NULL;
+	while ((keyPtr = keyAssignList.FindNext(keyPtr)) != NULL)
 	{
-		keyToFuncMap[keyPtr->dat.keyCode]=&keyPtr->dat;
-		funcToKeyMap[(int)keyPtr->dat.fnc]=&keyPtr->dat;
+		keyToFuncMap[keyPtr->dat.keyCode] = &keyPtr->dat;
+		funcToKeyMap[(int)keyPtr->dat.fnc] = &keyPtr->dat;
 	}
 }
 
-YSRESULT FsControlAssignment::AddAxisAssignment(int joyId,int joyAxs,FSAXISFUNCTION fnc,YSBOOL reverse)
+YSRESULT FsControlAssignment::AddAxisAssignment(int joyId, int joyAxs, FSAXISFUNCTION fnc, YSBOOL reverse)
 {
-	if(0<=joyId && joyId<FsMaxNumJoystick && 0<=joyAxs && joyAxs<FsMaxNumJoyAxis)
+	if (0 <= joyId && joyId < FsMaxNumJoystick && 0 <= joyAxs && joyAxs < FsMaxNumJoyAxis)
 	{
-		YsListItem <FsAxisAssignment> *axsPtr;
+		YsListItem <FsAxisAssignment>* axsPtr;
 
-		DeleteAxis(joyId,joyAxs);
+		DeleteAxis(joyId, joyAxs);
 		DeleteAxisFunction(fnc);
 
-		axsPtr=axsAssignList.Create();
-		axsPtr->dat.joyId=joyId;
-		axsPtr->dat.joyAxs=joyAxs;
-		axsPtr->dat.fnc=fnc;
-		axsPtr->dat.reverse=reverse;
+		axsPtr = axsAssignList.Create();
+		axsPtr->dat.joyId = joyId;
+		axsPtr->dat.joyAxs = joyAxs;
+		axsPtr->dat.fnc = fnc;
+		axsPtr->dat.reverse = reverse;
 		return YSOK;
 	}
 	return YSERR;
@@ -1859,53 +1859,53 @@ YSRESULT FsControlAssignment::AddAxisAssignment(int joyId,int joyAxs,FSAXISFUNCT
 
 YSRESULT FsControlAssignment::DeleteAxisFunction(FSAXISFUNCTION fnc)
 {
-	YsListItem <FsAxisAssignment> *axsPtr,*nextAxsPtr;
-	axsPtr=NULL;
-	nextAxsPtr=axsAssignList.FindNext(axsPtr);
-	while((axsPtr=nextAxsPtr)!=NULL)
+	YsListItem <FsAxisAssignment>* axsPtr, * nextAxsPtr;
+	axsPtr = NULL;
+	nextAxsPtr = axsAssignList.FindNext(axsPtr);
+	while ((axsPtr = nextAxsPtr) != NULL)
 	{
-		nextAxsPtr=axsAssignList.FindNext(axsPtr);
-		if(axsPtr->dat.fnc==fnc)
+		nextAxsPtr = axsAssignList.FindNext(axsPtr);
+		if (axsPtr->dat.fnc == fnc)
 		{
-			axisToFuncMap[axsPtr->dat.joyId][axsPtr->dat.joyAxs]=NULL;
-			funcToAxisMap[(int)fnc]=NULL;
+			axisToFuncMap[axsPtr->dat.joyId][axsPtr->dat.joyAxs] = NULL;
+			funcToAxisMap[(int)fnc] = NULL;
 			axsAssignList.Delete(axsPtr);
 		}
 	}
 	return YSOK;
 }
 
-YSRESULT FsControlAssignment::DeleteAxis(int joyId,int joyAxs)
+YSRESULT FsControlAssignment::DeleteAxis(int joyId, int joyAxs)
 {
-	YsListItem <FsAxisAssignment> *axsPtr,*nextAxsPtr;
-	axsPtr=NULL;
-	nextAxsPtr=axsAssignList.FindNext(axsPtr);
-	while((axsPtr=nextAxsPtr)!=NULL)
+	YsListItem <FsAxisAssignment>* axsPtr, * nextAxsPtr;
+	axsPtr = NULL;
+	nextAxsPtr = axsAssignList.FindNext(axsPtr);
+	while ((axsPtr = nextAxsPtr) != NULL)
 	{
-		nextAxsPtr=axsAssignList.FindNext(axsPtr);
-		if(axsPtr->dat.joyId==joyId && axsPtr->dat.joyAxs==joyAxs)
+		nextAxsPtr = axsAssignList.FindNext(axsPtr);
+		if (axsPtr->dat.joyId == joyId && axsPtr->dat.joyAxs == joyAxs)
 		{
-			axisToFuncMap[axsPtr->dat.joyId][axsPtr->dat.joyAxs]=NULL;
-			funcToAxisMap[(int)axsPtr->dat.fnc]=NULL;
+			axisToFuncMap[axsPtr->dat.joyId][axsPtr->dat.joyAxs] = NULL;
+			funcToAxisMap[(int)axsPtr->dat.fnc] = NULL;
 			axsAssignList.Delete(axsPtr);
 		}
 	}
 	return YSOK;
 }
 
-YSRESULT FsControlAssignment::AddTriggerAssignment(int joyId,int joyTrg,FSBUTTONFUNCTION fnc)
+YSRESULT FsControlAssignment::AddTriggerAssignment(int joyId, int joyTrg, FSBUTTONFUNCTION fnc)
 {
-	if(0<=joyId && joyId<FsMaxNumJoystick && 0<=joyTrg && joyTrg<FsMaxNumJoyTrig)
+	if (0 <= joyId && joyId < FsMaxNumJoystick && 0 <= joyTrg && joyTrg < FsMaxNumJoyTrig)
 	{
-		YsListItem <FsTriggerAssignment> *trgPtr;
+		YsListItem <FsTriggerAssignment>* trgPtr;
 
 		DeleteTriggerFunction(fnc);
-		DeleteTrigger(joyId,joyTrg);
+		DeleteTrigger(joyId, joyTrg);
 
-		trgPtr=trgAssignList.Create();
-		trgPtr->dat.joyId=joyId;
-		trgPtr->dat.joyTrg=joyTrg;
-		trgPtr->dat.fnc=fnc;
+		trgPtr = trgAssignList.Create();
+		trgPtr->dat.joyId = joyId;
+		trgPtr->dat.joyTrg = joyTrg;
+		trgPtr->dat.fnc = fnc;
 		return YSOK;
 	}
 	return YSERR;
@@ -1913,52 +1913,52 @@ YSRESULT FsControlAssignment::AddTriggerAssignment(int joyId,int joyTrg,FSBUTTON
 
 YSRESULT FsControlAssignment::DeleteTriggerFunction(FSBUTTONFUNCTION fnc)
 {
-	YsListItem <FsTriggerAssignment> *trgPtr,*nextTrgPtr;
-	trgPtr=NULL;
-	nextTrgPtr=trgAssignList.FindNext(trgPtr);
-	while((trgPtr=nextTrgPtr)!=NULL)
+	YsListItem <FsTriggerAssignment>* trgPtr, * nextTrgPtr;
+	trgPtr = NULL;
+	nextTrgPtr = trgAssignList.FindNext(trgPtr);
+	while ((trgPtr = nextTrgPtr) != NULL)
 	{
-		nextTrgPtr=trgAssignList.FindNext(trgPtr);
-		if(trgPtr->dat.fnc==fnc)
+		nextTrgPtr = trgAssignList.FindNext(trgPtr);
+		if (trgPtr->dat.fnc == fnc)
 		{
-			trgToFuncMap[trgPtr->dat.joyId][trgPtr->dat.joyTrg]=NULL;
-			funcToTrgMap[(int)fnc]=NULL;
+			trgToFuncMap[trgPtr->dat.joyId][trgPtr->dat.joyTrg] = NULL;
+			funcToTrgMap[(int)fnc] = NULL;
 			trgAssignList.Delete(trgPtr);
 		}
 	}
 	return YSOK;
 }
 
-YSRESULT FsControlAssignment::DeleteTrigger(int joyId,int joyTrg)
+YSRESULT FsControlAssignment::DeleteTrigger(int joyId, int joyTrg)
 {
-	YsListItem <FsTriggerAssignment> *trgPtr,*nextTrgPtr;
-	trgPtr=NULL;
-	nextTrgPtr=trgAssignList.FindNext(trgPtr);
-	while((trgPtr=nextTrgPtr)!=NULL)
+	YsListItem <FsTriggerAssignment>* trgPtr, * nextTrgPtr;
+	trgPtr = NULL;
+	nextTrgPtr = trgAssignList.FindNext(trgPtr);
+	while ((trgPtr = nextTrgPtr) != NULL)
 	{
-		nextTrgPtr=trgAssignList.FindNext(trgPtr);
-		if(trgPtr->dat.joyId==joyId && trgPtr->dat.joyTrg==joyTrg)
+		nextTrgPtr = trgAssignList.FindNext(trgPtr);
+		if (trgPtr->dat.joyId == joyId && trgPtr->dat.joyTrg == joyTrg)
 		{
-			trgToFuncMap[trgPtr->dat.joyId][trgPtr->dat.joyTrg]=NULL;
-			funcToTrgMap[(int)trgPtr->dat.fnc]=NULL;
+			trgToFuncMap[trgPtr->dat.joyId][trgPtr->dat.joyTrg] = NULL;
+			funcToTrgMap[(int)trgPtr->dat.fnc] = NULL;
 			trgAssignList.Delete(trgPtr);
 		}
 	}
 	return YSOK;
 }
 
-YSRESULT FsControlAssignment::AddKeyAssignment(int keyCode,FSBUTTONFUNCTION fnc)
+YSRESULT FsControlAssignment::AddKeyAssignment(int keyCode, FSBUTTONFUNCTION fnc)
 {
-	if(0<=keyCode && keyCode<FSKEY_NUM_KEYCODE)
+	if (0 <= keyCode && keyCode < FSKEY_NUM_KEYCODE)
 	{
-		YsListItem <FsKeyAssignment> *keyPtr;
+		YsListItem <FsKeyAssignment>* keyPtr;
 
 		DeleteKeyFunction(fnc);
 		DeleteKey(keyCode);
 
-		keyPtr=keyAssignList.Create();
-		keyPtr->dat.keyCode=keyCode;
-		keyPtr->dat.fnc=fnc;
+		keyPtr = keyAssignList.Create();
+		keyPtr->dat.keyCode = keyCode;
+		keyPtr->dat.fnc = fnc;
 		return YSOK;
 	}
 	return YSERR;
@@ -1966,16 +1966,16 @@ YSRESULT FsControlAssignment::AddKeyAssignment(int keyCode,FSBUTTONFUNCTION fnc)
 
 YSRESULT FsControlAssignment::DeleteKeyFunction(FSBUTTONFUNCTION fnc)
 {
-	YsListItem <FsKeyAssignment> *keyPtr,*nextKeyPtr;
-	keyPtr=NULL;
-	nextKeyPtr=keyAssignList.FindNext(keyPtr);
-	while((keyPtr=nextKeyPtr)!=NULL)
+	YsListItem <FsKeyAssignment>* keyPtr, * nextKeyPtr;
+	keyPtr = NULL;
+	nextKeyPtr = keyAssignList.FindNext(keyPtr);
+	while ((keyPtr = nextKeyPtr) != NULL)
 	{
-		nextKeyPtr=keyAssignList.FindNext(keyPtr);
-		if(keyPtr->dat.fnc==fnc)
+		nextKeyPtr = keyAssignList.FindNext(keyPtr);
+		if (keyPtr->dat.fnc == fnc)
 		{
-			keyToFuncMap[keyPtr->dat.keyCode]=NULL;
-			funcToKeyMap[(int)fnc]=NULL;
+			keyToFuncMap[keyPtr->dat.keyCode] = NULL;
+			funcToKeyMap[(int)fnc] = NULL;
 			keyAssignList.Delete(keyPtr);
 		}
 	}
@@ -1984,16 +1984,16 @@ YSRESULT FsControlAssignment::DeleteKeyFunction(FSBUTTONFUNCTION fnc)
 
 YSRESULT FsControlAssignment::DeleteKey(int keyCode)
 {
-	YsListItem <FsKeyAssignment> *keyPtr,*nextKeyPtr;
-	keyPtr=NULL;
-	nextKeyPtr=keyAssignList.FindNext(keyPtr);
-	while((keyPtr=nextKeyPtr)!=NULL)
+	YsListItem <FsKeyAssignment>* keyPtr, * nextKeyPtr;
+	keyPtr = NULL;
+	nextKeyPtr = keyAssignList.FindNext(keyPtr);
+	while ((keyPtr = nextKeyPtr) != NULL)
 	{
-		nextKeyPtr=keyAssignList.FindNext(keyPtr);
-		if(keyPtr->dat.keyCode==keyCode)
+		nextKeyPtr = keyAssignList.FindNext(keyPtr);
+		if (keyPtr->dat.keyCode == keyCode)
 		{
-			keyToFuncMap[keyCode]=NULL;
-			funcToKeyMap[(int)keyPtr->dat.fnc]=NULL;
+			keyToFuncMap[keyCode] = NULL;
+			funcToKeyMap[(int)keyPtr->dat.fnc] = NULL;
 			keyAssignList.Delete(keyPtr);
 		}
 	}
@@ -2002,43 +2002,43 @@ YSRESULT FsControlAssignment::DeleteKey(int keyCode)
 
 void FsControlAssignment::SetIgnoreThisKeyHolding(int rawKey)
 {
-	ignoreThisKeyHolding=rawKey;
+	ignoreThisKeyHolding = rawKey;
 }
 
 void FsControlAssignment::CheckIgnoredKeyRelease(void)
 {
-	if(FSKEY_NULL!=ignoreThisKeyHolding && YSTRUE!=FsGetKeyState(ignoreThisKeyHolding))
+	if (FSKEY_NULL != ignoreThisKeyHolding && YSTRUE != FsGetKeyState(ignoreThisKeyHolding))
 	{
-		ignoreThisKeyHolding=FSKEY_NULL;
+		ignoreThisKeyHolding = FSKEY_NULL;
 	}
 }
 
 FSBUTTONFUNCTION FsControlAssignment::TranslateKeyStroke(int keyCode) const
 {
-	if(processNumberKey!=YSTRUE && FSKEY_0<=keyCode && keyCode<=FSKEY_9)
+	if (processNumberKey != YSTRUE && FSKEY_0 <= keyCode && keyCode <= FSKEY_9)
 	{
 		return FSBTF_NULL;
 	}
 
-	if(0<keyCode && keyCode<FSKEY_NUM_KEYCODE && keyToFuncMap[keyCode]!=NULL)
+	if (0 < keyCode && keyCode < FSKEY_NUM_KEYCODE && keyToFuncMap[keyCode] != NULL)
 	{
 		return keyToFuncMap[keyCode]->fnc;
 	}
 	return FSBTF_NULL;
 }
 
-FSAXISFUNCTION FsControlAssignment::TranslateAxis(int joyId,int joyAxs) const
+FSAXISFUNCTION FsControlAssignment::TranslateAxis(int joyId, int joyAxs) const
 {
-	if(0<=joyId && joyId<FsMaxNumJoystick && 0<=joyAxs && joyAxs<FsMaxNumJoyAxis && NULL!=axisToFuncMap[joyId][joyAxs])
+	if (0 <= joyId && joyId < FsMaxNumJoystick && 0 <= joyAxs && joyAxs < FsMaxNumJoyAxis && NULL != axisToFuncMap[joyId][joyAxs])
 	{
 		return axisToFuncMap[joyId][joyAxs]->fnc;
 	}
 	return FSAXF_NULL;
 }
 
-FSBUTTONFUNCTION FsControlAssignment::TranslateTrigger(int joyId,int joyTrg) const
+FSBUTTONFUNCTION FsControlAssignment::TranslateTrigger(int joyId, int joyTrg) const
 {
-	if(0<=joyId && joyId<FsMaxNumJoystick && 0<=joyTrg && joyTrg<FsMaxNumJoyTrig && trgToFuncMap[joyId][joyTrg]!=NULL)
+	if (0 <= joyId && joyId < FsMaxNumJoystick && 0 <= joyTrg && joyTrg < FsMaxNumJoyTrig && trgToFuncMap[joyId][joyTrg] != NULL)
 	{
 		return trgToFuncMap[joyId][joyTrg]->fnc;
 	}
@@ -2047,52 +2047,52 @@ FSBUTTONFUNCTION FsControlAssignment::TranslateTrigger(int joyId,int joyTrg) con
 
 int FsControlAssignment::FindKeyByFunction(FSBUTTONFUNCTION fnc) const
 {
-	if(funcToKeyMap[(int)fnc]!=NULL)
+	if (funcToKeyMap[(int)fnc] != NULL)
 	{
 		return funcToKeyMap[(int)fnc]->keyCode;
 	}
 	return FSKEY_NULL;
 }
 
-YSRESULT FsControlAssignment::FindTriggerByFunction(int &joyId,int &joyTrg,FSBUTTONFUNCTION fnc) const
+YSRESULT FsControlAssignment::FindTriggerByFunction(int& joyId, int& joyTrg, FSBUTTONFUNCTION fnc) const
 {
-	if(funcToTrgMap[(int)fnc]!=NULL)
+	if (funcToTrgMap[(int)fnc] != NULL)
 	{
-		joyId=funcToTrgMap[(int)fnc]->joyId;
-		joyTrg=funcToTrgMap[(int)fnc]->joyTrg;
+		joyId = funcToTrgMap[(int)fnc]->joyId;
+		joyTrg = funcToTrgMap[(int)fnc]->joyTrg;
 		return YSOK;
 	}
-	joyId=-1;
-	joyTrg=-1;
+	joyId = -1;
+	joyTrg = -1;
 	return YSERR;
 }
 
-YSRESULT FsControlAssignment::FindAxisByFunction(int &joyId,int &joyAxs,YSBOOL &reverse,FSAXISFUNCTION fnc) const
+YSRESULT FsControlAssignment::FindAxisByFunction(int& joyId, int& joyAxs, YSBOOL& reverse, FSAXISFUNCTION fnc) const
 {
-	if(funcToAxisMap[(int)fnc]!=NULL)
+	if (funcToAxisMap[(int)fnc] != NULL)
 	{
-		joyId=funcToAxisMap[(int)fnc]->joyId;
-		joyAxs=funcToAxisMap[(int)fnc]->joyAxs;
-		reverse=funcToAxisMap[(int)fnc]->reverse;
+		joyId = funcToAxisMap[(int)fnc]->joyId;
+		joyAxs = funcToAxisMap[(int)fnc]->joyAxs;
+		reverse = funcToAxisMap[(int)fnc]->reverse;
 		return YSOK;
 	}
-	joyId=-1;
-	joyAxs=-1;
+	joyId = -1;
+	joyAxs = -1;
 	return YSERR;
 }
 
-YSBOOL FsControlAssignment::IsButtonPressed(FSBUTTONFUNCTION fnc,class FsJoystick joy[FsMaxNumJoystick]) const
+YSBOOL FsControlAssignment::IsButtonPressed(FSBUTTONFUNCTION fnc, class FsJoystick joy[FsMaxNumJoystick]) const
 {
-	int key,joyId,joyTrg;
+	int key, joyId, joyTrg;
 
-	key=FindKeyByFunction(fnc);
-	if(ignoreThisKeyHolding!=key)
+	key = FindKeyByFunction(fnc);
+	if (ignoreThisKeyHolding != key)
 	{
-		if(processNumberKey==YSTRUE || key<FSKEY_0 || FSKEY_9<key)
+		if (processNumberKey == YSTRUE || key < FSKEY_0 || FSKEY_9 < key)
 		{
-			if(checkKeyHolding==YSTRUE)   // <- Added on 2005/03/31
+			if (checkKeyHolding == YSTRUE)   // <- Added on 2005/03/31
 			{
-				if(FsGetKeyState(key)==YSTRUE)
+				if (FsGetKeyState(key) == YSTRUE)
 				{
 					return YSTRUE;
 				}
@@ -2100,7 +2100,7 @@ YSBOOL FsControlAssignment::IsButtonPressed(FSBUTTONFUNCTION fnc,class FsJoystic
 		}
 	}
 
-	if(FindTriggerByFunction(joyId,joyTrg,fnc)==YSOK && joy[joyId].trg[joyTrg]==YSTRUE)
+	if (FindTriggerByFunction(joyId, joyTrg, fnc) == YSOK && joy[joyId].trg[joyTrg] == YSTRUE)
 	{
 		return YSTRUE;
 	}
@@ -2110,142 +2110,142 @@ YSBOOL FsControlAssignment::IsButtonPressed(FSBUTTONFUNCTION fnc,class FsJoystic
 
 YSRESULT FsControlAssignment::Load(const wchar_t fn[])
 {
-	FILE *fp=YsFileIO::Fopen(fn,"r");
-	if(fp!=NULL)
+	FILE* fp = YsFileIO::Fopen(fn, "r");
+	if (fp != NULL)
 	{
 		int ac;
-		char *av[16];
-		char str[256],err[256];
+		char* av[16];
+		char str[256], err[256];
 		int version;
 
-		version=0;
+		version = 0;
 
 		CleanUp();
-		while(fgets(str,255,fp)!=NULL)
+		while (fgets(str, 255, fp) != NULL)
 		{
-			strcpy(err,str);
-			if(YsArguments(&ac,av,16,str)==YSOK && ac>0)
+			strcpy(err, str);
+			if (YsArguments(&ac, av, 16, str) == YSOK && ac > 0)
 			{
 				YSRESULT err;
 
-				err=YSOK;
-				if(strcmp(av[0],"END")==0)
+				err = YSOK;
+				if (strcmp(av[0], "END") == 0)
 				{
 					break;
 				}
-				else if(strcmp(av[0],"REM")==0)
+				else if (strcmp(av[0], "REM") == 0)
 				{
 				}
-				else if(strcmp(av[0],"VER")==0)
+				else if (strcmp(av[0], "VER") == 0)
 				{
-					version=atoi(av[1]);
+					version = atoi(av[1]);
 				}
-				else if(strcmp(av[0],"AXS")==0 && ac>=4)
+				else if (strcmp(av[0], "AXS") == 0 && ac >= 4)
 				{
-					int joyId,joyAxs;
+					int joyId, joyAxs;
 					FSAXISFUNCTION fnc;
 					YSBOOL reverse;
-					if(av[1][0]=='M')
+					if (av[1][0] == 'M')
 					{
-						joyId=FsMouseJoyId;
+						joyId = FsMouseJoyId;
 					}
 					else
 					{
-						joyId=atoi(av[1]);
+						joyId = atoi(av[1]);
 					}
 
-					joyAxs=atoi(av[2]);
-					fnc=FsGetAxisFuncFromString(av[3]);
+					joyAxs = atoi(av[2]);
+					fnc = FsGetAxisFuncFromString(av[3]);
 
-					if(ac>=5 && strcmp(av[4],"REV")==0)
+					if (ac >= 5 && strcmp(av[4], "REV") == 0)
 					{
-						reverse=YSTRUE;
+						reverse = YSTRUE;
 					}
 					else
 					{
-						reverse=YSFALSE;
+						reverse = YSFALSE;
 					}
 
-					if(fnc!=FSAXF_NULL)
+					if (fnc != FSAXF_NULL)
 					{
-						AddAxisAssignment(joyId,joyAxs,fnc,reverse);
+						AddAxisAssignment(joyId, joyAxs, fnc, reverse);
 					}
 				}
-				else if(strcmp(av[0],"TRG")==0 && ac>=4)
+				else if (strcmp(av[0], "TRG") == 0 && ac >= 4)
 				{
-					int joyId,joyTrg;
+					int joyId, joyTrg;
 					FSBUTTONFUNCTION fnc;
-					if(av[1][0]=='M')
+					if (av[1][0] == 'M')
 					{
-						joyId=FsMouseJoyId;
+						joyId = FsMouseJoyId;
 					}
 					else
 					{
-						joyId=atoi(av[1]);
+						joyId = atoi(av[1]);
 					}
-					joyTrg=atoi(av[2]);
-					fnc=FsGetButtonFuncFromString(av[3]);
-					AddTriggerAssignment(joyId,joyTrg,fnc);
+					joyTrg = atoi(av[2]);
+					fnc = FsGetButtonFuncFromString(av[3]);
+					AddTriggerAssignment(joyId, joyTrg, fnc);
 				}
-				else if(strcmp(av[0],"KEY")==0)
+				else if (strcmp(av[0], "KEY") == 0)
 				{
 					int keyCode;
 					FSBUTTONFUNCTION fnc;
-					keyCode=FsGetKeycodeFromString(av[1]);
-					fnc=FsGetButtonFuncFromString(av[2]);
-					if(keyCode!=FSKEY_NULL && fnc!=FSBTF_NULL)
+					keyCode = FsGetKeycodeFromString(av[1]);
+					fnc = FsGetButtonFuncFromString(av[2]);
+					if (keyCode != FSKEY_NULL && fnc != FSBTF_NULL)
 					{
-						AddKeyAssignment(keyCode,fnc);
+						AddKeyAssignment(keyCode, fnc);
 					}
 				}
-				else if(strcmp(av[0],"DZELV2")==0)
+				else if (strcmp(av[0], "DZELV2") == 0)
 				{
-					deadZoneElevator=atof(av[1]);
+					deadZoneElevator = atof(av[1]);
 				}
-				else if(strcmp(av[0],"DZAIL2")==0)
+				else if (strcmp(av[0], "DZAIL2") == 0)
 				{
-					deadZoneAileron=atof(av[1]);
+					deadZoneAileron = atof(av[1]);
 				}
-				else if(strcmp(av[0],"DZRUD2")==0)
+				else if (strcmp(av[0], "DZRUD2") == 0)
 				{
-					deadZoneRudder=atof(av[1]);
+					deadZoneRudder = atof(av[1]);
 				}
-				else if(strcmp(av[0],"DZELV")==0)
+				else if (strcmp(av[0], "DZELV") == 0)
 				{
 					YSBOOL useDeadZone;
-					FsGetBool(useDeadZone,av[1]);
-					deadZoneElevator=(YSTRUE==useDeadZone ? 0.03 : 0.0);
+					FsGetBool(useDeadZone, av[1]);
+					deadZoneElevator = (YSTRUE == useDeadZone ? 0.03 : 0.0);
 				}
-				else if(strcmp(av[0],"DZAIL")==0)
+				else if (strcmp(av[0], "DZAIL") == 0)
 				{
 					YSBOOL useDeadZone;
-					FsGetBool(useDeadZone,av[1]);
-					deadZoneAileron=(YSTRUE==useDeadZone ? 0.03 : 0.0);
+					FsGetBool(useDeadZone, av[1]);
+					deadZoneAileron = (YSTRUE == useDeadZone ? 0.03 : 0.0);
 				}
-				else if(strcmp(av[0],"DZRUD")==0)
+				else if (strcmp(av[0], "DZRUD") == 0)
 				{
 					YSBOOL useDeadZone;
-					FsGetBool(useDeadZone,av[1]);
-					deadZoneRudder=(YSTRUE==useDeadZone ? 0.03 : 0.0);
+					FsGetBool(useDeadZone, av[1]);
+					deadZoneRudder = (YSTRUE == useDeadZone ? 0.03 : 0.0);
 				}
-				else if(strcmp(av[0],"HATSW")==0)
+				else if (strcmp(av[0], "HATSW") == 0)
 				{
-					FsGetBool(usePovHatSwitch,av[1]);
+					FsGetBool(usePovHatSwitch, av[1]);
 				}
 				else
 				{
-					err=YSERR;
+					err = YSERR;
 				}
 
-				if(err!=YSOK)
+				if (err != YSOK)
 				{
-					fsStderr.Printf("Error: %s %d\n",av[0],err);
+					fsStderr.Printf("Error: %s %d\n", av[0], err);
 				}
 			}
 		}
 		fclose(fp);
 
-		if(version<=20070907)
+		if (version <= 20070907)
 		{
 			DeleteKeyFunction(FSBTF_ILS);
 			DeleteKeyFunction(FSBTF_OPENADFMENU);
@@ -2259,159 +2259,159 @@ YSRESULT FsControlAssignment::Load(const wchar_t fn[])
 
 YSRESULT FsControlAssignment::Save(const wchar_t fn[])
 {
-	int i,j;
-	FILE *fp=YsFileIO::Fopen(fn,"w");
-	if(fp!=NULL)
+	int i, j;
+	FILE* fp = YsFileIO::Fopen(fn, "w");
+	if (fp != NULL)
 	{
 		BuildMapping();
 
-		fprintf(fp,"VER %d\n",YSFLIGHT_VERSION);
+		fprintf(fp, "VER %d\n", YSFLIGHT_VERSION);
 
-		for(i=0; i<FsMaxNumJoystick; i++)
+		for (i = 0; i < FsMaxNumJoystick; i++)
 		{
-			for(j=0; j<FsMaxNumJoyAxis; j++)
+			for (j = 0; j < FsMaxNumJoyAxis; j++)
 			{
 				FSAXISFUNCTION fnc;
-				if(axisToFuncMap[i][j]!=NULL)
+				if (axisToFuncMap[i][j] != NULL)
 				{
-					const char *str,*revStr;
-					fnc=axisToFuncMap[i][j]->fnc;
-					str=FsGetAxisFuncString(fnc);
+					const char* str, * revStr;
+					fnc = axisToFuncMap[i][j]->fnc;
+					str = FsGetAxisFuncString(fnc);
 
-					if(axisToFuncMap[i][j]->reverse==YSTRUE)
+					if (axisToFuncMap[i][j]->reverse == YSTRUE)
 					{
-						revStr="REV";
+						revStr = "REV";
 					}
 					else
 					{
-						revStr="";
+						revStr = "";
 					}
 
-					if(str!=NULL)
+					if (str != NULL)
 					{
-						if(i==FsMouseJoyId)
+						if (i == FsMouseJoyId)
 						{
-							fprintf(fp,"AXS M %d %s %s\n",j,str,revStr);
+							fprintf(fp, "AXS M %d %s %s\n", j, str, revStr);
 						}
 						else
 						{
-							fprintf(fp,"AXS %d %d %s %s\n",i,j,str,revStr);
+							fprintf(fp, "AXS %d %d %s %s\n", i, j, str, revStr);
 						}
 					}
 				}
 			}
 		}
 
-		for(i=0; i<FsMaxNumJoystick; i++)
+		for (i = 0; i < FsMaxNumJoystick; i++)
 		{
-			for(j=0; j<FsMaxNumJoyTrig; j++)
+			for (j = 0; j < FsMaxNumJoyTrig; j++)
 			{
 				FSBUTTONFUNCTION fnc;
-				if(trgToFuncMap[i][j]!=NULL)
+				if (trgToFuncMap[i][j] != NULL)
 				{
-					const char *str;
-					fnc=trgToFuncMap[i][j]->fnc;
-					str=FsGetButtonFuncString(fnc);
-					if(str!=NULL)
+					const char* str;
+					fnc = trgToFuncMap[i][j]->fnc;
+					str = FsGetButtonFuncString(fnc);
+					if (str != NULL)
 					{
-						if(i==FsMouseJoyId)
+						if (i == FsMouseJoyId)
 						{
-							fprintf(fp,"TRG M %d %s\n",j,str);
+							fprintf(fp, "TRG M %d %s\n", j, str);
 						}
 						else
 						{
-							fprintf(fp,"TRG %d %d %s\n",i,j,str);
+							fprintf(fp, "TRG %d %d %s\n", i, j, str);
 						}
 					}
 				}
 			}
 		}
 
-		for(i=0; i<FSKEY_NUM_KEYCODE; i++)
+		for (i = 0; i < FSKEY_NUM_KEYCODE; i++)
 		{
 			FSBUTTONFUNCTION fnc;
-			if(keyToFuncMap[i]!=NULL)
+			if (keyToFuncMap[i] != NULL)
 			{
-				const char *str,*label;
-				fnc=keyToFuncMap[i]->fnc;
-				str=FsGetButtonFuncString(fnc);
-				label=FsGetKeyString(i);
-				if(str!=NULL && label!=NULL)
+				const char* str, * label;
+				fnc = keyToFuncMap[i]->fnc;
+				str = FsGetButtonFuncString(fnc);
+				label = FsGetKeyString(i);
+				if (str != NULL && label != NULL)
 				{
-					fprintf(fp,"KEY %s %s\n",label,str);
+					fprintf(fp, "KEY %s %s\n", label, str);
 				}
 			}
 		}
 
-		fprintf(fp,"DZELV2 %.3lf\n",deadZoneElevator);
-		fprintf(fp,"DZAIL2 %.3lf\n",deadZoneAileron);
-		fprintf(fp,"DZRUD2 %.3lf\n",deadZoneRudder);
-		fprintf(fp,"HATSW %s\n",FsTrueFalseString(usePovHatSwitch));
+		fprintf(fp, "DZELV2 %.3lf\n", deadZoneElevator);
+		fprintf(fp, "DZAIL2 %.3lf\n", deadZoneAileron);
+		fprintf(fp, "DZRUD2 %.3lf\n", deadZoneRudder);
+		fprintf(fp, "HATSW %s\n", FsTrueFalseString(usePovHatSwitch));
 
-		fprintf(fp,"END\n");
+		fprintf(fp, "END\n");
 
-		fprintf(fp,"REM Joystick Axis Assignment\n");
-		fprintf(fp,"REM   AXS joyId joyAxs AxisFunction\n");
-		fprintf(fp,"REM       or\n");
-		fprintf(fp,"REM   AXS joyId joyAxs AxisFunction REV\n");
-		fprintf(fp,"REM \n");
-		fprintf(fp,"REM   joyId='M' means mouse\n");
-		fprintf(fp,"REM   joyId must be 0<=joyId<=%d\n",FsMaxNumJoystick-1);
-		fprintf(fp,"REM   joyAxs must be 0<=joyAxs<=%d\n",FsMaxNumJoyAxis-1);
-		fprintf(fp,"REM   joyId=%d also means mouse, but it may change in the future versions.\n",FsMouseJoyId);
-		fprintf(fp,"REM   \"REV\" at the end of line means reverse.\n");
-		fprintf(fp,"REM \n");
-		fprintf(fp,"REM Joystick Trigger Assignment\n");
-		fprintf(fp,"REM   TRG joyId joyTrg ButtonFunction\n");
-		fprintf(fp,"REM \n");
-		fprintf(fp,"REM   joyTrg must be 0<=joyTrg<=%d\n",FsMaxNumJoyTrig-1);
-		fprintf(fp,"REM \n");
-		fprintf(fp,"REM Keyboard Assignment\n");
-		fprintf(fp,"REM   KEY keyCode ButtonFunction\n");
-		fprintf(fp,"REM \n");
+		fprintf(fp, "REM Joystick Axis Assignment\n");
+		fprintf(fp, "REM   AXS joyId joyAxs AxisFunction\n");
+		fprintf(fp, "REM       or\n");
+		fprintf(fp, "REM   AXS joyId joyAxs AxisFunction REV\n");
+		fprintf(fp, "REM \n");
+		fprintf(fp, "REM   joyId='M' means mouse\n");
+		fprintf(fp, "REM   joyId must be 0<=joyId<=%d\n", FsMaxNumJoystick - 1);
+		fprintf(fp, "REM   joyAxs must be 0<=joyAxs<=%d\n", FsMaxNumJoyAxis - 1);
+		fprintf(fp, "REM   joyId=%d also means mouse, but it may change in the future versions.\n", FsMouseJoyId);
+		fprintf(fp, "REM   \"REV\" at the end of line means reverse.\n");
+		fprintf(fp, "REM \n");
+		fprintf(fp, "REM Joystick Trigger Assignment\n");
+		fprintf(fp, "REM   TRG joyId joyTrg ButtonFunction\n");
+		fprintf(fp, "REM \n");
+		fprintf(fp, "REM   joyTrg must be 0<=joyTrg<=%d\n", FsMaxNumJoyTrig - 1);
+		fprintf(fp, "REM \n");
+		fprintf(fp, "REM Keyboard Assignment\n");
+		fprintf(fp, "REM   KEY keyCode ButtonFunction\n");
+		fprintf(fp, "REM \n");
 
-		fprintf(fp,"REM List of AxisFunctions\n");
-		for(i=0; i<(int)FSAXF_NUMAXISFUNCTION; i++)
+		fprintf(fp, "REM List of AxisFunctions\n");
+		for (i = 0; i < (int)FSAXF_NUMAXISFUNCTION; i++)
 		{
-			const char *label,*str;
-			label=FsGetAxisFuncLabel((FSAXISFUNCTION)i);
-			str=FsGetAxisFuncString((FSAXISFUNCTION)i);
-			if(label!=NULL && str!=NULL)
+			const char* label, * str;
+			label = FsGetAxisFuncLabel((FSAXISFUNCTION)i);
+			str = FsGetAxisFuncString((FSAXISFUNCTION)i);
+			if (label != NULL && str != NULL)
 			{
-				fprintf(fp,"REM   %-16s %s\n",str,label);
+				fprintf(fp, "REM   %-16s %s\n", str, label);
 			}
 		}
-		fprintf(fp,"REM Use dead zone (for overly sensitive joysticks)\n");
-		fprintf(fp,"REM   DZELV TRUE/FALSE   <- Elevator axis\n");
-		fprintf(fp,"REM   DZAIL TRUE/FALSE   <- Aileron axis\n");
-		fprintf(fp,"REM   DZRUD TRUE/FALSE   <- Rudder axis\n");
-		fprintf(fp,"REM\n");
+		fprintf(fp, "REM Use dead zone (for overly sensitive joysticks)\n");
+		fprintf(fp, "REM   DZELV TRUE/FALSE   <- Elevator axis\n");
+		fprintf(fp, "REM   DZAIL TRUE/FALSE   <- Aileron axis\n");
+		fprintf(fp, "REM   DZRUD TRUE/FALSE   <- Rudder axis\n");
+		fprintf(fp, "REM\n");
 
-		fprintf(fp,"REM List of ButtonFunctions \n");
-		for(i=0; i<(int)FSBTF_NUMBUTTONFUNCTION; i++)
+		fprintf(fp, "REM List of ButtonFunctions \n");
+		for (i = 0; i < (int)FSBTF_NUMBUTTONFUNCTION; i++)
 		{
-			const char *label,*str;
-			label=FsGetButtonFuncLabel((FSBUTTONFUNCTION)i);
-			str=FsGetButtonFuncString((FSBUTTONFUNCTION)i);
-			if(label!=NULL && str!=NULL)
+			const char* label, * str;
+			label = FsGetButtonFuncLabel((FSBUTTONFUNCTION)i);
+			str = FsGetButtonFuncString((FSBUTTONFUNCTION)i);
+			if (label != NULL && str != NULL)
 			{
-				fprintf(fp,"REM   %-16s %s\n",str,label);
+				fprintf(fp, "REM   %-16s %s\n", str, label);
 			}
 		}
-		fprintf(fp,"REM\n");
+		fprintf(fp, "REM\n");
 
-		fprintf(fp,"REM List of KeyCodes\n");
-		for(i=0; i<(int)FSKEY_NUM_KEYCODE; i++)
+		fprintf(fp, "REM List of KeyCodes\n");
+		for (i = 0; i < (int)FSKEY_NUM_KEYCODE; i++)
 		{
-			const char *label,*str;
-			label=FsGetKeyLabel(i);
-			str=FsGetKeyString(i);
-			if(label!=NULL && str!=NULL)
+			const char* label, * str;
+			label = FsGetKeyLabel(i);
+			str = FsGetKeyString(i);
+			if (label != NULL && str != NULL)
 			{
-				fprintf(fp,"REM   %-16s %s\n",str,label);
+				fprintf(fp, "REM   %-16s %s\n", str, label);
 			}
 		}
-		fprintf(fp,"REM\n");
+		fprintf(fp, "REM\n");
 
 		fclose(fp);
 		return YSOK;
@@ -2423,7 +2423,7 @@ YSRESULT FsControlAssignment::Save(const wchar_t fn[])
 
 YSRESULT FsControlAssignment::MergeDefaultControl(void)
 {
-	FsControlAssignment defCtl,userCtl;
+	FsControlAssignment defCtl, userCtl;
 	YSBOOL update;
 
 	defCtl.CleanUp();
@@ -2431,72 +2431,72 @@ YSRESULT FsControlAssignment::MergeDefaultControl(void)
 	defCtl.BuildMapping();
 
 	userCtl.CleanUp();
-	if(userCtl.Load(FsGetControlAssignFile())==YSOK)
+	if (userCtl.Load(FsGetControlAssignFile()) == YSOK)
 	{
 		int i;
-		update=YSFALSE;
-		for(i=0; i<FSBTF_NUMBUTTONFUNCTION; i++)
+		update = YSFALSE;
+		for (i = 0; i < FSBTF_NUMBUTTONFUNCTION; i++)
 		{
 			FSBUTTONFUNCTION fnc;
 
-			fnc=(FSBUTTONFUNCTION)i;
+			fnc = (FSBUTTONFUNCTION)i;
 
-			if((defCtl.funcToTrgMap[i]!=NULL || defCtl.funcToKeyMap[i]!=NULL) && // A key or trigger is assigned in default assignment and
-			   (userCtl.funcToTrgMap[i]==NULL && userCtl.funcToKeyMap[i]==NULL)) // No key nor trigger is assigned in user assignment.
+			if ((defCtl.funcToTrgMap[i] != NULL || defCtl.funcToKeyMap[i] != NULL) && // A key or trigger is assigned in default assignment and
+				(userCtl.funcToTrgMap[i] == NULL && userCtl.funcToKeyMap[i] == NULL)) // No key nor trigger is assigned in user assignment.
 			{
-				if(defCtl.funcToTrgMap[i]!=NULL)  // If a trigger is assigned in default assginment
+				if (defCtl.funcToTrgMap[i] != NULL)  // If a trigger is assigned in default assginment
 				{
-					int joyId,joyTrg;
-					joyId=defCtl.funcToTrgMap[i]->joyId;
-					joyTrg=defCtl.funcToTrgMap[i]->joyTrg;
-					if(userCtl.trgToFuncMap[joyId][joyTrg]==NULL)
+					int joyId, joyTrg;
+					joyId = defCtl.funcToTrgMap[i]->joyId;
+					joyTrg = defCtl.funcToTrgMap[i]->joyTrg;
+					if (userCtl.trgToFuncMap[joyId][joyTrg] == NULL)
 					{
-						printf("No trigger was assigned to %s\n",FsGetButtonFuncLabel((FSBUTTONFUNCTION)i));
-						printf("JS:%d TRG:%d is now assigned.\n",joyId,joyTrg);
+						printf("No trigger was assigned to %s\n", FsGetButtonFuncLabel((FSBUTTONFUNCTION)i));
+						printf("JS:%d TRG:%d is now assigned.\n", joyId, joyTrg);
 
-						userCtl.AddTriggerAssignment(joyId,joyTrg,fnc);
-						update=YSTRUE;
+						userCtl.AddTriggerAssignment(joyId, joyTrg, fnc);
+						update = YSTRUE;
 					}
 				}
-				else if(defCtl.funcToKeyMap[i]!=NULL)
+				else if (defCtl.funcToKeyMap[i] != NULL)
 				{
 					int keyCode;
-					keyCode=defCtl.funcToKeyMap[i]->keyCode;
-					if(userCtl.keyToFuncMap[keyCode]==NULL)
+					keyCode = defCtl.funcToKeyMap[i]->keyCode;
+					if (userCtl.keyToFuncMap[keyCode] == NULL)
 					{
-						printf("No key was assigned to %s\n",FsGetButtonFuncLabel((FSBUTTONFUNCTION)i));
-						printf("%s-key is now assigned.\n",FsGetKeyLabel(keyCode));
+						printf("No key was assigned to %s\n", FsGetButtonFuncLabel((FSBUTTONFUNCTION)i));
+						printf("%s-key is now assigned.\n", FsGetKeyLabel(keyCode));
 
-						userCtl.AddKeyAssignment(keyCode,fnc);
-						update=YSTRUE;
+						userCtl.AddKeyAssignment(keyCode, fnc);
+						update = YSTRUE;
 					}
 				}
 			}
 		}
 
-		for(i=0; i<FSAXF_NUMAXISFUNCTION; i++)
+		for (i = 0; i < FSAXF_NUMAXISFUNCTION; i++)
 		{
 			FSAXISFUNCTION fnc;
 
-			fnc=(FSAXISFUNCTION)i;
+			fnc = (FSAXISFUNCTION)i;
 
-			if(defCtl.funcToAxisMap[i]!=NULL && userCtl.funcToAxisMap[i]==NULL)
+			if (defCtl.funcToAxisMap[i] != NULL && userCtl.funcToAxisMap[i] == NULL)
 			{
-				int joyId,joyAxs;
-				joyId=defCtl.funcToAxisMap[i]->joyId;
-				joyAxs=defCtl.funcToAxisMap[i]->joyAxs;
-				if(userCtl.axisToFuncMap[joyId][joyAxs]==NULL)
+				int joyId, joyAxs;
+				joyId = defCtl.funcToAxisMap[i]->joyId;
+				joyAxs = defCtl.funcToAxisMap[i]->joyAxs;
+				if (userCtl.axisToFuncMap[joyId][joyAxs] == NULL)
 				{
-					printf("No axis was assigned to %s\n",FsGetAxisFuncLabel((FSAXISFUNCTION)i));
-					printf("JS:%d AXS:%d is now assigned.\n",joyId,joyAxs);
+					printf("No axis was assigned to %s\n", FsGetAxisFuncLabel((FSAXISFUNCTION)i));
+					printf("JS:%d AXS:%d is now assigned.\n", joyId, joyAxs);
 
-					userCtl.AddAxisAssignment(joyId,joyAxs,fnc,defCtl.funcToAxisMap[i]->reverse);
-					update=YSTRUE;
+					userCtl.AddAxisAssignment(joyId, joyAxs, fnc, defCtl.funcToAxisMap[i]->reverse);
+					update = YSTRUE;
 				}
 			}
 		}
 
-		if(update==YSTRUE)
+		if (update == YSTRUE)
 		{
 			userCtl.BuildMapping();
 			return userCtl.Save(FsGetControlAssignFile());
@@ -2508,251 +2508,251 @@ YSRESULT FsControlAssignment::MergeDefaultControl(void)
 
 FsCenterJoystick::FsCenterJoystick()
 {
-	pJoy=new FsJoystick[FsMaxNumJoystick];
-	joy=new FsJoystick[FsMaxNumJoystick];
+	pJoy = new FsJoystick[FsMaxNumJoystick];
+	joy = new FsJoystick[FsMaxNumJoystick];
 }
 
 FsCenterJoystick::~FsCenterJoystick()
 {
-	if(NULL!=pJoy)
+	if (NULL != pJoy)
 	{
-		delete [] pJoy;
-		pJoy=NULL;
+		delete[] pJoy;
+		pJoy = NULL;
 	}
-	if(NULL!=joy)
+	if (NULL != joy)
 	{
-		delete [] joy;
-		joy=NULL;
+		delete[] joy;
+		joy = NULL;
 	}
 }
 
-void FsCenterJoystick::Initialize(FsFlightControl *ctl,const FsControlAssignment *ctlAssign,int nextActionCode)
+void FsCenterJoystick::Initialize(FsFlightControl* ctl, const FsControlAssignment* ctlAssign, int nextActionCode)
 {
-	this->ctl=ctl;
-	this->ctlAssign=ctlAssign;
+	this->ctl = ctl;
+	this->ctlAssign = ctlAssign;
 
-	state=INITIAL;
-	this->nextActionCode=nextActionCode;
+	state = INITIAL;
+	this->nextActionCode = nextActionCode;
 }
 
 void FsCenterJoystick::RunOneStep(void)
 {
-	YSBOOL lb,mb,rb;
-	int mx,my;
+	YSBOOL lb, mb, rb;
+	int mx, my;
 
-	if(INITIAL==state)
+	if (INITIAL == state)
 	{
-		for(int i=0; i<FsMaxNumJoystick; i++)
+		for (int i = 0; i < FsMaxNumJoystick; i++)
 		{
-			FsPollJoystick(joy[i],i);
+			FsPollJoystick(joy[i], i);
 		}
-		ctl->ReadControl(*ctlAssign,joy);
-		state=WAITING_FOR_BUTTON;
+		ctl->ReadControl(*ctlAssign, joy);
+		state = WAITING_FOR_BUTTON;
 	}
-	else if(WAITING_FOR_BUTTON==state)
+	else if (WAITING_FOR_BUTTON == state)
 	{
 		int key;
 
-		while((key=FsInkey())!=FSKEY_NULL)
+		while ((key = FsInkey()) != FSKEY_NULL)
 		{
 			FSBUTTONFUNCTION fnc;
-			fnc=ctlAssign->TranslateKeyStroke(key);
-			ctl->ProcessButtonFunction(0.0,NULL,fnc);
-			if(key==FSKEY_SPACE || key==FSKEY_ENTER) // or trigger is pulled
+			fnc = ctlAssign->TranslateKeyStroke(key);
+			ctl->ProcessButtonFunction(0.0, NULL, fnc);
+			if (key == FSKEY_SPACE || key == FSKEY_ENTER) // or trigger is pulled
 			{
-				waitStart=time(NULL);
-				state=WAITING_FOR_RELEASE;
+				waitStart = time(NULL);
+				state = WAITING_FOR_RELEASE;
 				return;
 			}
-			if(key==FSKEY_ESC)
+			if (key == FSKEY_ESC)
 			{
-				res=YSERR;
-				state=OVER;
+				res = YSERR;
+				state = OVER;
 				return;
 			}
 		}
 
-		for(int i=0; i<FsMaxNumJoystick; i++)
+		for (int i = 0; i < FsMaxNumJoystick; i++)
 		{
-			pJoy[i]=joy[i];
-			FsPollJoystick(joy[i],i);
-			for(int j=0; j<FsMaxNumJoyTrig; j++)
+			pJoy[i] = joy[i];
+			FsPollJoystick(joy[i], i);
+			for (int j = 0; j < FsMaxNumJoyTrig; j++)
 			{
 				FSBUTTONFUNCTION fnc;
-				fnc=ctlAssign->TranslateTrigger(i,j);
-				if(fnc!=FSBTF_NULL && joy[i].trg[j]==YSTRUE)
+				fnc = ctlAssign->TranslateTrigger(i, j);
+				if (fnc != FSBTF_NULL && joy[i].trg[j] == YSTRUE)
 				{
-					waitStart=time(NULL);
-					state=WAITING_FOR_RELEASE;
+					waitStart = time(NULL);
+					state = WAITING_FOR_RELEASE;
 					return;
 				}
 			}
 		}
 
-		FsGetMouseEvent(lb,mb,rb,mx,my);
-		if(lb==YSTRUE || mb==YSTRUE || rb==YSTRUE)
+		FsGetMouseEvent(lb, mb, rb, mx, my);
+		if (lb == YSTRUE || mb == YSTRUE || rb == YSTRUE)
 		{
-			waitStart=time(NULL);
-			state=WAITING_FOR_RELEASE;
+			waitStart = time(NULL);
+			state = WAITING_FOR_RELEASE;
 			return;
 		}
 
-		ctl->ReadControl(*ctlAssign,pJoy,joy);
+		ctl->ReadControl(*ctlAssign, pJoy, joy);
 	}
-	else if(WAITING_FOR_RELEASE==state)
+	else if (WAITING_FOR_RELEASE == state)
 	{
-		int x,y;
-		const time_t waitTime=2;
+		int x, y;
+		const time_t waitTime = 2;
 
-		x=32;
-		y=48;
+		x = 32;
+		y = 48;
 
-		waiting=time(NULL)-waitStart;
+		waiting = time(NULL) - waitStart;
 
-		while(FsInkey()!=FSKEY_NULL)
+		while (FsInkey() != FSKEY_NULL)
 		{
 		}
 
 		int c;
-		c=0;
-		if(FsGetKeyState(FSKEY_SPACE)!=YSFALSE)
+		c = 0;
+		if (FsGetKeyState(FSKEY_SPACE) != YSFALSE)
 		{
 			c++;
 		}
-		for(int i=0; i<FsMaxNumJoystick; i++)
+		for (int i = 0; i < FsMaxNumJoystick; i++)
 		{
-			FsPollJoystick(joy[i],i);
-			for(int j=0; j<FsMaxNumJoyTrig; j++)
+			FsPollJoystick(joy[i], i);
+			for (int j = 0; j < FsMaxNumJoyTrig; j++)
 			{
-				auto fnc=ctlAssign->TranslateTrigger(i,j);
-				if(fnc!=FSBTF_NULL && joy[i].trg[j]==YSTRUE)
+				auto fnc = ctlAssign->TranslateTrigger(i, j);
+				if (fnc != FSBTF_NULL && joy[i].trg[j] == YSTRUE)
 				{
 					c++;
 				}
 			}
 		}
 
-		FsGetMouseEvent(lb,mb,rb,mx,my);
-		if(lb==YSTRUE || mb==YSTRUE || rb==YSTRUE)
+		FsGetMouseEvent(lb, mb, rb, mx, my);
+		if (lb == YSTRUE || mb == YSTRUE || rb == YSTRUE)
 		{
 			c++;
 		}
 
-		if(c==0 || 5<waiting)
+		if (c == 0 || 5 < waiting)
 		{
-			state=OVER;
+			state = OVER;
 			return;
 		}
 	}
-	else if(OVER==state)
+	else if (OVER == state)
 	{
 	}
 }
 
 void FsCenterJoystick::Draw(void) const
 {
-	if(INITIAL==state)
+	if (INITIAL == state)
 	{
 	}
-	else if(WAITING_FOR_BUTTON==state)
+	else if (WAITING_FOR_BUTTON == state)
 	{
 		FsClearScreenAndZBuffer(YsBlue());
 
 		FsProjection prj;
 		FsSimulation::GetStandardProjection(prj);
-		prj.nearz=0.1;
-		prj.farz=50.0;
+		prj.nearz = 0.1;
+		prj.farz = 50.0;
 		FsSetSceneProjection(prj);
 
 
-		YsVec3 pos(0.0,0.0,-1.0);
-		YsAtt3 att(0.0,-YsPi/4.1,0.0);
-		att.Mul(pos,pos);
+		YsVec3 pos(0.0, 0.0, -1.0);
+		YsAtt3 att(0.0, -YsPi / 4.1, 0.0);
+		att.Mul(pos, pos);
 		pos.AddY(0.2);
-		FsSetCameraPosition(pos,att,YSTRUE);
-		FsSetDirectionalLight(YsVec3(0.0,0.2,-1.0),YsYVec(),FSDAYLIGHT);
+		FsSetCameraPosition(pos, att, YSTRUE);
+		FsSetDirectionalLight(YsVec3(0.0, 0.2, -1.0), YsYVec(), FSDAYLIGHT);
 
 
 
-		YsVec3 joyPos,thrPos,rudPos;
-		joyPos.Set( 0.4,0.1,0.2);
-		thrPos.Set(-0.4,0.1,0.2);
-		rudPos.Set( 0.0,-0.4,-0.05);
+		YsVec3 joyPos, thrPos, rudPos;
+		joyPos.Set(0.4, 0.1, 0.2);
+		thrPos.Set(-0.4, 0.1, 0.2);
+		rudPos.Set(0.0, -0.4, -0.05);
 
-		att.MulInverse(joyPos,joyPos-pos);
-		att.MulInverse(thrPos,thrPos-pos);
-		att.MulInverse(rudPos,rudPos-pos);
+		att.MulInverse(joyPos, joyPos - pos);
+		att.MulInverse(thrPos, thrPos - pos);
+		att.MulInverse(rudPos, rudPos - pos);
 
-		YsVec3 ev=YsZVec(),uv=YsYVec();
-		att.MulInverse(ev,ev);
-		att.MulInverse(uv,uv);
+		YsVec3 ev = YsZVec(), uv = YsYVec();
+		att.MulInverse(ev, ev);
+		att.MulInverse(uv, uv);
 
 		YsAtt3 joyAtt;
-		joyAtt.SetTwoVector(ev,uv);
+		joyAtt.SetTwoVector(ev, uv);
 
-		ctl->DrawJoystick(joyPos,joyAtt);
-		ctl->DrawThrottle(thrPos,joyAtt);
-		ctl->DrawRudder(rudPos,joyAtt);
+		ctl->DrawJoystick(joyPos, joyAtt);
+		ctl->DrawThrottle(thrPos, joyAtt);
+		ctl->DrawRudder(rudPos, joyAtt);
 
 
 
 		FsSet2DDrawing();
-		FsDrawString(48,48,"CENTER JOYSTICK. PRESS SPACE KEY or TRIGGER TO GO!",YsWhite());
+		FsDrawString(48, 48, "CENTER JOYSTICK. PRESS SPACE KEY or TRIGGER TO GO!", YsWhite());
 
 		FsFlushScene(); // BiFlushBuffer();
 		FsSwapBuffers();
 	}
-	else if(WAITING_FOR_RELEASE==state)
+	else if (WAITING_FOR_RELEASE == state)
 	{
-		int x,y;
-		const time_t waitTime=2;
+		int x, y;
+		const time_t waitTime = 2;
 
-		x=32;
-		y=48;
+		x = 32;
+		y = 48;
 
-		auto waiting=time(NULL)-waitStart;
-		if(waiting>=waitTime)
+		auto waiting = time(NULL) - waitStart;
+		if (waiting >= waitTime)
 		{
 			FsClearScreenAndZBuffer(YsBlue());
 			FsSet2DDrawing();
 
-			if(FsGetKeyState(FSKEY_SPACE)!=YSFALSE)
+			if (FsGetKeyState(FSKEY_SPACE) != YSFALSE)
 			{
-				if(waiting>=waitTime)
+				if (waiting >= waitTime)
 				{
-					FsDrawString(x,y,"Please Release Space Key",YsWhite());
-					y+=24;
+					FsDrawString(x, y, "Please Release Space Key", YsWhite());
+					y += 24;
 				}
 			}
-			for(int i=0; i<FsMaxNumJoystick; i++)
+			for (int i = 0; i < FsMaxNumJoystick; i++)
 			{
-				FsPollJoystick(joy[i],i);
-				for(int j=0; j<FsMaxNumJoyTrig; j++)
+				FsPollJoystick(joy[i], i);
+				for (int j = 0; j < FsMaxNumJoyTrig; j++)
 				{
 					FSBUTTONFUNCTION fnc;
-					fnc=ctlAssign->TranslateTrigger(i,j);
-					if(fnc!=FSBTF_NULL && joy[i].trg[j]==YSTRUE)
+					fnc = ctlAssign->TranslateTrigger(i, j);
+					if (fnc != FSBTF_NULL && joy[i].trg[j] == YSTRUE)
 					{
-						if(waiting>=waitTime)
+						if (waiting >= waitTime)
 						{
 							char str[256];
-							sprintf(str,"Please Release Joystick %d Button %d",i,j);
-							FsDrawString(x,y,str,YsWhite());
-							y+=24;
+							sprintf(str, "Please Release Joystick %d Button %d", i, j);
+							FsDrawString(x, y, str, YsWhite());
+							y += 24;
 						}
 					}
 				}
 			}
 
-			int mx,my;
-			YSBOOL lb,mb,rb;
-			FsMouse(lb,mb,rb,mx,my);
-			if(lb==YSTRUE || mb==YSTRUE || rb==YSTRUE)
+			int mx, my;
+			YSBOOL lb, mb, rb;
+			FsMouse(lb, mb, rb, mx, my);
+			if (lb == YSTRUE || mb == YSTRUE || rb == YSTRUE)
 			{
-				if(waiting>=waitTime)
+				if (waiting >= waitTime)
 				{
-					FsDrawString(x,y,"Please Release Mouse Button",YsWhite());
-					y+=24;
+					FsDrawString(x, y, "Please Release Mouse Button", YsWhite());
+					y += 24;
 				}
 			}
 
@@ -2760,7 +2760,7 @@ void FsCenterJoystick::Draw(void) const
 			FsSwapBuffers();
 		}
 	}
-	else if(OVER==state)
+	else if (OVER == state)
 	{
 	}
 }

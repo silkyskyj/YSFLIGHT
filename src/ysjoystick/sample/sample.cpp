@@ -10,36 +10,36 @@ YsJoyReader joystick[maxNumJoystick];
 
 int main(void)
 {
-	YsJoyReaderSetUpJoystick(numJoystick,joystick,maxNumJoystick);
-	YsJoyReaderLoadJoystickCalibrationInfo(numJoystick,joystick);
+	YsJoyReaderSetUpJoystick(numJoystick, joystick, maxNumJoystick);
+	YsJoyReaderLoadJoystickCalibrationInfo(numJoystick, joystick);
 
-	while(1)
+	while (1)
 	{
-		int i,j;
-		for(i=0; i<numJoystick; i++)
+		int i, j;
+		for (i = 0; i < numJoystick; i++)
 		{
 			joystick[i].Read();
 
-			printf("Joy[%d]",i);
-			for(j=0; j<YsJoyReaderMaxNumAxis; j++)
+			printf("Joy[%d]", i);
+			for (j = 0; j < YsJoyReaderMaxNumAxis; j++)
 			{
-				if(joystick[i].axis[j].exist!=0)
+				if (joystick[i].axis[j].exist != 0)
 				{
-					printf(" Ax%d:%+5.2lf",j,joystick[i].axis[j].GetCalibratedValue());
+					printf(" Ax%d:%+5.2lf", j, joystick[i].axis[j].GetCalibratedValue());
 				}
 			}
-			for(j=0; j<YsJoyReaderMaxNumButton; j++)
+			for (j = 0; j < YsJoyReaderMaxNumButton; j++)
 			{
-				if(joystick[i].button[j].exist!=0)
+				if (joystick[i].button[j].exist != 0)
 				{
-					printf(" Bt%d:%d",j,joystick[i].button[j].value);
+					printf(" Bt%d:%d", j, joystick[i].button[j].value);
 				}
 			}
-			for(j=0; j<YsJoyReaderMaxNumHatSwitch; j++)
+			for (j = 0; j < YsJoyReaderMaxNumHatSwitch; j++)
 			{
-				if(joystick[i].hatSwitch[j].exist!=0)
+				if (joystick[i].hatSwitch[j].exist != 0)
 				{
-					printf(" POV%d:%d",j,joystick[i].hatSwitch[j].value);
+					printf(" POV%d:%d", j, joystick[i].hatSwitch[j].value);
 				}
 			}
 			printf("\n");

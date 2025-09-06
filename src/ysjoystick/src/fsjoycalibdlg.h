@@ -9,10 +9,10 @@
 #else
 extern YsTextResource fsTextResource;
 
-inline const wchar_t *FsJoyCalibGUIMessage(const char msgkey[],const wchar_t altTxt[])
+inline const wchar_t* FsJoyCalibGUIMessage(const char msgkey[], const wchar_t altTxt[])
 {
-	auto msg=fsTextResource.FindWString(msgkey);
-	if(NULL!=msg)
+	auto msg = fsTextResource.FindWString(msgkey);
+	if (NULL != msg)
 	{
 		return msg;
 	}
@@ -40,7 +40,7 @@ inline const wchar_t *FsJoyCalibGUIMessage(const char msgkey[],const wchar_t alt
 #define FSJC_BMP_CALIB_NEXT         FsJoyCalibGUIMessage("joycalib_next",        L"Next >>")
 #endif
 
-enum 
+enum
 {
 	FSJOY_AXISTYPE_STICKORYOKE,
 	FSJOY_AXISTYPE_QUADRANT,
@@ -51,53 +51,53 @@ class FsCalibrationDialog : public FsGuiDialog
 {
 public:
 	int nJoystick;
-	YsJoyReader *joystick;
+	YsJoyReader* joystick;
 	YSBOOL exitDlg;
 
-	FsGuiButton *calibrateBtn;
+	FsGuiButton* calibrateBtn;
 #ifdef YSJOYREADER_USE_HAT_CALIBRATION
-	FsGuiButton *calibrateHatBtn;
+	FsGuiButton* calibrateHatBtn;
 #endif
-	FsGuiButton *eraseInfoBtn,*exitBtn;
+	FsGuiButton* eraseInfoBtn, * exitBtn;
 
-	FsGuiDropList *joyId;
-	FsGuiDropList *joyType;
+	FsGuiDropList* joyId;
+	FsGuiDropList* joyType;
 
 #ifdef GLX
-	FsGuiDropList *povXAxis,*povYAxis;
+	FsGuiDropList* povXAxis, * povYAxis;
 #endif
 
-	FsGuiStatic *axisRaw[YsJoyReaderMaxNumAxis],*axisCalib[YsJoyReaderMaxNumAxis];
-	FsGuiStatic *button;
-	FsGuiStatic *hatSwitchRaw,*hatSwitchCalibrated;
+	FsGuiStatic* axisRaw[YsJoyReaderMaxNumAxis], * axisCalib[YsJoyReaderMaxNumAxis];
+	FsGuiStatic* button;
+	FsGuiStatic* hatSwitchRaw, * hatSwitchCalibrated;
 
 	FsCalibrationDialog();
-	FsCalibrationDialog(int nJoystick,YsJoyReader *joystick);
-	void SetJoystick(int nJoystick,YsJoyReader *joystick);
+	FsCalibrationDialog(int nJoystick, YsJoyReader* joystick);
+	void SetJoystick(int nJoystick, YsJoyReader* joystick);
 	void MakeDialog(void);
-	void SetValueText(const YsJoyReader &joystick) const;
+	void SetValueText(const YsJoyReader& joystick) const;
 	void InitialSetup(void);
 	void GetAxisType(int axisType[YsJoyReaderMaxNumAxis]) const;
 
-	void CalibrateJoystick(YsJoyReader &joystick,int axisType[]);
-	void CalibrateHatSwitch(YsJoyReader &joystick);
-	void CaptureHat(YsJoyReader &joystick,int hatId,int &hatValueCapture,FsGuiDialog *dlg,FsGuiButton *nextBtn,FsGuiStatic *hatState);
-	void ShowJoystickAxes(const YsJoyReader &joy,const int axisType[]) const;
+	void CalibrateJoystick(YsJoyReader& joystick, int axisType[]);
+	void CalibrateHatSwitch(YsJoyReader& joystick);
+	void CaptureHat(YsJoyReader& joystick, int hatId, int& hatValueCapture, FsGuiDialog* dlg, FsGuiButton* nextBtn, FsGuiStatic* hatState);
+	void ShowJoystickAxes(const YsJoyReader& joy, const int axisType[]) const;
 
 	// fsjoycalibdlggl.cpp >>
 	void ClearScreen(void) const;
-	void ShowJoystickAxis(const YsJoyReader &joy,const int axisType[],int axis,int x,int y) const;
-	void ShowHatSwitch(const YsJoyReader &joy,int hatId,int x,int y) const;
+	void ShowJoystickAxis(const YsJoyReader& joy, const int axisType[], int axis, int x, int y) const;
+	void ShowHatSwitch(const YsJoyReader& joy, int hatId, int x, int y) const;
 	// fsjoycalibdlggl.cpp <<
 
 	virtual void Interval(void);
-	virtual void OnButtonClick(FsGuiButton *btn);
+	virtual void OnButtonClick(FsGuiButton* btn);
 #ifdef GLX
-	virtual void OnDropListSelChange(FsGuiDropList *drp,int prevSel);
+	virtual void OnDropListSelChange(FsGuiDropList* drp, int prevSel);
 #endif
-	virtual void Show(const FsGuiDialog *excludeFromDrawing=NULL) const;
+	virtual void Show(const FsGuiDialog* excludeFromDrawing = NULL) const;
 
-	void OnCalibrateAxisDialogClosed(FsGuiDialog *dlg,int returnCode);
+	void OnCalibrateAxisDialogClosed(FsGuiDialog* dlg, int returnCode);
 };
 
 

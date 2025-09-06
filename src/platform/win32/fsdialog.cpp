@@ -1,9 +1,9 @@
 
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stddef.h>
 
 #include <direct.h>
 
@@ -17,8 +17,8 @@
 #include <fsopengl.h>
 #include <fswindow.h>
 
-#include <windows.h>
 #include <float.h>
+#include <windows.h>
 
 #include <ysbitmap.h>
 
@@ -36,7 +36,7 @@ extern void FsClearEventQueue(void);
 extern int FsCheckKeyHeldDown(void);
 
 
-static FsWorld *currentWorld=NULL;
+static FsWorld* currentWorld = NULL;
 
 extern HWND FsWin32GetMainWindowHandle(void);
 
@@ -45,30 +45,30 @@ extern HWND FsWin32GetMainWindowHandle(void);
 static void FsInstallJWordPlugin(HWND hDlg)
 {
 	STARTUPINFO sui;
-	sui.cb=sizeof(STARTUPINFO);
-	sui.lpReserved=NULL;
-	sui.lpDesktop=NULL;
-	sui.lpTitle=NULL;
-	sui.dwFlags=0;
-	sui.cbReserved2=0;
-	sui.lpReserved2=0;
+	sui.cb = sizeof(STARTUPINFO);
+	sui.lpReserved = NULL;
+	sui.lpDesktop = NULL;
+	sui.lpTitle = NULL;
+	sui.dwFlags = 0;
+	sui.cbReserved2 = 0;
+	sui.lpReserved2 = 0;
 
 	PROCESS_INFORMATION pi;
 	BOOL err;
 
-	err=CreateProcess
-	   (NULL,
-	    FS_JWORD_COMMAND,
-	    NULL,
-	    NULL,
-	    FALSE,
-	    CREATE_DEFAULT_ERROR_MODE,
-	    NULL,
-	    NULL,
-	    &sui,
-	    &pi);
+	err = CreateProcess
+	(NULL,
+		FS_JWORD_COMMAND,
+		NULL,
+		NULL,
+		FALSE,
+		CREATE_DEFAULT_ERROR_MODE,
+		NULL,
+		NULL,
+		&sui,
+		&pi);
 
-	MessageBoxA(hDlg,"JWordƒvƒ‰ƒOƒCƒ“‚ğƒCƒ“ƒXƒg[ƒ‹‚¢‚½‚¾‚«A‚ ‚è‚ª‚Æ‚¤‚²‚´‚¢‚Ü‚µ‚½B","Thank you!",MB_OK);
+	MessageBoxA(hDlg, "JWordï¿½vï¿½ï¿½ï¿½Oï¿½Cï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Xï¿½gï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½è‚ªï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B", "Thank you!", MB_OK);
 }
 
 void FsWin32InstallJWordPlugin(void) // Called from fsmenu.cpp as a cheating function.

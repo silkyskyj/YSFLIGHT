@@ -1,31 +1,31 @@
-#include <string.h>
 #include "ysjoyreader.h"
+#include <string.h>
 
 
 double YsJoyReaderAxis::GetCalibratedValue(void) const
 {
 	double calib;
 
-	if(calibCenter<value && calibMax!=calibCenter)
+	if (calibCenter < value && calibMax != calibCenter)
 	{
-		calib=(double)(value-calibCenter)/(double)(calibMax-calibCenter);
+		calib = (double)(value - calibCenter) / (double)(calibMax - calibCenter);
 	}
-	else if(value<calibCenter && calibMin!=calibCenter)
+	else if (value < calibCenter && calibMin != calibCenter)
 	{
-		calib=(double)(value-calibCenter)/(double)(calibCenter-calibMin);
+		calib = (double)(value - calibCenter) / (double)(calibCenter - calibMin);
 	}
 	else
 	{
 		return 0.0;
 	}
 
-	if(calib>1.0)
+	if (calib > 1.0)
 	{
-		calib=1.0;
+		calib = 1.0;
 	}
-	if(calib<-1.0)
+	if (calib < -1.0)
 	{
-		calib=-1.0;
+		calib = -1.0;
 	}
 
 	return calib;
@@ -33,30 +33,30 @@ double YsJoyReaderAxis::GetCalibratedValue(void) const
 
 void YsJoyReaderAxis::CaptureCenter(void)
 {
-	calibCenter=value;
+	calibCenter = value;
 }
 
 void YsJoyReaderAxis::BeginCaptureMinMax(void)
 {
-	calibMin=calibCenter+1000;
-	calibMax=calibCenter-1000;
+	calibMin = calibCenter + 1000;
+	calibMax = calibCenter - 1000;
 }
 
 void YsJoyReaderAxis::CaptureMinMax(void)
 {
-	if(value<calibMin)
+	if (value < calibMin)
 	{
-		calibMin=value;
+		calibMin = value;
 	}
-	if(value>calibMax)
+	if (value > calibMax)
 	{
-		calibMax=value;
+		calibMax = value;
 	}
 }
 
 void YsJoyReaderAxis::CenterFromMinMax(void)
 {
-	calibCenter=(calibMin+calibMax)/2;
+	calibCenter = (calibMin + calibMax) / 2;
 }
 
 YsJoyReaderButton::YsJoyReaderButton()
@@ -65,22 +65,22 @@ YsJoyReaderButton::YsJoyReaderButton()
 
 YsJoyReaderHatSwitch::YsJoyReaderHatSwitch()
 {
-	valueNeutral=0;
-	value0Deg=1;
-	value90Deg=3;
-	value180Deg=5;
-	value270Deg=7;
+	valueNeutral = 0;
+	value0Deg = 1;
+	value90Deg = 3;
+	value180Deg = 5;
+	value270Deg = 7;
 }
 
-int YsJoyReaderSaveJoystickCalibrationInfo(int nJoystick,YsJoyReader joystick[])
+int YsJoyReaderSaveJoystickCalibrationInfo(int nJoystick, YsJoyReader joystick[])
 {
-	FILE *fp;
-	fp=YsJoyReaderOpenJoystickCalibrationFile("w");
+	FILE* fp;
+	fp = YsJoyReaderOpenJoystickCalibrationFile("w");
 
-	if(fp!=NULL)
+	if (fp != NULL)
 	{
 		int i;
-		for(i=0; i<nJoystick; i++)
+		for (i = 0; i < nJoystick; i++)
 		{
 			joystick[i].WriteCalibInfoFile(fp);
 		}
@@ -91,21 +91,21 @@ int YsJoyReaderSaveJoystickCalibrationInfo(int nJoystick,YsJoyReader joystick[])
 	return 0;
 }
 
-int YsJoyReaderLoadJoystickCalibrationInfo(int nJoystick,YsJoyReader joystick[])
+int YsJoyReaderLoadJoystickCalibrationInfo(int nJoystick, YsJoyReader joystick[])
 {
-	FILE *fp;
-	fp=YsJoyReaderOpenJoystickCalibrationFile("r");
+	FILE* fp;
+	fp = YsJoyReaderOpenJoystickCalibrationFile("r");
 
-	if(fp!=NULL)
+	if (fp != NULL)
 	{
 		char str[256];
-		while(fgets(str,255,fp)!=NULL)
+		while (fgets(str, 255, fp) != NULL)
 		{
-			if(strncmp(str,"BGNJOY",6)==0)
+			if (strncmp(str, "BGNJOY", 6) == 0)
 			{
 				int joyId;
-				sscanf(str,"%*s %d",&joyId);
-				if(0<=joyId && joyId<nJoystick)
+				sscanf(str, "%*s %d", &joyId);
+				if (0 <= joyId && joyId < nJoystick)
 				{
 					joystick[joyId].ReadCalibInfoFile(fp);
 				}

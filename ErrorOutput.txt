@@ -1,0 +1,232 @@
+    <Exec Command="%(PreBuildEvent.Command)$(_BuildSuffix)" StdOutEncoding="%(PreBuildEvent.StdOutEncoding)" StdErrEncoding="%(PreBuildEvent.StdErrEncoding)" Condition="'%(PreBuildEvent.Command)' != ''"/>
+
+  ysflight_graphics_gl1.vcxproj -> C:\Projects\silkyskyj\YSFLIGHT\build\graphics\gl\Release\ysflight_graphics_gl1.lib
+  ysflight_gui.vcxproj -> C:\Projects\silkyskyj\YSFLIGHT\build\gui\Release\ysflight_gui.lib
+  Python
+  Python
+  Python
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: コマンド "setlocal [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: python C:/Projects/silkyskyj/YSFLIGHT/src/main_demoOnly/../../scripts/runtime_timestamp.py C:/Projects/si
+lkyskyj/YSFLIGHT/src/main_demoOnly/../../runtime [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo
+.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.
+vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main_demo
+Only\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmErrorLevel [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: exit /b %1 [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :VCEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.
+vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :VCEnd" はコード 9009 で終了しました。 [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj
+]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: コマンド "setlocal [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: python C:/Projects/silkyskyj/YSFLIGHT/src/main/../../scripts/runtime_timestamp.py C:/Projects/silkyskyj/Y
+SFLIGHT/src/main/../../runtime [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysfl
+ight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmErrorLevel [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: exit /b %1 [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :VCEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :VCEnd" はコード 9009 で終了しました。 [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: コマンド "setlocal [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: python C:/Projects/silkyskyj/YSFLIGHT/src/main/../../scripts/runtime_timestamp.py C:/Projects/silkyskyj/Y
+SFLIGHT/src/main/../../runtime [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysfl
+ight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmErrorLevel [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: exit /b %1 [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :VCEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :VCEnd" はコード 9009 で終了しました。 [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+  Python
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: コマンド "setlocal [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: python C:/Projects/silkyskyj/YSFLIGHT/src/main_demoOnly/../../scripts/runtime_timestamp.py C:/Projects/si
+lkyskyj/YSFLIGHT/src/main_demoOnly/../../runtime [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo
+.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.
+vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main_demo
+Only\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmErrorLevel [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: exit /b %1 [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :VCEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.
+vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :VCEnd" はコード 9009 で終了しました。 [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj
+]
+  ysflight64_nownd.vcxproj -> C:\Projects\silkyskyj\YSFLIGHT\build\main_consvr\Release\ysflight64_nownd.exe
+  For: ysflight64_nownd
+  Copy
+  From: C:/Projects/silkyskyj/YSFLIGHT/src/main_consvr/../../runtime
+  To: C:/Projects/silkyskyj/YSFLIGHT/build/main_consvr/Release
+
+C:\Projects\silkyskyj\YSFLIGHT\build>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: コマンド "setlocal [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: python C:/Projects/silkyskyj/YSFLIGHT/src/main/../../scripts/runtime_timestamp.py C:/Projects/silkyskyj/Y
+SFLIGHT/src/main/../../runtime [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysfl
+ight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmErrorLevel [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: exit /b %1 [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :VCEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :VCEnd" はコード 9009 で終了しました。 [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl1.vcxproj]
+  
+  Python
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: コマンド "setlocal [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: python C:/Projects/silkyskyj/YSFLIGHT/src/main_demoOnly/../../scripts/runtime_timestamp.py C:/Projects/si
+lkyskyj/YSFLIGHT/src/main_demoOnly/../../runtime [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo
+.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.
+vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main_demo
+Only\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmErrorLevel [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: exit /b %1 [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :VCEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.
+vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :VCEnd" はコード 9009 で終了しました。 [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl1demo.vcxproj
+]
+
+
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: コマンド "setlocal [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: python C:/Projects/silkyskyj/YSFLIGHT/src/main_demoOnly/../../scripts/runtime_timestamp.py C:/Projects/si
+lkyskyj/YSFLIGHT/src/main_demoOnly/../../runtime [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo
+.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.
+vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main_demo
+Only\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmErrorLevel [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: exit /b %1 [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :VCEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.
+vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :VCEnd" はコード 9009 で終了しました。 [C:\Projects\silkyskyj\YSFLIGHT\build\main_demoOnly\ysflight64_gl2demo.vcxproj
+]
+
+  Python
+  
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: コマンド "setlocal [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: python C:/Projects/silkyskyj/YSFLIGHT/src/main/../../scripts/runtime_timestamp.py C:/Projects/silkyskyj/Y
+SFLIGHT/src/main/../../runtime [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysfl
+ight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmErrorLevel [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: exit /b %1 [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :cmDone [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: if %errorlevel% neq 0 goto :VCEnd [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(156,5): e
+rror MSB3073: :VCEnd" はコード 9009 で終了しました。 [C:\Projects\silkyskyj\YSFLIGHT\build\main\ysflight64_gl2.vcxproj]
+
+C:\Projects\silkyskyj\YSFLIGHT\build>

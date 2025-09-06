@@ -8,38 +8,38 @@
 #include <fswindow.h>
 #include <fscontrol.h>
 
-static YSBOOL FsFirstJoystickRead=YSTRUE;
+static YSBOOL FsFirstJoystickRead = YSTRUE;
 
 static JOYCAPS FsJoyCaps[FsMaxNumJoystick];
 static YSBOOL FsJoystickIsPlugged[FsMaxNumJoystick];
 
 static void FsGetJoystickCapabilities(void)
 {
-	if(FsFirstJoystickRead==YSTRUE)
+	if (FsFirstJoystickRead == YSTRUE)
 	{
-		int i,j;
+		int i, j;
 		int nJoy;
 
-		FsFirstJoystickRead=YSFALSE;
+		FsFirstJoystickRead = YSFALSE;
 
-		for(i=0; i<FsMaxNumJoystick; i++)
+		for (i = 0; i < FsMaxNumJoystick; i++)
 		{
-			FsJoystickIsPlugged[i]=YSFALSE;
+			FsJoystickIsPlugged[i] = YSFALSE;
 		}
 
-		nJoy=YsSmaller <int> (joyGetNumDevs(),FsMaxNumJoystick);
+		nJoy = YsSmaller <int>(joyGetNumDevs(), FsMaxNumJoystick);
 
-		for(i=0; i<nJoy; i++)
+		for (i = 0; i < nJoy; i++)
 		{
-			for(j=0; j<8; j++)  // Retry
+			for (j = 0; j < 8; j++)  // Retry
 			{
 				JOYINFOEX joy;
-				joy.dwSize=sizeof(joy);
-				joy.dwFlags=JOY_RETURNALL|JOY_RETURNCENTERED;
-				if(joyGetPosEx(i,&joy)==JOYERR_NOERROR)  // If it is unplugged, it'll return JOYERR_UNPLUGGED
+				joy.dwSize = sizeof(joy);
+				joy.dwFlags = JOY_RETURNALL | JOY_RETURNCENTERED;
+				if (joyGetPosEx(i, &joy) == JOYERR_NOERROR)  // If it is unplugged, it'll return JOYERR_UNPLUGGED
 				{
-					FsJoystickIsPlugged[i]=YSTRUE;
-					joyGetDevCaps(i,&FsJoyCaps[i],sizeof(JOYCAPS));
+					FsJoystickIsPlugged[i] = YSTRUE;
+					joyGetDevCaps(i, &FsJoyCaps[i], sizeof(JOYCAPS));
 					break;
 				}
 				FsSleep(10);
@@ -48,13 +48,13 @@ static void FsGetJoystickCapabilities(void)
 	}
 }
 
-YSBOOL FsIsJoystickAxisAvailable(int joyId,int joyAxs)
+YSBOOL FsIsJoystickAxisAvailable(int joyId, int joyAxs)
 {
 	FsGetJoystickCapabilities();
 
-	if(joyId==FsMouseJoyId)
+	if (joyId == FsMouseJoyId)
 	{
-		if(joyAxs==0 || joyAxs==1)
+		if (joyAxs == 0 || joyAxs == 1)
 		{
 			return YSTRUE;
 		}
@@ -63,45 +63,45 @@ YSBOOL FsIsJoystickAxisAvailable(int joyId,int joyAxs)
 			return YSFALSE;
 		}
 	}
-	else if(0<=joyId && joyId<FsMaxNumJoystick && FsJoystickIsPlugged[joyId]==YSTRUE)
+	else if (0 <= joyId && joyId < FsMaxNumJoystick && FsJoystickIsPlugged[joyId] == YSTRUE)
 	{
-		switch(joyAxs)
+		switch (joyAxs)
 		{
-		case 0:
-		case 1:
-			return YSTRUE;
-		case 2:
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASZ)
-			{
+			case 0:
+			case 1:
 				return YSTRUE;
-			}
-			break;
-		case 3:
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASR)
-			{
-				return YSTRUE;
-			}
-			break;
-		case 4:
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASU)
-			{
-				return YSTRUE;
-			}
-			break;
-		case 5:
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASV)
-			{
-				return YSTRUE;
-			}
-			break;
+			case 2:
+				if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASZ)
+				{
+					return YSTRUE;
+				}
+				break;
+			case 3:
+				if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASR)
+				{
+					return YSTRUE;
+				}
+				break;
+			case 4:
+				if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASU)
+				{
+					return YSTRUE;
+				}
+				break;
+			case 5:
+				if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASV)
+				{
+					return YSTRUE;
+				}
+				break;
 		}
 	}
 	return YSFALSE;
 }
 
-YSRESULT FsPollJoystick(FsJoystick &joy,int joyId)
+YSRESULT FsPollJoystick(FsJoystick& joy, int joyId)
 {
-	static unsigned int buttonCheckFlag[FsMaxNumJoyTrig]=
+	static unsigned int buttonCheckFlag[FsMaxNumJoyTrig] =
 	{
 		JOY_BUTTON1,
 		JOY_BUTTON2,
@@ -140,92 +140,92 @@ YSRESULT FsPollJoystick(FsJoystick &joy,int joyId)
 	FsGetJoystickCapabilities();
 
 	int i;
-	for(i=0; i<FsMaxNumJoyAxis; i++)
+	for (i = 0; i < FsMaxNumJoyAxis; i++)
 	{
-		joy.axs[i]=-1.0;
+		joy.axs[i] = -1.0;
 	}
-	for(i=0; i<FsMaxNumJoyTrig; i++)
+	for (i = 0; i < FsMaxNumJoyTrig; i++)
 	{
-		joy.trg[i]=YSFALSE;
+		joy.trg[i] = YSFALSE;
 	}
-	joy.pov=YSFALSE;
-	joy.povAngle=0.0;
+	joy.pov = YSFALSE;
+	joy.povAngle = 0.0;
 
-	if(joyId==FsMouseJoyId)
+	if (joyId == FsMouseJoyId)
 	{
-		int wid,hei,mx,my;
-		YSBOOL lb,mb,rb;
-		FsMouse(lb,mb,rb,mx,my);  // Never turn it to FsGetMouseEvent.  This function must not take event.
-		FsGetWindowSize(wid,hei);
-		const int cx=wid/2;
-		const int cy=hei/2;
-		const int denom=YsSmaller(wid,hei);
-		joy.axs[0]=YsBound(0.5+(double)(mx-cx)/(double)denom,0.0,1.0);
-		joy.axs[1]=YsBound(0.5+(double)(my-cy)/(double)denom,0.0,1.0);
-		joy.trg[0]=lb;
-		joy.trg[1]=rb;
-		joy.trg[2]=mb;
+		int wid, hei, mx, my;
+		YSBOOL lb, mb, rb;
+		FsMouse(lb, mb, rb, mx, my);  // Never turn it to FsGetMouseEvent.  This function must not take event.
+		FsGetWindowSize(wid, hei);
+		const int cx = wid / 2;
+		const int cy = hei / 2;
+		const int denom = YsSmaller(wid, hei);
+		joy.axs[0] = YsBound(0.5 + (double)(mx - cx) / (double)denom, 0.0, 1.0);
+		joy.axs[1] = YsBound(0.5 + (double)(my - cy) / (double)denom, 0.0, 1.0);
+		joy.trg[0] = lb;
+		joy.trg[1] = rb;
+		joy.trg[2] = mb;
 		return YSOK;
 	}
-	else if(0<=joyId && joyId<FsMaxNumJoystick && FsJoystickIsPlugged[joyId]==YSTRUE)
+	else if (0 <= joyId && joyId < FsMaxNumJoystick && FsJoystickIsPlugged[joyId] == YSTRUE)
 	{
 		JOYINFOEX joyInfo;
-		joyInfo.dwSize=sizeof(JOYINFOEX);
-		joyInfo.dwFlags=JOY_RETURNALL|JOY_RETURNCENTERED;
-		if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASPOV)
+		joyInfo.dwSize = sizeof(JOYINFOEX);
+		joyInfo.dwFlags = JOY_RETURNALL | JOY_RETURNCENTERED;
+		if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASPOV)
 		{
-			joyInfo.dwFlags|=JOY_RETURNPOVCTS;
+			joyInfo.dwFlags |= JOY_RETURNPOVCTS;
 		}
-		if(joyGetPosEx(joyId,&joyInfo)==JOYERR_NOERROR)
+		if (joyGetPosEx(joyId, &joyInfo) == JOYERR_NOERROR)
 		{
 			unsigned i;
-			for(i=0; i<FsMaxNumJoyTrig && i<FsJoyCaps[joyId].wNumButtons; i++)
+			for (i = 0; i < FsMaxNumJoyTrig && i < FsJoyCaps[joyId].wNumButtons; i++)
 			{
-				joy.trg[i]=((joyInfo.dwButtons&buttonCheckFlag[i])!=0 ? YSTRUE : YSFALSE);
+				joy.trg[i] = ((joyInfo.dwButtons & buttonCheckFlag[i]) != 0 ? YSTRUE : YSFALSE);
 			}
 
-			joy.axs[0]=(double)(        joyInfo.dwXpos-FsJoyCaps[joyId].wXmin)/
-			           (double)(FsJoyCaps[joyId].wXmax-FsJoyCaps[joyId].wXmin);
-			joy.axs[0]=YsBound(joy.axs[0],0.0,1.0);
+			joy.axs[0] = (double)(joyInfo.dwXpos - FsJoyCaps[joyId].wXmin) /
+				(double)(FsJoyCaps[joyId].wXmax - FsJoyCaps[joyId].wXmin);
+			joy.axs[0] = YsBound(joy.axs[0], 0.0, 1.0);
 
-			joy.axs[1]=(double)(        joyInfo.dwYpos-FsJoyCaps[joyId].wYmin)/
-			           (double)(FsJoyCaps[joyId].wYmax-FsJoyCaps[joyId].wYmin);
-			joy.axs[1]=YsBound(joy.axs[1],0.0,1.0);
+			joy.axs[1] = (double)(joyInfo.dwYpos - FsJoyCaps[joyId].wYmin) /
+				(double)(FsJoyCaps[joyId].wYmax - FsJoyCaps[joyId].wYmin);
+			joy.axs[1] = YsBound(joy.axs[1], 0.0, 1.0);
 
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASZ)
+			if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASZ)
 			{
-				joy.axs[2]=(double)(        joyInfo.dwZpos-FsJoyCaps[joyId].wZmin)/
-				           (double)(FsJoyCaps[joyId].wZmax-FsJoyCaps[joyId].wZmin);
-				joy.axs[2]=YsBound(joy.axs[2],0.0,1.0);
+				joy.axs[2] = (double)(joyInfo.dwZpos - FsJoyCaps[joyId].wZmin) /
+					(double)(FsJoyCaps[joyId].wZmax - FsJoyCaps[joyId].wZmin);
+				joy.axs[2] = YsBound(joy.axs[2], 0.0, 1.0);
 			}
 
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASR)
+			if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASR)
 			{
-				joy.axs[3]=(double)(        joyInfo.dwRpos-FsJoyCaps[joyId].wRmin)/
-				           (double)(FsJoyCaps[joyId].wRmax-FsJoyCaps[joyId].wRmin);
-				joy.axs[3]=YsBound(joy.axs[3],0.0,1.0);
+				joy.axs[3] = (double)(joyInfo.dwRpos - FsJoyCaps[joyId].wRmin) /
+					(double)(FsJoyCaps[joyId].wRmax - FsJoyCaps[joyId].wRmin);
+				joy.axs[3] = YsBound(joy.axs[3], 0.0, 1.0);
 			}
 
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASU)
+			if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASU)
 			{
-				joy.axs[4]=(double)(        joyInfo.dwUpos-FsJoyCaps[joyId].wUmin)/
-				           (double)(FsJoyCaps[joyId].wUmax-FsJoyCaps[joyId].wUmin);
-				joy.axs[4]=YsBound(joy.axs[4],0.0,1.0);
+				joy.axs[4] = (double)(joyInfo.dwUpos - FsJoyCaps[joyId].wUmin) /
+					(double)(FsJoyCaps[joyId].wUmax - FsJoyCaps[joyId].wUmin);
+				joy.axs[4] = YsBound(joy.axs[4], 0.0, 1.0);
 			}
 
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASV)
+			if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASV)
 			{
-				joy.axs[5]=(double)(        joyInfo.dwVpos-FsJoyCaps[joyId].wVmin)/
-				           (double)(FsJoyCaps[joyId].wVmax-FsJoyCaps[joyId].wVmin);
-				joy.axs[5]=YsBound(joy.axs[5],0.0,1.0);
+				joy.axs[5] = (double)(joyInfo.dwVpos - FsJoyCaps[joyId].wVmin) /
+					(double)(FsJoyCaps[joyId].wVmax - FsJoyCaps[joyId].wVmin);
+				joy.axs[5] = YsBound(joy.axs[5], 0.0, 1.0);
 			}
 
-			if(FsJoyCaps[joyId].wCaps&JOYCAPS_HASPOV)
+			if (FsJoyCaps[joyId].wCaps & JOYCAPS_HASPOV)
 			{
-				if(0<=joyInfo.dwPOV && joyInfo.dwPOV<36000)  // If POV is neutral, dwPOV is 65535
+				if (0 <= joyInfo.dwPOV && joyInfo.dwPOV < 36000)  // If POV is neutral, dwPOV is 65535
 				{
-					joy.pov=YSTRUE;
-					joy.povAngle=(double)joyInfo.dwPOV*YsPi/18000.0;
+					joy.pov = YSTRUE;
+					joy.povAngle = (double)joyInfo.dwPOV * YsPi / 18000.0;
 				}
 			}
 
