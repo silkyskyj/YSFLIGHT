@@ -3,6 +3,18 @@
 by CaptainYS
 http://www.ysflight.com
 
+customized by silkysky  
+https://github.com/silkyskyj/YSFLIGHT
+
+ 2025/09/08 TrackIR Axis is now available. It can be used to move the viewpoint (POVX, POVY, POVX180 settings).  https://github.com/silkyskyj/YSFLIGHT/issues/2   
+
+ ![Image](https://github.com/user-attachments/assets/a9377f49-3aaa-4df2-b5e3-0fca7d050ffe)  
+
+ ![Image](https://github.com/user-attachments/assets/ab3ffc9f-fe09-4915-ab7e-e932e283963c)  
+
+ Download: https://1drv.ms/u/c/538de3d97d257b91/EWcHdTe8GJFGoNyK2BVwEJIBTDUwBovGbIWycgIC__TIkw?e=wGCPfR  
+ ( Download old version: https://1drv.ms/f/c/538de3d97d257b91/EiOeDj5cKiFHrD0n-oN-QqgBvU_SaqSHWkxIvle1J21huw?e=vVaLhD )  
+
 ## Introduction
 Thank you for downloading and flying YS Flight Simulator!
 
