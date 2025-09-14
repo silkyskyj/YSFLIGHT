@@ -6,6 +6,18 @@ http://www.ysflight.com
 customized by silkysky  
 https://github.com/silkyskyj/YSFLIGHT
 
+ 2025/09/14 Ver20250914  
+ 1. ズーム軸を追加 (テストバージョン、後ろ向いた時はうまく動作しません)  https://github.com/silkyskyj/YSFLIGHT/issues/6   
+ 2. ジョイスティックのZoom in とZoom Outでボタンを押下し続けた場合、処理を継続できるように変更しました   
+ 3. 視点操作でのTrackIRの優先度を低く変更しました。Hatスイッチ(POV)による操作が割り当てられボタン入力されている場合、そちらの値を優先します  
+ 4. TrackIRの接続がない場合、視点が中心になるように修正しました  
+ 5. 軸設定の削除を行えるように変更しました  https://github.com/silkyskyj/YSFLIGHT/issues/4  
+ 6. 軸の選択ダイアログで、初期スクロールバー位置を設定済みの軸位置に移動するように変更しました  https://github.com/silkyskyj/YSFLIGHT/issues/5  
+ 7. 敵や味方の機体マーカーや距離表示を非表示にできるように設定を追加しました (これはネット対戦用の設定と同じものｗシングルプレイで出来るようにしただけです)  
+
+ Download: https://1drv.ms/u/c/538de3d97d257b91/ERoFlj2sCeJCuheWGyMuJcsBEnZl62xcqcC6KDUGMaVp1g?e=6TVUB0  
+ ( Download old version: https://1drv.ms/f/c/538de3d97d257b91/EiOeDj5cKiFHrD0n-oN-QqgBvU_SaqSHWkxIvle1J21huw?e=vVaLhD )   
+
  2025/09/08 TrackIR Axis is now available. It can be used to move the viewpoint (POVX, POVY, POVX180 settings).  https://github.com/silkyskyj/YSFLIGHT/issues/2   
 
  ![Image](https://github.com/user-attachments/assets/a9377f49-3aaa-4df2-b5e3-0fca7d050ffe)  
