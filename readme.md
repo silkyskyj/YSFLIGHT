@@ -14,7 +14,7 @@ https://github.com/silkyskyj/YSFLIGHT
  4. TrackIRの接続がない場合、視点が中心になるように修正しました  
  5. 軸設定の削除を行えるように変更しました  https://github.com/silkyskyj/YSFLIGHT/issues/4  
  6. 軸の選択ダイアログで、初期スクロールバー位置を設定済みの軸位置に移動するように変更しました  https://github.com/silkyskyj/YSFLIGHT/issues/5  
- 7. 敵や味方の機体マーカーや距離表示を非表示にできるように設定を追加しました (これはネット対戦用の設定と同じものｗシングルプレイで出来るようにしただけです)  
+ 7. 敵や味方の機体マーカーや距離表示を非表示にできるように設定を追加しました (これはネット対戦用の設定と同じものをシングルプレイでも設定出来るようにしただけです)  
   ![YSFS_20250914_config_game](https://github.com/user-attachments/assets/82be2523-00fe-48aa-80e5-62819b767a79)  
 
  Download: https://1drv.ms/u/c/538de3d97d257b91/ERoFlj2sCeJCuheWGyMuJcsBEnZl62xcqcC6KDUGMaVp1g?e=6TVUB0  
