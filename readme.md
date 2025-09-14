@@ -6,6 +6,9 @@ http://www.ysflight.com
 customized by silkysky  
 https://github.com/silkyskyj/YSFLIGHT
 
+※ 本カスタマイズ版は、BSD-3-Clause licenseにより作成されたカスタムバージョンです。YSFLIGHT開発者である山川氏へのお問合せはご遠慮ください。  
+※ This customized version is a custom version created under the BSD-3-Clause license. Please refrain from contacting Mr. Yamakawa, the developer of YSFLIGHT.  
+
  2025/09/14 Ver20250914  
  1. ズーム軸を追加 (テストバージョン、後ろ向いた時はうまく動作しません)  https://github.com/silkyskyj/YSFLIGHT/issues/6   
  2. ジョイスティックのZoom in とZoom Outでボタンを押下し続けた場合、処理を継続できるように変更しました   
