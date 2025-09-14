@@ -23,7 +23,7 @@ https://github.com/silkyskyj/YSFLIGHT
   ![YSFS_20250914_File_Version](https://github.com/user-attachments/assets/398beabf-5754-43e5-b814-f492dd6a6af1)
 
 
- Download: https://1drv.ms/u/c/538de3d97d257b91/ERoFlj2sCeJCuheWGyMuJcsBEnZl62xcqcC6KDUGMaVp1g?e=6TVUB0  
+ Download: https://1drv.ms/u/c/538de3d97d257b91/EW72pwxKkNFDmpANg2FXVV8B4gxxzCwAQJ-a962EIA5CfQ?e=ibBF0X    
  ( Download old version: https://1drv.ms/f/c/538de3d97d257b91/EiOeDj5cKiFHrD0n-oN-QqgBvU_SaqSHWkxIvle1J21huw?e=vVaLhD )   
 
  2025/09/08 TrackIR Axis is now available. It can be used to move the viewpoint (POVX, POVY, POVX180 settings).  https://github.com/silkyskyj/YSFLIGHT/issues/2   
