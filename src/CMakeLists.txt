@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.2)
 project(YSFLIGHT)
 
+# The original repository does not contain the ysd3d9.h file, so it cannot be built as is.
+#set(ysd3d9_EXIST ON)	
+
+set(CMAKE_CHECK_SOURCE_DIR OFF)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
