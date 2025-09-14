@@ -9,11 +9,13 @@ https://github.com/silkyskyj/YSFLIGHT
  2025/09/14 Ver20250914  
  1. ズーム軸を追加 (テストバージョン、後ろ向いた時はうまく動作しません)  https://github.com/silkyskyj/YSFLIGHT/issues/6   
  2. ジョイスティックのZoom in とZoom Outでボタンを押下し続けた場合、処理を継続できるように変更しました   
+  ![Image](https://github.com/user-attachments/assets/b070d15c-95f2-4cd5-bcf2-04f89b86eab6)  
  3. 視点操作でのTrackIRの優先度を低く変更しました。Hatスイッチ(POV)による操作が割り当てられボタン入力されている場合、そちらの値を優先します  
  4. TrackIRの接続がない場合、視点が中心になるように修正しました  
  5. 軸設定の削除を行えるように変更しました  https://github.com/silkyskyj/YSFLIGHT/issues/4  
  6. 軸の選択ダイアログで、初期スクロールバー位置を設定済みの軸位置に移動するように変更しました  https://github.com/silkyskyj/YSFLIGHT/issues/5  
  7. 敵や味方の機体マーカーや距離表示を非表示にできるように設定を追加しました (これはネット対戦用の設定と同じものｗシングルプレイで出来るようにしただけです)  
+  ![YSFS_20250914_config_game](https://github.com/user-attachments/assets/82be2523-00fe-48aa-80e5-62819b767a79)  
 
  Download: https://1drv.ms/u/c/538de3d97d257b91/ERoFlj2sCeJCuheWGyMuJcsBEnZl62xcqcC6KDUGMaVp1g?e=6TVUB0  
  ( Download old version: https://1drv.ms/f/c/538de3d97d257b91/EiOeDj5cKiFHrD0n-oN-QqgBvU_SaqSHWkxIvle1J21huw?e=vVaLhD )   
