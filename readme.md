@@ -9,6 +9,8 @@ https://github.com/silkyskyj/YSFLIGHT
 ※ 本カスタマイズ版は、BSD-3-Clause licenseにより作成されたカスタムバージョンです。YSFLIGHT開発者である山川氏へのお問合せはご遠慮ください。  
 ※ This customized version is a custom version created under the BSD-3-Clause license. Please refrain from contacting Mr. Yamakawa, the developer of YSFLIGHT.  
 
+※ Webページ内の翻訳が無料で使え、ほぼリアルタイムで翻訳が行えるようになり、誤訳の責任を負ってまで無理して母国語以外で書く理由がなくなりました。その為、私のページでは母国語で記載します。
+
  2025/09/15 Ver20250915  
  1. 軸/ボタン/キーボード設定画面で、割当の削除機能を追加しました
  ![YSFS_20250915_Delete_Assign](https://github.com/user-attachments/assets/2ca7b5f8-66f7-44cc-9cc6-0258a1bcab92)  
