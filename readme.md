@@ -9,6 +9,13 @@ https://github.com/silkyskyj/YSFLIGHT
 ※ 本カスタマイズ版は、BSD-3-Clause licenseにより作成されたカスタムバージョンです。YSFLIGHT開発者である山川氏へのお問合せはご遠慮ください。  
 ※ This customized version is a custom version created under the BSD-3-Clause license. Please refrain from contacting Mr. Yamakawa, the developer of YSFLIGHT.  
 
+ 2025/09/15 Ver20250915  
+ 1. 軸/ボタン/キーボード設定画面で、割当の削除機能を追加しました
+ ![YSFS_20250915_Delete_Assign](https://github.com/user-attachments/assets/2ca7b5f8-66f7-44cc-9cc6-0258a1bcab92)  
+
+ Download:  https://1drv.ms/u/c/538de3d97d257b91/EWJNM90HcWhJrpirZn4RRGUBzt3J_Ucua8tufwwkru9J3A?e=BUcow0    
+ ( Download old version: https://1drv.ms/f/c/538de3d97d257b91/EiOeDj5cKiFHrD0n-oN-QqgBvU_SaqSHWkxIvle1J21huw?e=vVaLhD )   
+
  2025/09/14 Ver20250914  
  1. ズーム軸を追加 (テストバージョン、後ろ向いた時はうまく動作しません)  https://github.com/silkyskyj/YSFLIGHT/issues/6   
  2. ジョイスティックのZoom in とZoom Outでボタンを押下し続けた場合、処理を継続できるように変更しました   
