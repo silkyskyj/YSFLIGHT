@@ -19,7 +19,7 @@ https://github.com/silkyskyj/YSFLIGHT
  ( Download old version: https://1drv.ms/f/c/538de3d97d257b91/EiOeDj5cKiFHrD0n-oN-QqgBvU_SaqSHWkxIvle1J21huw?e=vVaLhD )   
 
  2025/09/14 Ver20250914  
- 1. ズーム軸を追加 (テストバージョン、後ろ向いた時はうまく動作しません)  https://github.com/silkyskyj/YSFLIGHT/issues/6   
+ 1. ズーム軸を追加 (テストバージョン、TrackIRのZ軸を割り当てて後ろ向いた時にはうまく動作しません)  https://github.com/silkyskyj/YSFLIGHT/issues/6   
  2. ジョイスティックのZoom in とZoom Outでボタンを押下し続けた場合、処理を継続できるように変更しました   
   ![YSFS_20250914_joyaxis_w640](https://github.com/user-attachments/assets/28a68885-06f2-4a08-8bf4-587d45c0550e)  
  4. 視点操作でのTrackIRの優先度を低く変更しました。Hatスイッチ(POV)による操作が割り当てられボタン入力されている場合、そちらの値を優先します  
