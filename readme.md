@@ -9,7 +9,7 @@ https://github.com/silkyskyj/YSFLIGHT
 ※ 本カスタマイズ版は、BSD-3-Clause licenseにより作成されたカスタムバージョンです。YSFLIGHT開発者である山川氏へのお問合せはご遠慮ください。  
 ※ This customized version is a custom version created under the BSD-3-Clause license. Please refrain from contacting Mr. Yamakawa, the developer of YSFLIGHT.  
 
-※ Webページ内の翻訳が無料で使え、ほぼリアルタイムで翻訳が行えるようになり、誤訳のリスクを冒してまで無理に母国語以外で書く理由がなくなりました。その為、私のページでは母国語で記載します。
+※ Webページ内の翻訳が無料で使え、ブラウザからほぼリアルタイムで翻訳が行えるようになり、誤訳のリスクを冒してまで無理に母国語以外で書く理由がなくなりました。その為、私のページでは母国語で記載します。
 
 このリポジトリでは、主にWindows環境のユーザーインターフェースを自分好みにカスタマイズしてます。(それ以外のカスタイマイズを行う予定はありません)  
   
