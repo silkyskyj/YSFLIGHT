@@ -11,7 +11,7 @@ https://github.com/silkyskyj/YSFLIGHT
 
 ※ Webページ内の翻訳が無料で使え、ブラウザからほぼリアルタイムで翻訳が行えるようになり、誤訳のリスクを冒してまで無理に母国語以外で書く理由がなくなりました。その為、私のページでは母国語で記載します。
 
-このリポジトリでは、主にWindows環境のユーザーインターフェースを自分好みにカスタマイズしてます。(それ以外のカスタイマイズを行う予定はありません)  
+ここでは、主にWindows環境のユーザーインターフェースを自分好みにカスタマイズしたものを配布してます。(それ以外のカスタイマイズを行う予定はありません)  
   
   現在の課題 https://github.com/silkyskyj/YSFLIGHT/issues  
   閉じた課題 https://github.com/silkyskyj/YSFLIGHT/issues?q=is%3Aissue%20state%3Aclosed  
